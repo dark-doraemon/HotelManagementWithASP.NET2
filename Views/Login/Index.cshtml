@@ -1,5 +1,7 @@
-﻿<link rel="stylesheet" href="~/style/dangnhap.css" />
+﻿@model TaiKhoan
+<link rel="stylesheet" href="~/style/dangnhap.css" />
 
+<div asp-validation-summary="All"></div>
 <div class="wrapper">
     <div class="title-text">
         <div class="title login">
@@ -11,12 +13,12 @@
     </div>
     <div class="form-container">
         <div class="form-inner">
-            <form action="#" class="login">
+            <form action="#" class="login" method="post">
                 <div class="field">
-                    <input type="text" placeholder="Email Address" required>
+                    <input type="text" asp-for="UserName" placeholder="Email Address" required>
                 </div>
                 <div class="field">
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" asp-for="Password" placeholder="Password" required>
                 </div>
                 <div class="pass-link">
                     <a href="#">Forgot password?</a>
@@ -30,21 +32,7 @@
                 </div>
             </form>
 
-            <form action="#" class="signup">
-                <div class="field">
-                    <input type="text" placeholder="Email Address" required>
-                </div>
-                <div class="field">
-                    <input type="password" placeholder="Password" required>
-                </div>
-                <div class="field">
-                    <input type="password" placeholder="Confirm password" required>
-                </div>
-                <div class="field btn">
-                    <div class="btn-layer"></div>
-                    <input type="submit" value="Signup">
-                </div>
-            </form>
+           
         </div>
     </div>
 </div>

@@ -18,5 +18,6 @@ namespace HotelManagement.Controllers
             var s = repo.getPeople;
             return View(s);
         }
+
     }
 }

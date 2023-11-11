@@ -7,5 +7,7 @@ namespace HotelManagement.DataAccess
         IEnumerable<Person> getPeople { get;  }
 
         void CreateAccount(TaiKhoan a);
+
+        bool CheckAccount(TaiKhoan a);
     }
 }
