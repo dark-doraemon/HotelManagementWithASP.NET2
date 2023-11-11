@@ -1,0 +1,60 @@
+﻿@model PersonAndAccount
+<link rel="stylesheet" href="~/style/dangky.css" />
+<div class="wrapper">
+    <div class="title-text">
+        <div class="title signup">
+            Đăng ký
+        </div>
+        <div class="title signup">
+            Signup Form
+        </div>
+    </div>
+    <div asp-validation-summary="All"></div>
+    <div class="form-container">
+        <div class="form-inner">
+
+            <form class="signup" method="post" >
+                <div class="field">
+                    <input asp-for="p.PersonId" type="text" placeholder="CCCD" />
+                </div>
+
+                <div class="field">
+                    <input asp-for="p.HoTen" type="text" placeholder="Họ và tên" />
+                </div>
+
+                <div class="field">
+                    <input asp-for="p.Tuoi" type="number" placeholder="Tuổi" />
+
+                </div>
+
+                <div class="field">
+                    <select asp-for="p.GioiTinh" class="form-select">
+                        <option value="0">Nam</option>
+                        <option value="1">Nữ</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <input asp-for="p.Sdt" type="text" placeholder="Số điện thoại" />
+
+                </div>
+                <div class="field">
+                    <input asp-for="a.UserName" type="text" placeholder="Email Address" required>
+                </div>
+                <div class="field">
+                    <input asp-for="a.Password" type="password" placeholder="Password" required>
+                </div>
+                <div class="field">
+                    <input asp-for="confirm" type="password" placeholder="Confirm password" required>
+                </div>
+                <div class="field btn">
+                    <div class="btn-layer"></div>
+                    <input type="submit" value="Signup">
+                </div>
+
+            </form>
+        </div>
+            <a href="login/index">Quay lại</a>
+
+    </div>
+</div>

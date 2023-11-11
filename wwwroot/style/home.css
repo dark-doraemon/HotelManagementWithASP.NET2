@@ -1,0 +1,36 @@
+﻿* {
+    padding : 0;
+    margin : 0;
+    box-sizing : border-box;
+}
+
+#main {
+    
+}
+
+.nav {
+    height : 10%;
+    background-color: black;
+    display : flex;
+    align-items: center;
+    justify-content  : space-between
+}
+
+.nav-list {
+    list-style-type : none;
+}
+
+.nav-item {
+    display: inline-block;
+    
+}
+
+
+#slider {
+}
+#content {
+    
+}
+#footer {
+    
+}

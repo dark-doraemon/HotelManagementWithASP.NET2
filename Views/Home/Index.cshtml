@@ -1,0 +1,35 @@
+﻿ @model IEnumerable<Person>
+<link rel="stylesheet" href="~/style/home.css" />
+<header>
+    <div id="main" style="height: 100vh;">
+
+        <div class="nav" >
+            <ul class="nav-list">
+                <li class="nav-item" ><a class ="btn btn-primary" href="#">Room</a></li>
+                <li class="nav-item" ><a class ="btn btn-primary" href="#">More</a></li>
+                <li class="nav-item" ><a class ="btn btn-primary" href="#">Home</a></li>
+                <li class="nav-item" ><a class ="btn btn-primary" href="#">About</a></li>
+            </ul>
+
+
+            <ul class="nav-list">
+                <li class="nav-item"><a class="btn btn-primary" asp-controller="Login" asp-action="Index">Đăng nhập</a></li>
+                <li class="nav-item"><a class="btn btn-primary" asp-controller="Signup" asp-action="Index">Đăng kí</a></li>
+            </ul>
+        </div>
+
+          @foreach(var s in @Model)
+          {
+              <div>@s.PersonId</div>
+          }
+
+        <div id="slider">
+        </div>
+
+        <div id="content">
+        </div>
+
+        <div id="footer">
+        </div>
+    </>
+</header>
