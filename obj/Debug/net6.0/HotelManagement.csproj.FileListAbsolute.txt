@@ -71,3 +71,4 @@ D:\AllWebProjects\HotelManagement\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptogr
 D:\AllWebProjects\HotelManagement\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 D:\AllWebProjects\HotelManagement\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 D:\AllWebProjects\HotelManagement\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+D:\AllWebProjects\HotelManagement\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

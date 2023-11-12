@@ -1,0 +1,56 @@
+﻿@model TaiKhoan
+<header>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Paradise Hotel</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/Home/Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Room" asp-action="Index">Rooms</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link">About</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex justify-content-around">
+                    <ul class="navbar-nav me-auto">
+
+                        @{
+                            if (Model.UserName == null)
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login/index">Đăng nhập</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login/index">Đăng kí</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <div class="nav-link">@Model?.UserName</div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Login" asp-action="Logout">Logout</a>
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+</header>

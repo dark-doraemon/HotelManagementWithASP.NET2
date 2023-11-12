@@ -1,16 +1,19 @@
 ﻿using HotelManagement.DataAccess;
 using HotelManagement.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using System.IO;
 namespace HotelManagement.Controllers
 {
     public class LoginController : Controller
     {
 
         private IRepository repo;
-        public LoginController(IRepository repo)
+        private IHttpContextAccessor httpContextAccessor;
+        public LoginController(IRepository repo, IHttpContextAccessor accessor)
         {
-            this.repo = repo;   
+            this.repo = repo;
+            this.httpContextAccessor = accessor;
         }
         [HttpGet]
         public IActionResult Index()
@@ -22,15 +25,26 @@ namespace HotelManagement.Controllers
         [HttpPost]
         public IActionResult Index(TaiKhoan account)
         {
-            if (repo.CheckAccount(account))
+            //khi đăng nhập phải check xem session có account chưa
+            if (httpContextAccessor.HttpContext.Session.GetString(account.UserName) == null)
             {
-                return RedirectToAction("Index","Home");
+                //Kiểm tra account có trong CSDL không
+                if (repo.CheckAccount(account))
+                {
+                    httpContextAccessor.HttpContext.Session.SetString("UserName", account.UserName);
+                    return RedirectToAction("Index", "Home", account);
+                }
+                ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không chính xác");
             }
-            else
-            {
-                ModelState.AddModelError("", "Tk hoac mk k chinh xac");
-                return View();
-            }
+            return View();
+        }
+
+
+        public IActionResult Logout()
+        {
+            httpContextAccessor.HttpContext.Session.Clear();
+            httpContextAccessor.HttpContext.Session.Remove("UserName");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

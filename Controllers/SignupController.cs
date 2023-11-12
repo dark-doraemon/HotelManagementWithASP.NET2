@@ -31,12 +31,12 @@ namespace HotelManagement.Controllers
             {
                 repo.CreateAccount(new TaiKhoan
                 {
-                    MaTaiKhoan = "TK2",
+                    MaTaiKhoan = repo.GetLastIndexOfAccount(),
                     UserName = paa.a.UserName,
                     Password = paa.a.Password,
                     LoaiTaiKhoan = "LTK3",
                     Person = paa.p
-                }); 
+                }); ; ; 
             }
             return View();
         }

@@ -12,12 +12,14 @@ namespace HotelManagement.Controllers
         {
             this.repo = repository;
         }
-        public IActionResult Index()
+
+
+       
+        [HttpGet]
+        [HttpPost]
+        public IActionResult Index(TaiKhoan a)
         {
-
-            var s = repo.getPeople;
-            return View(s);
+            return View(a);
         }
-
     }
 }

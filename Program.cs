@@ -1,6 +1,9 @@
 using HotelManagement.DataAccess;
 using HotelManagement.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace HotelManagement
 {
@@ -9,6 +12,12 @@ namespace HotelManagement
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddSession();
+
+            builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -34,6 +43,8 @@ namespace HotelManagement
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
