@@ -8,7 +8,7 @@ namespace HotelManagement.DataAccess
 
         void CreateAccount(TaiKhoan a);
 
-        bool CheckAccount(TaiKhoan a);
+        TaiKhoan CheckAccount(TaiKhoan a);
 
         string GetLastIndexOfPerson();
 

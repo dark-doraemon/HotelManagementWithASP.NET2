@@ -16,11 +16,11 @@ namespace HotelManagement.DataAccess
 
         public IEnumerable<Person> getPeople => this.context.People;
 
-        public bool CheckAccount(TaiKhoan a)
+        public TaiKhoan CheckAccount(TaiKhoan a)
         {
             var matchingAccount = this.context.TaiKhoans.FirstOrDefault(account => account.UserName == a.UserName && account.Password == a.Password);
-            if (matchingAccount == null) return false;
-            return true;
+            if (matchingAccount == null) return null;
+            return matchingAccount;
         }
 
         public void CreateAccount(TaiKhoan a)

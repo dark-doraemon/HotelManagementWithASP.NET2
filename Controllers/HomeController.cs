@@ -17,9 +17,9 @@ namespace HotelManagement.Controllers
        
         [HttpGet]
         [HttpPost]
-        public IActionResult Index(TaiKhoan a)
+        public IActionResult Index()
         {
-            return View(a);
+            return View();
         }
     }
 }

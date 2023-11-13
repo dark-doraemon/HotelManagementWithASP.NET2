@@ -1,4 +1,5 @@
 ﻿@model TaiKhoan
+@inject IHttpContextAccessor accessor
 <header>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
@@ -15,16 +16,30 @@
                         <a class="nav-link" asp-controller="Room" asp-action="Index">Rooms</a>
                     </li>
 
+
                     <li class="nav-item">
                         <a class="nav-link">About</a>
                     </li>
+
+                    @{
+                        if (accessor.HttpContext.Session.GetString("admin") != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Admin" asp-action="QLPhong">Quản lý phòng</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Admin" asp-action="QLDichVu">Quản lý dịch vụ</a>
+                            </li>
+                        }
+                    }
                 </ul>
 
                 <div class="d-flex justify-content-around">
                     <ul class="navbar-nav me-auto">
 
                         @{
-                            if (Model.UserName == null)
+                            if (accessor.HttpContext.Session.GetString("UserName") == null && accessor.HttpContext.Session.GetString("admin") == null)
                             {
 
                                 <li class="nav-item">
@@ -38,7 +53,7 @@
                             else
                             {
                                 <li class="nav-item">
-                                    <div class="nav-link">@Model?.UserName</div>
+                                    <div class="nav-link">@accessor.HttpContext.Session.GetString("UserName")</div>
                                 </li>
 
                                 <li class="nav-item">

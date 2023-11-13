@@ -29,10 +29,18 @@ namespace HotelManagement.Controllers
             if (httpContextAccessor.HttpContext.Session.GetString(account.UserName) == null)
             {
                 //Kiểm tra account có trong CSDL không
-                if (repo.CheckAccount(account))
+                TaiKhoan check = repo.CheckAccount(account);
+                if (check != null)
                 {
-                    httpContextAccessor.HttpContext.Session.SetString("UserName", account.UserName);
-                    return RedirectToAction("Index", "Home", account);
+                    if (repo.CheckAccount(account).LoaiTaiKhoan == "LTK1")
+                    {
+                        httpContextAccessor.HttpContext.Session.SetString("admin", account.UserName);
+                    }
+                    else
+                    {
+                        httpContextAccessor.HttpContext.Session.SetString("UserName", account.UserName);
+                    }
+                    return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không chính xác");
             }

@@ -6,7 +6,7 @@ namespace HotelManagement.Controllers
     public class RoomController : Controller
     {
 
-        [Authentication]
+        [Authentication] // (hàm tự build) nó sẽ kiểm tra season xem người dùng đã đăng nhập chưa
         public IActionResult Index()
         {
             return View();
