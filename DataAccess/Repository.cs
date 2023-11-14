@@ -1,6 +1,4 @@
-﻿//using HotelManagement.Models;
-
-using HotelManagement.Models;
+﻿using HotelManagement.Models;
 using System.Text.RegularExpressions;
 
 namespace HotelManagement.DataAccess
@@ -15,6 +13,7 @@ namespace HotelManagement.DataAccess
         }
 
         public IEnumerable<Person> getPeople => this.context.People;
+
 
         public TaiKhoan CheckAccount(TaiKhoan a)
         {
@@ -38,8 +37,58 @@ namespace HotelManagement.DataAccess
         {
             string lastId = context.TaiKhoans.OrderByDescending(a => a.MaTaiKhoan).FirstOrDefault().MaTaiKhoan;
             int number = int.Parse(Regex.Match(lastId, @"\d+").Value) + 1;
-            return "TK" + number ;
+            return "TK" + number;
         }
 
+        public IEnumerable<LoaiPhong> getLoaiPhong => context.LoaiPhongs;
+
+        public IEnumerable<Phong> getPhong(string id)
+        {
+            if (id == null) return context.Phongs;
+            return context.Phongs.Where(p => p.MaLoaiPhong == id);
+        }
+
+        public void removeLoaiPhong(string id)
+        {
+            var rooms = context.Phongs.Where(p => p.MaLoaiPhong == id);
+
+            context.RemoveRange(rooms);
+
+            context.Remove(context.LoaiPhongs.Where(lp => lp.MaLoaiPhong == id).FirstOrDefault());
+
+            context.SaveChanges();
+        }
+
+        public void themLoaiPhong(LoaiPhong newloaiphong)
+        {
+            context.LoaiPhongs.Add(newloaiphong);
+            context.SaveChanges();
+        }
+
+        public void suaLoaiPhong(LoaiPhong phongcuasua)
+        {
+            context.Update(phongcuasua);
+            context.SaveChanges();
+        }
+
+        public IEnumerable<TrangThaiPhong> getTrangThaiPhong => context.TrangThaiPhongs;
+
+        public void themPhong(Phong newphong)
+        {
+            context.Phongs.Add(newphong);
+            context.SaveChanges();
+        }
+
+        public void xoaPhong(string id)
+        {
+            context.Phongs.Remove(context.Phongs.Where(p => p.MaPhong == id).FirstOrDefault()); 
+            context.SaveChanges();
+        }
+
+        public void suaPhong(Phong phongcansua)
+        {
+            context.Phongs.Update(phongcansua);
+            context.SaveChanges();  
+        }
     }
 }

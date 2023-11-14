@@ -25,25 +25,23 @@ namespace HotelManagement.Controllers
         [HttpPost]
         public IActionResult Index(TaiKhoan account)
         {
-            //khi đăng nhập phải check xem session có account chưa
-            if (httpContextAccessor.HttpContext.Session.GetString(account.UserName) == null)
+            httpContextAccessor.HttpContext.Session.Clear();
+
+            //Kiểm tra account có trong CSDL không
+            TaiKhoan check = repo.CheckAccount(account);
+            if (check != null)
             {
-                //Kiểm tra account có trong CSDL không
-                TaiKhoan check = repo.CheckAccount(account);
-                if (check != null)
+                if (repo.CheckAccount(account).LoaiTaiKhoan == "LTK1")
                 {
-                    if (repo.CheckAccount(account).LoaiTaiKhoan == "LTK1")
-                    {
-                        httpContextAccessor.HttpContext.Session.SetString("admin", account.UserName);
-                    }
-                    else
-                    {
-                        httpContextAccessor.HttpContext.Session.SetString("UserName", account.UserName);
-                    }
-                    return RedirectToAction("Index", "Home");
+                    httpContextAccessor.HttpContext.Session.SetString("admin", account.UserName);
                 }
-                ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không chính xác");
+                else
+                {
+                    httpContextAccessor.HttpContext.Session.SetString("UserName", account.UserName);
+                }
+                return RedirectToAction("Index", "Home");
             }
+            ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không chính xác");
             return View();
         }
 

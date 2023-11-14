@@ -4,7 +4,7 @@ namespace HotelManagement.DataAccess
 {
     public interface IRepository
     {
-        IEnumerable<Person> getPeople { get;  }
+        IEnumerable<Person> getPeople { get; }
 
         void CreateAccount(TaiKhoan a);
 
@@ -13,6 +13,24 @@ namespace HotelManagement.DataAccess
         string GetLastIndexOfPerson();
 
         string GetLastIndexOfAccount();
+
+        IEnumerable<LoaiPhong> getLoaiPhong { get; }
+
+        IEnumerable<Phong> getPhong(string id);
+
+        void removeLoaiPhong(string id);
+
+        void themLoaiPhong(LoaiPhong newloaiphong);
+
+        void suaLoaiPhong(LoaiPhong phongcuasua);
+
+        public IEnumerable<TrangThaiPhong> getTrangThaiPhong { get; }
+
+        void themPhong(Phong newphong);
+
+        void xoaPhong(string id);
+
+        void suaPhong(Phong phongcansua);
 
     }
 }

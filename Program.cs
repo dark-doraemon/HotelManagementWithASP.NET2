@@ -48,8 +48,13 @@ namespace HotelManagement
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller}/{action}/{id?}",
+                defaults: new {controller= "Home",action = "Index"});
 
+            app.MapControllerRoute(
+                name : "null",
+                pattern: "Admin/{action}",
+                defaults : new { action = "QLPhong"});
             app.Run();
         }
     }

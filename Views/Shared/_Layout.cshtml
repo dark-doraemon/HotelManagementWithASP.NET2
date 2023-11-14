@@ -9,39 +9,8 @@
     <link rel="stylesheet" href="~/HotelManagement.styles.css" asp-append-version="true" />
 </head>
 <body>
-    @* <header>
-        <nav class="navbar navbar-expand navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand">Paradise Hotel</a>
-                <ul class="navbar-nav me-auto">
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home/index">Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link">Rooms</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link">About</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div >
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login/index">Đăng nhập</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login/index">Đăng kí</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header> *@
+    @await Html.PartialAsync("header")
     @RenderBody()
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

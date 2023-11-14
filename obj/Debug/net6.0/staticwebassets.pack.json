@@ -245,6 +245,22 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\hotel1.jpg",
+      "PackagePath": "staticwebassets\\pictures\\hotel1.jpg"
+    },
+    {
+      "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\hotel2.jpg",
+      "PackagePath": "staticwebassets\\pictures\\hotel2.jpg"
+    },
+    {
+      "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\hotel3.jpg",
+      "PackagePath": "staticwebassets\\pictures\\hotel3.jpg"
+    },
+    {
+      "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\hotel4.jpg",
+      "PackagePath": "staticwebassets\\pictures\\hotel4.jpg"
+    },
+    {
       "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\style\\dangky.css",
       "PackagePath": "staticwebassets\\style\\dangky.css"
     },

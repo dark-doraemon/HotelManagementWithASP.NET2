@@ -13,7 +13,6 @@ namespace HotelManagement.Controllers
             this.repo = repository;
         }
 
-
        
         [HttpGet]
         [HttpPost]
