@@ -1,30 +1,301 @@
-﻿<h1>This is room</h1>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-    Open modal
-</button>
-</div>
+﻿@model LoaiPhongPhongTrangThaiPhong
 
-<!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+<div class="container " style="border:1px solid black">
+    <div class="row">
+        <div class="col-3 p-0 " style="border : 1px solid black">
+            <div class=" text-center list-group-item active" aria-current="true">Loại phòng</div>
+            <div class="text-center">
+                <a class="btn btn-block m-3" href="/room/index">All</a> <br />
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                @foreach (var loaiphong in Model.loaiphongs)
+                {
+                    <a class="btn btn-block m-3"
+                       asp-action="Index" asp-route-loaiphong="@loaiphong.MaLoaiPhong">@loaiphong.TenLoaiPhong</a>
+                    <br />
+                }
             </div>
 
-            <!-- Modal body -->
-            <div class="modal-body">
-                Modal body..
+            <div class=" text-center list-group-item active" aria-current="true">Trạng thái phòng</div>
+            <div class="text-center">
+                @foreach (var trangthai in Model.trangthaiphongs)
+                {
+                    <a class="btn btn-block m-3"
+                       asp-action="Index" asp-route-trangthaiphong="@trangthai.MaTrangThai">@trangthai.TenTrangThai</a>
+                    <br />
+                }
             </div>
+        </div>
+        <div class="col-9 p-0 " style="max-height:650px;overflow-y:auto;overflow-x:hidden">
+            <div class="row">
+                @foreach (var phong in Model.phongs)
+                {
+                    <div class="col-4">
+                        <div class="card" style="width: 18rem;">
+                            @{
+                                if (phong.MaLoaiPhongNavigation.MaLoaiPhong == "MLP1")
+                                {
+                                        <img src="~/pictures/phongdon.png" height="200" class="card-img-top" alt="">
+                                }
+                                else if (phong.MaLoaiPhongNavigation.MaLoaiPhong == "MLP2")
+                                {
+                                        <img src="~/pictures/phongdoi.png" height="200" class="card-img-top" alt="">
 
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                }
+                                else if (phong.MaLoaiPhongNavigation.MaLoaiPhong == "MLP3")
+                                {
+                                        <img src="~/pictures/phonggiadinh.jpg" height="200" class="card-img-top" alt="">
+                                }
+                                else
+                                {
+                                        <img src="~/pictures/phongvip.jpg" height="200" class="card-img-top" alt="">
+                                }
+                            }
+                            <div class="card-body">
+                                <h5 class="card-title">@phong.TenPhong - @phong.MaTrangThaiNavigation.TenTrangThai</h5>
+                                <div class="card-text">@phong.MaLoaiPhongNavigation.TenLoaiPhong - @String.Format("{0:N0}",phong.MaLoaiPhongNavigation.GiaPhong)</div>
+                                <input class="tienPhong" type="hidden" value="@phong.MaLoaiPhongNavigation.GiaPhong">
+                                <div>
+                                    @{
+                                        if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT1")//phòng trống
+                                        {
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
+                                                    Đặt phòng
+                                                </button>
+                                                <!-- The Modal -->
+                                                <div class="modal fade " id="@phong.MaPhong">
+                                                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                        <div class="modal-content">
+
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Đặt phòng - @phong.MaLoaiPhongNavigation.TenLoaiPhong - @phong.TenPhong - @String.Format("{0:N0}",phong.MaLoaiPhongNavigation.GiaPhong)</h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            </div>
+
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body row ">
+                                                                <div class="col-6 p-5" style="border:1px solid black">
+                                                                    <div class="text-center"><b>Thông tin khách hàng</b></div>
+                                                                    <form method="post" class="form-group" asp>
+                                                                        <label class="form-label">Họ và tên</label>
+                                                                        <input class="form-control" />
+
+                                                                        <label class="form-label">Tuổi</label>
+                                                                        <input class="form-control" type="number" />
+
+                                                                        <label class="form-label">Giới tính</label>
+                                                                        <select class="form-select">
+                                                                            <option value="0">Nam</option>
+                                                                            <option value="1">Nữ</option>
+                                                                        </select>
+
+                                                                        <label class="form-label">CCCD</label>
+                                                                        <input class="form-control">
+
+                                                                        <label class="form-label">SĐT</label>
+                                                                        <input class="form-control">
+
+                                                                        <label class="form-label">Ngày đến:</label>
+                                                                        <input class="dayIn" type="date" oninput="tinhNgay(this)">
+
+                                                                        <label class="form-label">Ngày đi</label>
+                                                                        <input class="dayOut" type="date" oninput="tinhNgay(this)"> <br>
+                                                                        <div class="totalDays">Tổng ngày thuê: </div>
+                                                                        <div class="tongTienPhong">Tổng tiền phòng: </div>
+                                                                    </form>
+
+                                                                </div>
+
+                                                                <div class="col-6 p-5" style="border:1px solid black">
+                                                                    <div class="text-center"><b>Dịch vụ</b></div>
+                                                                    <form method="post" class="form-group">
+                                                                        <label class="form-label">Chọn dịch vụ</label>
+
+                                                                        <table class="table" id="dichVuTable">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Chọn</th>
+                                                                                    <th>Tên dịch vụ</th>
+                                                                                    <th>Giá dịch vụ</th>
+                                                                                    <th>Số lượng</th>
+                                                                                    <th>Tổng tiền</th>
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                            <tbody>
+                                                                                @{
+                                                                                foreach (var dichvu in Model.dichvus)
+                                                                                {
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <input style=" transform: scale(2.5); " type="checkbox" class="checkbox" data-gia="@dichvu.GiaDichVu" onclick="updateTotal(this)">
+                                                                                                </td>
+                                                                                                <td>@dichvu.TenDichVu</td>
+                                                                                                <td>@String.Format("{0:N0}",dichvu.GiaDichVu)</td>
+                                                                                                <td>
+                                                                                                    <input style="width:50px" class="form-control quantity" data-gia="@dichvu.GiaDichVu" oninput="updateTotal(this)" />
+                                                                                                </td>
+
+                                                                                                <td class="total"></td>
+                                                                                            </tr>
+                                                                                }
+                                                                                }
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <div class="tongTien">Tổng tiền dịch vụ: 0</div>
+                                                                    <div class="totalAll">Tổng tất cả: </div>
+
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Modal footer -->
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Xác nhận</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        }
+                                        else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT2")
+                                        {
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
+                                                    Thanh toán
+                                                </button>
+                                                <!-- The Modal -->
+                                                <div class="modal" id="@phong.MaPhong">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Thanh toán</h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            </div>
+
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+                                                                Modal body..
+                                                            </div>
+
+                                                            <!-- Modal footer -->
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        }
+                                        else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT3")
+                                        {
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
+                                                    Xác nhận
+                                                </button>
+                                                <!-- The Modal -->
+                                                <div class="modal" id="@phong.MaPhong">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Xác nhận</h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            </div>
+
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+                                                                Modal body..
+                                                            </div>
+
+                                                            <!-- Modal footer -->
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
             </div>
 
         </div>
     </div>
 </div>
+
+
+<script>
+    var g_tongDichVu = 0
+    var tongTienPhong = 0;
+    var element_cua_ham_updateTotal;
+    function tinhNgay(element) {
+        var form = element.closest('.form-group');
+        var dayIn = form.querySelector(".dayIn");
+        var dayOut = form.querySelector(".dayOut");
+        var date1 = new Date(dayIn.value);
+        var date2 = new Date(dayOut.value);
+        var diffTime = Math.abs(date2 - date1);
+        var totalDays = form.querySelector(".totalDays").textContent = Math.ceil(diffTime / 1000 / 60 / 60 / 24)
+        form.querySelector(".totalDays").textContent = "Tổng ngày thuê: " + totalDays
+        tongTienPhong = totalDays * document.querySelector(".tienPhong").value
+        form.querySelector(".tongTienPhong").textContent = "Tổng tiền phòng: " + tongTienPhong.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        
+        element_cua_ham_updateTotal.closest('.form-group').querySelector(".totalAll").textContent = 
+        "Tổng tất cả: " + (tongTienPhong + g_tongDichVu).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    }
+
+    // Hàm cập nhật tổng tiền
+    function updateTotal(element) {
+        element_cua_ham_updateTotal = element;
+        var totalDichVu = 0;// tổng chung các dịch vụ đã chọn
+
+
+        var form = element.closest('.form-group');
+
+
+        // Duyệt qua mỗi dòng trong bảng
+        var tableRows = form.querySelectorAll("#dichVuTable tbody tr");
+
+        tableRows.forEach(function (row) {
+            var checkbox = row.querySelector(".checkbox");
+            var quantityInput = row.querySelector(".quantity");
+            var totalCell = row.querySelector(".total");
+
+            // Kiểm tra checkbox đã chọn
+            if (checkbox.checked) {
+                // Lấy giá và số lượng
+                var gia = parseFloat(checkbox.getAttribute("data-gia"));
+                var quantity = parseInt(quantityInput.value);
+
+                // Tính tổng tiền cho dòng
+                var rowTotal = gia * quantity;
+
+                // Cập nhật tổng tiền và hiển thị
+                totalDichVu += rowTotal;
+                totalCell.textContent = rowTotal.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+            } else {
+                // Nếu checkbox không chọn, đặt tổng tiền cho dòng là 0
+                totalCell.textContent = "0";
+            }
+        });
+
+        // Hiển thị tổng tiền chung
+        form.querySelector(".tongTien").textContent = "Tổng tiền dịch vụ: " + totalDichVu.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        form.querySelector(".totalAll").textContent = "Tổng tất cả: " + (tongTienPhong + totalDichVu).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        g_tongDichVu = totalDichVu;
+
+        var form = element.closest('.form-group');
+    }
+
+    
+
+
+</script>

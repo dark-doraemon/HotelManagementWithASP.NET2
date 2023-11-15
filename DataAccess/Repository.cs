@@ -1,5 +1,6 @@
 ﻿using HotelManagement.Models;
 using System.Text.RegularExpressions;
+using System.Transactions;
 
 namespace HotelManagement.DataAccess
 {
@@ -73,6 +74,7 @@ namespace HotelManagement.DataAccess
 
         public IEnumerable<TrangThaiPhong> getTrangThaiPhong => context.TrangThaiPhongs;
 
+
         public void themPhong(Phong newphong)
         {
             context.Phongs.Add(newphong);
@@ -90,5 +92,14 @@ namespace HotelManagement.DataAccess
             context.Phongs.Update(phongcansua);
             context.SaveChanges();  
         }
+
+        public IEnumerable<Phong> getPhongByMaTrangThai(string trangthai)
+        {
+            return context.Phongs.Where(p => p.MaTrangThai == trangthai);   
+        }
+
+
+        public IEnumerable<DichVu> getDichvu => context.DichVus;
+
     }
 }

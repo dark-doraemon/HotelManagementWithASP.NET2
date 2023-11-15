@@ -261,6 +261,22 @@
       "PackagePath": "staticwebassets\\pictures\\hotel4.jpg"
     },
     {
+      "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\phongdoi.png",
+      "PackagePath": "staticwebassets\\pictures\\phongdoi.png"
+    },
+    {
+      "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\phongdon.png",
+      "PackagePath": "staticwebassets\\pictures\\phongdon.png"
+    },
+    {
+      "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\phonggiadinh.jpg",
+      "PackagePath": "staticwebassets\\pictures\\phonggiadinh.jpg"
+    },
+    {
+      "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\phongvip.jpg",
+      "PackagePath": "staticwebassets\\pictures\\phongvip.jpg"
+    },
+    {
       "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\style\\dangky.css",
       "PackagePath": "staticwebassets\\style\\dangky.css"
     },

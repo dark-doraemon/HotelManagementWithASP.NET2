@@ -37,8 +37,6 @@
                             </div>
                         </form>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -95,8 +93,6 @@
                                                 </div>
                                             </form>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -193,6 +189,8 @@
                     <th>Mã phòng</th>
                     <th>Tên phòng</th>
                     <th>Mô tả phòng</th>
+                    <th>Giá phòng</th>
+                    <td>Trạng thái phòng</td>
                     <th>Sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -203,7 +201,13 @@
                     <tr>
                         <td>@p.MaPhong</td>
                         <td>@p.TenPhong</td>
-                        <td>@p.MoTaPhong</td>
+                        <td>
+                            <textarea class="text-center">
+                                @p.MoTaPhong
+                            </textarea>
+                        </td>
+                        <td>@String.Format("{0:N0}",@p.MaLoaiPhongNavigation.GiaPhong)</td>
+                        <td>@p.MaTrangThaiNavigation.TenTrangThai</td>
                         <td>
                             <div>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@p.MaPhong">
