@@ -57,11 +57,11 @@ namespace HotelManagement.Controllers
                 NgayDen = ngayden,
                 NgayDi = ngaydi,
                 PersonId = cccd,
-                MaPhong = maphong
+                MaPhong = maphong,
+                Person = person,
             };
 
-            
-            OrderPhongDichVu orderphongdichvu = new OrderPhongDichVu();
+
 
             return RedirectToAction("Index");
         }

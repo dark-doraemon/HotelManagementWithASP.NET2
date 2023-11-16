@@ -37,5 +37,7 @@ namespace HotelManagement.DataAccess
         public IEnumerable<DichVu> getDichvu { get; }
 
         string createOrderPhongId();
+
+        void updateTrangThaiPhong(Phong phongCanUpdateTrangThai);
     }
 }

@@ -88,10 +88,14 @@ namespace HotelManagement.Models
                     .HasConstraintName("FKKhach_Hang279424");
             });
 
+
+           
+
             modelBuilder.Entity<LoaiPhong>(entity =>
             {
                 entity.HasKey(e => e.MaLoaiPhong)
                     .HasName("PK__Loai_Pho__23021217A48C92C2");
+
 
                 entity.ToTable("Loai_Phong");
 
@@ -236,7 +240,7 @@ namespace HotelManagement.Models
                 entity.HasOne(d => d.MaLoaiPhongNavigation)
                     .WithMany(p => p.Phongs)
                     .HasForeignKey(d => d.MaLoaiPhong)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKPhong134689");
 
                 entity.HasOne(d => d.MaTrangThaiNavigation)

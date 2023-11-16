@@ -51,12 +51,11 @@ namespace HotelManagement.DataAccess
 
         public void removeLoaiPhong(string id)
         {
-            var rooms = context.Phongs.Where(p => p.MaLoaiPhong == id);
+            //khi xóa loaiphong thì tất cả các phòng thuộc loại phòng đó đều bị xóa
+            //do trong file context Phong có .Ondelete là cascade
 
-            context.RemoveRange(rooms);
-
-            context.Remove(context.LoaiPhongs.Where(lp => lp.MaLoaiPhong == id).FirstOrDefault());
-
+            var loaiphong = context.LoaiPhongs.Where( lp => lp.MaLoaiPhong == id).FirstOrDefault();
+            context.Remove(loaiphong);
             context.SaveChanges();
         }
 
@@ -108,6 +107,12 @@ namespace HotelManagement.DataAccess
             else lastId = orderPhong.MaOrderPhong.ToString();
             int number = int.Parse(Regex.Match(lastId, @"\d+").Value) + 1;
             return "MOP" + number;
+        }
+
+        public void updateTrangThaiPhong(Phong phongCanUpdateTrangThai)
+        {
+            context.Update(phongCanUpdateTrangThai);
+            context.SaveChanges();  
         }
     }
 }
