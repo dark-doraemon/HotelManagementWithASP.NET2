@@ -38,6 +38,12 @@ namespace HotelManagement.DataAccess
 
         string createOrderPhongId();
 
-        void updateTrangThaiPhong(Phong phongCanUpdateTrangThai);
+        void updateTrangThaiPhong(string maphong,string maTrangThai);
+
+        void addKhachHang(KhachHang kh);
+
+        void addOrderPhong(OrderPhong orderPhong);
+
+        void addOrderPhongDichVu(List<OrderPhongDichVu> orderphongdichvu);
     }
 }

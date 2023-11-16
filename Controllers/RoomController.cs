@@ -38,7 +38,7 @@ namespace HotelManagement.Controllers
             DateTime ngaydi,
             string maphong,
             string selectedServiceIds,
-            string selectedServices,
+            string servicePrice,
             string selectedQuantities)
         {
             Person person = new Person
@@ -61,8 +61,29 @@ namespace HotelManagement.Controllers
                 Person = person,
             };
 
+            List<string> madichvu = selectedServiceIds.Split(',').ToList();
+            List<int> soLuongMoiDichVu = selectedQuantities.Split(",").Select(int.Parse).ToList();
+            List<float> giaMoiDichVu = servicePrice.Split(",").Select(float.Parse).ToList();
 
+            List<OrderPhongDichVu> orderphongdichvu = new List<OrderPhongDichVu>();
+            for (int i = 0; i < madichvu.Count(); i++)
+            {
+                orderphongdichvu.Add(new OrderPhongDichVu
+                {
+                    MaOrderPhong = maorderphong,
+                    MaDichVu = madichvu[i],
+                    SoLuong = soLuongMoiDichVu[i],
+                    DonGia = giaMoiDichVu[i]
+                });
+            }
+            //đầu tiên add order phòng
+            repo.addOrderPhong(orderphong);
 
+            //tiếp theo add order phòng và danh sách dịch vụ của order phòng đó
+            repo.addOrderPhongDichVu(orderphongdichvu);
+
+            //cuối cùng update trạng thái phòng là đăng thuê
+            repo.updateTrangThaiPhong(maphong, "MTT2");
             return RedirectToAction("Index");
         }
        

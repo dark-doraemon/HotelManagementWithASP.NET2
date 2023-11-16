@@ -109,9 +109,40 @@ namespace HotelManagement.DataAccess
             return "MOP" + number;
         }
 
-        public void updateTrangThaiPhong(Phong phongCanUpdateTrangThai)
+        public void updateTrangThaiPhong(string maphong, string maTrangThai)
         {
-            context.Update(phongCanUpdateTrangThai);
+            Phong phongCanSuaTrangThai = context.Phongs.Where(p =>p.MaPhong == maphong).FirstOrDefault();
+            phongCanSuaTrangThai.MaTrangThai = maTrangThai;
+            context.Phongs.Update(phongCanSuaTrangThai);
+            context.SaveChanges();  
+        }
+
+        public void addKhachHang(KhachHang kh)
+        {
+            context.KhachHangs.Add(kh);
+            context.SaveChanges();
+        }
+
+
+        public void addOrderPhong(OrderPhong orderPhong)
+        {
+            //khi add orderPhong thi thông tin người order cũng được lưu tại vì trong orderPhong có Person 
+            context.OrderPhongs.Add(orderPhong);
+            context.SaveChanges();
+
+            KhachHang kh = new KhachHang
+            {
+                KhachHangId = orderPhong.PersonId,
+                KhachHangNavigation = orderPhong.Person
+            };
+
+            addKhachHang(kh);
+
+        }
+
+        public void addOrderPhongDichVu(List<OrderPhongDichVu> orderphongdichvu)
+        {
+            context.OrderPhongDichVus.AddRange(orderphongdichvu);
             context.SaveChanges();  
         }
     }

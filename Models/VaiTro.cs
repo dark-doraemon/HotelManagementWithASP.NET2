@@ -8,11 +8,12 @@ namespace HotelManagement.Models
         public VaiTro()
         {
             NhanViens = new HashSet<NhanVien>();
+
         }
+
 
         public string MaVaiTro { get; set; } = null!;
         public string? TenVaiTro { get; set; }
-
         public virtual ICollection<NhanVien> NhanViens { get; set; }
     }
 }

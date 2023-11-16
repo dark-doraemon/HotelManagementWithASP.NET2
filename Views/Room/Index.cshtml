@@ -140,7 +140,7 @@
                                                                         </tbody>
                                                                     </table>
                                                                     <input type="hidden" id="selectedServiceIds" name="selectedServiceIds" />
-                                                                    <input type="hidden" id="selectedServices" name="selectedServices" />
+                                                                    <input type="hidden" id="servicePrice" name="servicePrice" />
                                                                     <input type="hidden" id="selectedQuantities" name="selectedQuantities" />
                                                                     <div class="tongTien">Tổng tiền dịch vụ: 0</div>
                                                                     <div class="totalAll">Tổng tất cả: </div>
@@ -306,7 +306,7 @@
     function updateSelectedData(element) {
         var form = element.closest('.form-group');
         var serviceIds = [];
-        var selectedServices = [];
+        var servicePrice = [];
         var selectedQuantities = [];
 
         // Lặp qua các hàng để thu thập dịch vụ và số lượng đã chọn
@@ -318,12 +318,12 @@
             var madichvu = row.querySelector(".madichvu");
             if (checkbox.checked) {
                 serviceIds.push(madichvu.getAttribute("data-madichvu"));
-                selectedServices.push(checkbox.getAttribute("data-gia"));
+                servicePrice.push(checkbox.getAttribute("data-gia"));
                 selectedQuantities.push(quantity.value);
             }
         }
         form.querySelector("#selectedServiceIds").value = serviceIds.join(',');
-        form.querySelector("#selectedServices").value = selectedServices.join(',');
+        form.querySelector("#servicePrice").value = servicePrice.join(',');
         form.querySelector("#selectedQuantities").value = selectedQuantities.join(',');
     }
 
