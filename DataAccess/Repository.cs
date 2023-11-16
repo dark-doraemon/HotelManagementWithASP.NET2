@@ -98,8 +98,16 @@ namespace HotelManagement.DataAccess
             return context.Phongs.Where(p => p.MaTrangThai == trangthai);   
         }
 
-
         public IEnumerable<DichVu> getDichvu => context.DichVus;
 
+        public string createOrderPhongId()
+        {
+            var orderPhong = context.OrderPhongs.OrderByDescending(o => o.MaOrderPhong).FirstOrDefault();
+            string lastId;
+            if (orderPhong == null) lastId = "0";
+            else lastId = orderPhong.MaOrderPhong.ToString();
+            int number = int.Parse(Regex.Match(lastId, @"\d+").Value) + 1;
+            return "MOP" + number;
+        }
     }
 }

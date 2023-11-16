@@ -28,9 +28,42 @@ namespace HotelManagement.Controllers
             return View(treetable);
         }
 
-        public IActionResult datPhong()
+        
+        public IActionResult datPhongVaDichVu(string hoten,
+            int tuoi,
+            int gioitinh,
+            string cccd,
+            string sdt,
+            DateTime ngayden,
+            DateTime ngaydi,
+            string maphong,
+            string selectedServiceIds,
+            string selectedServices,
+            string selectedQuantities)
         {
-            return View();
+            Person person = new Person
+            {
+                PersonId = cccd,
+                HoTen = hoten,
+                Tuoi = tuoi,
+                GioiTinh = gioitinh,
+                Sdt = sdt,
+            };
+
+            string maorderphong = repo.createOrderPhongId();
+            OrderPhong orderphong = new OrderPhong
+            {
+                MaOrderPhong = maorderphong,
+                NgayDen = ngayden,
+                NgayDi = ngaydi,
+                PersonId = cccd,
+                MaPhong = maphong
+            };
+
+            
+            OrderPhongDichVu orderphongdichvu = new OrderPhongDichVu();
+
+            return RedirectToAction("Index");
         }
        
     }

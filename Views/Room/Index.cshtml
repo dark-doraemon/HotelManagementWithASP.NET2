@@ -34,20 +34,20 @@
                             @{
                                 if (phong.MaLoaiPhongNavigation.MaLoaiPhong == "MLP1")
                                 {
-                                        <img src="~/pictures/phongdon.png" height="200" class="card-img-top" alt="">
+                                    <img src="~/pictures/phongdon.png" height="200" class="card-img-top" alt="">
                                 }
                                 else if (phong.MaLoaiPhongNavigation.MaLoaiPhong == "MLP2")
                                 {
-                                        <img src="~/pictures/phongdoi.png" height="200" class="card-img-top" alt="">
+                                    <img src="~/pictures/phongdoi.png" height="200" class="card-img-top" alt="">
 
                                 }
                                 else if (phong.MaLoaiPhongNavigation.MaLoaiPhong == "MLP3")
                                 {
-                                        <img src="~/pictures/phonggiadinh.jpg" height="200" class="card-img-top" alt="">
+                                    <img src="~/pictures/phonggiadinh.jpg" height="200" class="card-img-top" alt="">
                                 }
                                 else
                                 {
-                                        <img src="~/pictures/phongvip.jpg" height="200" class="card-img-top" alt="">
+                                    <img src="~/pictures/phongvip.jpg" height="200" class="card-img-top" alt="">
                                 }
                             }
                             <div class="card-body">
@@ -58,165 +58,168 @@
                                     @{
                                         if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT1")//phòng trống
                                         {
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
-                                                    Đặt phòng
-                                                </button>
-                                                <!-- The Modal -->
-                                                <div class="modal fade " id="@phong.MaPhong">
-                                                    <div class="modal-dialog modal-dialog-centered modal-xl">
-                                                        <div class="modal-content">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
+                                                Đặt phòng
+                                            </button>
+                                            <!-- The Modal -->
+                                            <div class="modal fade " id="@phong.MaPhong">
+                                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                    <div class="modal-content">
 
-                                                            <!-- Modal Header -->
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Đặt phòng - @phong.MaLoaiPhongNavigation.TenLoaiPhong - @phong.TenPhong - @String.Format("{0:N0}",phong.MaLoaiPhongNavigation.GiaPhong)</h4>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                            </div>
+                                                        <!-- Modal Header -->
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Đặt phòng - @phong.MaLoaiPhongNavigation.TenLoaiPhong - @phong.TenPhong - @String.Format("{0:N0}",phong.MaLoaiPhongNavigation.GiaPhong)</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                        </div>
 
-                                                            <!-- Modal body -->
-                                                            <div class="modal-body row ">
+                                                        <!-- Modal body -->
+                                                        <div class="modal-body row ">
+                                                            <form method="post" class="form-group row" asp-controller="Room" asp-action="datPhongVaDichVu" id="myForm">
                                                                 <div class="col-6 p-5" style="border:1px solid black">
                                                                     <div class="text-center"><b>Thông tin khách hàng</b></div>
-                                                                    <form method="post" class="form-group" asp>
-                                                                        <label class="form-label">Họ và tên</label>
-                                                                        <input class="form-control" />
+                                                                    <label class="form-label">Họ và tên</label>
+                                                                    <input class="form-control" name="hoten" />
 
-                                                                        <label class="form-label">Tuổi</label>
-                                                                        <input class="form-control" type="number" />
+                                                                    <label class="form-label">Tuổi</label>
+                                                                    <input class="form-control" type="number" name="tuoi" />
 
-                                                                        <label class="form-label">Giới tính</label>
-                                                                        <select class="form-select">
-                                                                            <option value="0">Nam</option>
-                                                                            <option value="1">Nữ</option>
-                                                                        </select>
+                                                                    <label class="form-label">Giới tính</label>
+                                                                    <select class="form-select" name="gioitinh">
+                                                                        <option value="0">Nam</option>
+                                                                        <option value="1">Nữ</option>
+                                                                    </select>
 
-                                                                        <label class="form-label">CCCD</label>
-                                                                        <input class="form-control">
+                                                                    <label class="form-label">CCCD</label>
+                                                                    <input class="form-control" name="cccd">
 
-                                                                        <label class="form-label">SĐT</label>
-                                                                        <input class="form-control">
+                                                                    <label class="form-label">SĐT</label>
+                                                                    <input class="form-control" name="sdt">
 
-                                                                        <label class="form-label">Ngày đến:</label>
-                                                                        <input class="dayIn" type="date" oninput="tinhNgay(this)">
+                                                                    <label class="form-label">Ngày đến:</label>
+                                                                    <input class="dayIn" type="date" oninput="tinhNgay(this)" name="ngayden">
 
-                                                                        <label class="form-label">Ngày đi</label>
-                                                                        <input class="dayOut" type="date" oninput="tinhNgay(this)"> <br>
-                                                                        <div class="totalDays">Tổng ngày thuê: </div>
-                                                                        <div class="tongTienPhong">Tổng tiền phòng: </div>
-                                                                    </form>
+                                                                    <label class="form-label">Ngày đi</label>
+                                                                    <input class="dayOut" type="date" oninput="tinhNgay(this)" name="ngaydi"> <br>
 
+                                                                    <input type="hidden" value="@phong.MaPhong" name="maphong">
+                                                                    <div class="totalDays">Tổng ngày thuê: </div>
+                                                                    <div class="tongTienPhong">Tổng tiền phòng: </div>
                                                                 </div>
 
                                                                 <div class="col-6 p-5" style="border:1px solid black">
                                                                     <div class="text-center"><b>Dịch vụ</b></div>
-                                                                    <form method="post" class="form-group">
-                                                                        <label class="form-label">Chọn dịch vụ</label>
+                                                                    <table class="table" id="dichVuTable">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Chọn</th>
+                                                                                <th>Tên dịch vụ</th>
+                                                                                <th>Giá dịch vụ</th>
+                                                                                <th>Số lượng</th>
+                                                                                <th>Tổng tiền</th>
+                                                                            </tr>
+                                                                        </thead>
 
-                                                                        <table class="table" id="dichVuTable">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Chọn</th>
-                                                                                    <th>Tên dịch vụ</th>
-                                                                                    <th>Giá dịch vụ</th>
-                                                                                    <th>Số lượng</th>
-                                                                                    <th>Tổng tiền</th>
-                                                                                </tr>
-                                                                            </thead>
-
-                                                                            <tbody>
-                                                                                @{
+                                                                        <tbody>
+                                                                            @{
                                                                                 foreach (var dichvu in Model.dichvus)
                                                                                 {
-                                                                                            <tr>
-                                                                                                <td>
-                                                                                                    <input style=" transform: scale(2.5); " type="checkbox" class="checkbox" data-gia="@dichvu.GiaDichVu" onclick="updateTotal(this)">
-                                                                                                </td>
-                                                                                                <td>@dichvu.TenDichVu</td>
-                                                                                                <td>@String.Format("{0:N0}",dichvu.GiaDichVu)</td>
-                                                                                                <td>
-                                                                                                    <input style="width:50px" class="form-control quantity" data-gia="@dichvu.GiaDichVu" oninput="updateTotal(this)" />
-                                                                                                </td>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <input style=" transform: scale(2.5); " type="checkbox" class="checkbox" data-gia="@dichvu.GiaDichVu" onclick="updateTotal(this)">
+                                                                                        </td>
+                                                                                        <td class="madichvu" data-madichvu ="@dichvu.MaDichVu">@dichvu.TenDichVu</td>
+                                                                                        <td>@String.Format("{0:N0}",dichvu.GiaDichVu)</td>
+                                                                                        <td>
+                                                                                            <input style="width:50px" class="form-control quantity" data-gia="@dichvu.GiaDichVu" oninput="updateTotal(this)" />
+                                                                                        </td>
 
-                                                                                                <td class="total"></td>
-                                                                                            </tr>
+                                                                                        <td class="total"></td>
+                                                                                    </tr>
                                                                                 }
-                                                                                }
-                                                                            </tbody>
-                                                                        </table>
-                                                                        <div class="tongTien">Tổng tiền dịch vụ: 0</div>
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <input type="hidden" id="selectedServiceIds" name="selectedServiceIds" />
+                                                                    <input type="hidden" id="selectedServices" name="selectedServices" />
+                                                                    <input type="hidden" id="selectedQuantities" name="selectedQuantities" />
+                                                                    <div class="tongTien">Tổng tiền dịch vụ: 0</div>
                                                                     <div class="totalAll">Tổng tất cả: </div>
-
-                                                                    </form>
                                                                 </div>
-                                                            </div>
 
-                                                            <!-- Modal footer -->
+                                                                <!-- Modal footer -->
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" onclick="submitForm(this)">Xác nhận</button>
+                                                                </div>
+                                                            </form>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Xác nhận</button>
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="closeForm()">Close</button>
                                                             </div>
-
                                                         </div>
+
+
                                                     </div>
                                                 </div>
+                                            </div>
                                         }
                                         else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT2")
                                         {
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
-                                                    Thanh toán
-                                                </button>
-                                                <!-- The Modal -->
-                                                <div class="modal" id="@phong.MaPhong">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
+                                                Thanh toán
+                                            </button>
+                                            <!-- The Modal -->
+                                            <div class="modal" id="@phong.MaPhong">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
 
-                                                            <!-- Modal Header -->
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Thanh toán</h4>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                            </div>
-
-                                                            <!-- Modal body -->
-                                                            <div class="modal-body">
-                                                                Modal body..
-                                                            </div>
-
-                                                            <!-- Modal footer -->
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                            </div>
-
+                                                        <!-- Modal Header -->
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Thanh toán</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
+
+                                                        <!-- Modal body -->
+                                                        <div class="modal-body">
+                                                            Modal body..
+                                                        </div>
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+
                                                     </div>
                                                 </div>
+                                            </div>
                                         }
                                         else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT3")
                                         {
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
-                                                    Xác nhận
-                                                </button>
-                                                <!-- The Modal -->
-                                                <div class="modal" id="@phong.MaPhong">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
+                                                Xác nhận
+                                            </button>
+                                            <!-- The Modal -->
+                                            <div class="modal" id="@phong.MaPhong">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
 
-                                                            <!-- Modal Header -->
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Xác nhận</h4>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                            </div>
-
-                                                            <!-- Modal body -->
-                                                            <div class="modal-body">
-                                                                Modal body..
-                                                            </div>
-
-                                                            <!-- Modal footer -->
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                            </div>
-
+                                                        <!-- Modal Header -->
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Xác nhận</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
+
+                                                        <!-- Modal body -->
+                                                        <div class="modal-body">
+                                                            Modal body..
+                                                        </div>
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+
                                                     </div>
                                                 </div>
+                                            </div>
                                         }
                                     }
                                 </div>
@@ -247,19 +250,17 @@
         form.querySelector(".totalDays").textContent = "Tổng ngày thuê: " + totalDays
         tongTienPhong = totalDays * document.querySelector(".tienPhong").value
         form.querySelector(".tongTienPhong").textContent = "Tổng tiền phòng: " + tongTienPhong.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-        
-        element_cua_ham_updateTotal.closest('.form-group').querySelector(".totalAll").textContent = 
-        "Tổng tất cả: " + (tongTienPhong + g_tongDichVu).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+
+        form.querySelector(".totalAll").textContent =
+            "Tổng tất cả: " + (tongTienPhong + g_tongDichVu).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     }
 
     // Hàm cập nhật tổng tiền
     function updateTotal(element) {
-        element_cua_ham_updateTotal = element;
         var totalDichVu = 0;// tổng chung các dịch vụ đã chọn
 
 
         var form = element.closest('.form-group');
-
 
         // Duyệt qua mỗi dòng trong bảng
         var tableRows = form.querySelectorAll("#dichVuTable tbody tr");
@@ -291,11 +292,44 @@
         form.querySelector(".tongTien").textContent = "Tổng tiền dịch vụ: " + totalDichVu.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
         form.querySelector(".totalAll").textContent = "Tổng tất cả: " + (tongTienPhong + totalDichVu).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
         g_tongDichVu = totalDichVu;
-
-        var form = element.closest('.form-group');
     }
 
-    
+    function submitForm(element) {
+        console.log('submitForm')
+        // Cập nhật các trường input ẩn trước khi nộp biểu mẫu
+        updateSelectedData(element);
 
+        // Nộp biểu mẫu
+        document.getElementById("myForm").submit();
+    }
+
+    function updateSelectedData(element) {
+        var form = element.closest('.form-group');
+        var serviceIds = [];
+        var selectedServices = [];
+        var selectedQuantities = [];
+
+        // Lặp qua các hàng để thu thập dịch vụ và số lượng đã chọn
+        var rows = form.querySelectorAll("#dichVuTable tbody tr");
+
+        for (var row of rows) {
+            var checkbox = row.querySelector(".checkbox");
+            var quantity = row.querySelector(".quantity");
+            var madichvu = row.querySelector(".madichvu");
+            if (checkbox.checked) {
+                serviceIds.push(madichvu.getAttribute("data-madichvu"));
+                selectedServices.push(checkbox.getAttribute("data-gia"));
+                selectedQuantities.push(quantity.value);
+            }
+        }
+        form.querySelector("#selectedServiceIds").value = serviceIds.join(',');
+        form.querySelector("#selectedServices").value = selectedServices.join(',');
+        form.querySelector("#selectedQuantities").value = selectedQuantities.join(',');
+    }
+
+    function closeForm() {
+        var form = document.getElementById("myForm");
+        form.reset(); // Đặt lại giá trị của tất cả các trường input trong form
+    }
 
 </script>
