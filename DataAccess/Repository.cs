@@ -182,5 +182,27 @@ namespace HotelManagement.DataAccess
 
         }
 
+        public string createHoaDonId()
+        {
+            var hoadon = context.HoaDons.OrderByDescending(o => o.MaOrderPhong).FirstOrDefault();
+            string lastId;
+            if (hoadon == null) lastId = "0";
+            else lastId = hoadon.MaHoaDon.ToString();
+            int number = int.Parse(Regex.Match(lastId, @"\d+").Value) + 1;
+            return "HD" + number;
+        }
+
+        public bool addHoaDon(HoaDon hoaDon)
+        {
+            var check = context.HoaDons.Where(hd => hd.MaOrderPhong == hoaDon.MaOrderPhong).Any();
+            if (check) return false;
+            else
+            {
+                context.HoaDons.Add(hoaDon);
+                var checkSave = context.SaveChanges();
+                if (checkSave !=0)  return true;
+                else return false;
+            }
+        }
     }
 }

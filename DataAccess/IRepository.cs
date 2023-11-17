@@ -51,5 +51,9 @@ namespace HotelManagement.DataAccess
         void phongUpdateOrderDatPhong(Phong phongOrder);
 
         IEnumerable<OrderPhong> getOrderPhongByMaPhong(string id);
+
+        string createHoaDonId();
+
+        bool addHoaDon(HoaDon hoaDon);
     }
 }

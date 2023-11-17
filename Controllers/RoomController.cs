@@ -93,11 +93,37 @@ namespace HotelManagement.Controllers
             return RedirectToAction("Index","Room",new { maorder = maorderphong });
         }
 
-        [Route("[controller]/[action]/{maphong}")]
-        public IActionResult thanhToan(string maphong)
+        [Route("[controller]/[action]/{maphong}/{successOrFail?}")]
+        public IActionResult thanhToan(string maphong,string successOrFail = "0")
         {
             OrderPhong order = repo.getOrderPhongByMaPhong(maphong).FirstOrDefault();
-            return View("thanhToan",order);
+            return View("thanhToan",new OrderPhongVaTrangThai { orderPhong = order, trangthai = successOrFail } );
+        }
+
+        [Route("[controller]/[action]/maorder")]
+        public IActionResult addHoadon(string maorder,string tongtien,string maphong)
+        {
+            HoaDon hd = new HoaDon
+            {
+                MaHoaDon = repo.createHoaDonId(),
+                NgayIn = DateTime.Now,
+                TongTien = float.Parse(tongtien),
+                MaOrderPhong = maorder,
+            };
+
+            bool checkHoaDonOrderPHong = repo.addHoaDon(hd);
+            if (checkHoaDonOrderPHong)
+            {
+                //sao khi thanh toán thì cập nhật trạng thái phòng lại
+                repo.updateTrangThaiPhong(maphong, "MTT1");
+
+                return RedirectToAction("thanhToan", "Room", new { maphong = maphong, successOrFail = "1" });
+            }
+            else
+            {
+                return RedirectToAction("thanhToan", "Room", new { maphong = maphong, successOrFail = "2" });
+            }
+
         }
     }
 
@@ -111,6 +137,15 @@ namespace HotelManagement.Controllers
         public IEnumerable<Phong> phongs { get; set; }
         public IEnumerable<TrangThaiPhong> trangthaiphongs { get; set; }
         public IEnumerable<DichVu> dichvus { get; set; }
+    }
+
+    public class OrderPhongVaTrangThai
+    {
+        public OrderPhongVaTrangThai() { }
+
+        public OrderPhong orderPhong { get; set; }
+
+        public string trangthai { get; set; }
     }
 
 }
