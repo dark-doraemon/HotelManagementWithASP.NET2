@@ -1,167 +1,108 @@
-﻿@model OrderPhongVaTrangThai
-<h1 class="text-center bg-primary">Thanh Toán</h1>
+﻿@model OrderPhong
 @{
-    if(Model.trangthai == "1")
+    if (Model == null)
     {
-        <h1 class="text-center text-primary">Thành công</h1>
+        <h1 class="text-center bg-primary">Phòng thanh toán thành công</h1>
     }
-    else if(Model.trangthai == "2")
+    else
     {
-        <h1 class="text-center text-primary">Đã thanh toán</h1>
-    }
-}
-<div class="container ">
-    <div class="row">
-        @{
-            float tienphong = Model.orderPhong.MaPhongNavigation.MaLoaiPhongNavigation.GiaPhong;
-            <h2>@Model.orderPhong.MaPhongNavigation.TenPhong - @String.Format("{0:N0}", @Model.orderPhong.MaPhongNavigation.MaLoaiPhongNavigation.GiaPhong)</h2>
-
-            DateTime ngayden = Convert.ToDateTime(Model.orderPhong.NgayDen);
-            DateTime ngaydi = Convert.ToDateTime(Model.orderPhong.NgayDi);
-            int totalDays = Convert.ToInt32((ngaydi - ngayden).TotalDays);
-            float tongtienphong = totalDays * tienphong;
-            <div class="col-6">
-                <h2>Ngày đến : @ngayden.ToString("dd/MM/yyyy")</h2>
-                <h2>Ngày đi : @ngaydi.ToString("dd/MM/yyyy")</h2>
-            </div>
-
-            <div class="col-6">
-                <h2>Số ngày : @totalDays</h2>
-                <h2>Tổng tiền phòng : @(String.Format("{0:N0}", tongtienphong))</h2>
-            </div>
-
-        }
-        <div class="col-6 p-5" style="border: 1px solid black">
-            <form class="form-group">
-                <label class="form-label">Họ và tên</label>
-                <input class="form-control" disabled value="@Model.orderPhong.Person.HoTen" />
-
-                <label class="form-label">Tuổi</label>
-                <input class="form-control" disabled value="@Model.orderPhong.Person.Tuoi" />
-
-                <label class="form-label">Giới tính</label>
-                <input class="form-control" disabled value="@(@Model.orderPhong.Person.GioiTinh == 0 ? "Nam" : "Nữ")" />
-
-                <label class="form-label">CCCD</label>
-                <input class="form-control" disabled value="@Model.orderPhong.Person.PersonId" />
-
-                <label class="form-label">SĐT</label>
-                <input class="form-control" disabled value="@Model.orderPhong.Person.Sdt" />
-            </form>
-        </div>
-        <div class="col-6" style="border: 1px solid black">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Tên dịch vụ</th>
-                        <th>Giá dịch vụ</th>
-                        <th>Số lượng</th>
-                        <th>Tổng</th>
-                    </tr>
-                </thead>
+        <div class="container ">
+            <div class="row">
                 @{
-                    int i = 1;
-                    float tongtiendichvu = 0;
-                    foreach (var dv in Model.orderPhong.OrderPhongDichVus)
-                    {
-                        tongtiendichvu += Convert.ToInt32((dv.SoLuong * dv.DonGia));
-                        <tr>
-                            <th>@(i++)</th>
-                            <th>@dv.MaDichVuNavigation.TenDichVu</th>
-                            <th>@dv.SoLuong</th>
-                            <th>@String.Format("{0:N0}",@dv.DonGia)</th>
-                            <th>@String.Format("{0:N0}",(dv.SoLuong * dv.DonGia))</th>
-                        </tr>
-                    }
-                    <tr>
-                        <th class="text-center" colspan="4">Tổng tiền dịch vụ</th>
-                        <th>@String.Format("{0:N0}",Math.Floor(tongtiendichvu))</th>
-                    </tr>
+                    float tienphong = Model.MaPhongNavigation.MaLoaiPhongNavigation.GiaPhong;
+                    <h2>@Model.MaPhongNavigation.TenPhong - @String.Format("{0:N0}", @Model.MaPhongNavigation.MaLoaiPhongNavigation.GiaPhong)</h2>
 
-                    <tr>
-                        <th class="text-center" colspan="4">Tổng tiền phòng</th>
-                        <th>@String.Format("{0:N0}",tongtienphong)</th>
-                    </tr>
+                    DateTime ngayden = Convert.ToDateTime(Model.NgayDen);
+                    DateTime ngaydi = Convert.ToDateTime(Model.NgayDi);
+                    int totalDays = Convert.ToInt32((ngaydi - ngayden).TotalDays);
+                    float tongtienphong = totalDays * tienphong;
+                    <div class="col-6">
+                        <h2>Ngày đến : @ngayden.ToString("dd/MM/yyyy")</h2>
+                        <h2>Ngày đi : @ngaydi.ToString("dd/MM/yyyy")</h2>
+                    </div>
 
-                    <tr>
-                        <th class="text-center" colspan="4">
-                            Tổng cộng
-                        </th>
-
-                        @{
-                            float tongtientatca = tongtienphong + tongtiendichvu;
-                        }
-                        <th>@String.Format("{0:N0}",tongtientatca)</th>
-                    </tr>
-
+                    <div class="col-6">
+                        <h2>Số ngày : @totalDays</h2>
+                        <h2>Tổng tiền phòng : @(String.Format("{0:N0}", tongtienphong))</h2>
+                    </div>
 
                 }
-            </table>
-            <div class="float-end mt-1">
-                <a class="btn btn-dark">In hóa đơn</a>
-                <a class="btn btn-primary" asp-action="addHoadon" asp-route-maorder="@Model.orderPhong.MaOrderPhong"
-                   asp-route-tongtien="@tongtientatca"
-                   asp-route-maphong="@Model.orderPhong.MaPhong"
-                   >Xác nhận</a>
+                <div class="col-6 p-5" style="border: 1px solid black">
+                    <form class="form-group">
+                        <label class="form-label">Họ và tên</label>
+                        <input class="form-control" disabled value="@Model.Person.HoTen" />
 
-                <!-- The Modal -->
-                @* @{
-                    if (Model.trangthai == true)
-                    {
-                        <div class="modal" id="myModal">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
+                        <label class="form-label">Tuổi</label>
+                        <input class="form-control" disabled value="@Model.Person.Tuoi" />
 
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Thông báo</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
+                        <label class="form-label">Giới tính</label>
+                        <input class="form-control" disabled value="@(@Model.Person.GioiTinh == 0 ? "Nam" : "Nữ")" />
 
-                                    <!-- Modal body -->
-                                    <div class="modal-body">
-                                        Thành công
-                                    </div>
+                        <label class="form-label">CCCD</label>
+                        <input class="form-control" disabled value="@Model.Person.PersonId" />
 
-                                    <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                    </div>
+                        <label class="form-label">SĐT</label>
+                        <input class="form-control" disabled value="@Model.Person.Sdt" />
+                    </form>
+                </div>
+                <div class="col-6" style="border: 1px solid black">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên dịch vụ</th>
+                                <th>Giá dịch vụ</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                            </tr>
+                        </thead>
+                        @{
+                            int i = 1;
+                            float tongtiendichvu = 0;
+                            foreach (var dv in Model.OrderPhongDichVus)
+                            {
+                                tongtiendichvu += Convert.ToInt32((dv.SoLuong * dv.DonGia));
+                                <tr>
+                                    <th>@(i++)</th>
+                                    <th>@dv.MaDichVuNavigation.TenDichVu</th>
+                                    <th>@dv.SoLuong</th>
+                                    <th>@String.Format("{0:N0}",@dv.DonGia)</th>
+                                    <th>@String.Format("{0:N0}",(dv.SoLuong * dv.DonGia))</th>
+                                </tr>
+                            }
+                            <tr>
+                                <th class="text-center" colspan="4">Tổng tiền dịch vụ</th>
+                                <th>@String.Format("{0:N0}",Math.Floor(tongtiendichvu))</th>
+                            </tr>
 
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="modal" id="myModal">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
+                            <tr>
+                                <th class="text-center" colspan="4">Tổng tiền phòng</th>
+                                <th>@String.Format("{0:N0}",tongtienphong)</th>
+                            </tr>
 
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Thông báo</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
+                            <tr>
+                                <th class="text-center" colspan="4">
+                                    Tổng cộng
+                                </th>
 
-                                    <!-- Modal body -->
-                                    <div class="modal-body">
-                                        Thất bại
-                                    </div>
+                                @{
+                                    float tongtientatca = tongtienphong + tongtiendichvu;
+                                }
+                                <th>@String.Format("{0:N0}",tongtientatca)</th>
+                            </tr>
 
-                                    <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
+                        }
+                    </table>
+                    <div class="float-end mt-1">
+                        <a class="btn btn-dark">In hóa đơn</a>
+                        <a class="btn btn-primary" asp-action="addHoadon" asp-route-maorder="@Model.MaOrderPhong"
+                           asp-route-tongtien="@tongtientatca"
+                           asp-route-maphong="@Model.MaPhong">Xác nhận</a>
 
-                    }
-                } *@
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    }
+}

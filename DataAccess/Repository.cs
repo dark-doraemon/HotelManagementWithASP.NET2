@@ -204,5 +204,14 @@ namespace HotelManagement.DataAccess
                 else return false;
             }
         }
+
+        public void updateTrangThaiThanhtoanOrderPhong(string orderPhongId)
+        {
+            OrderPhong od = context.OrderPhongs.FirstOrDefault(od => od.MaOrderPhong == orderPhongId);
+            od.TrangThaiThanhToan = 1; // cập nhật lại là đã thanh toán
+            context.OrderPhongs.Update(od);
+            context.SaveChanges();  
+
+        }
     }
 }

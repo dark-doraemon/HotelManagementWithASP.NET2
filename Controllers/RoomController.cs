@@ -17,7 +17,7 @@ namespace HotelManagement.Controllers
         LoaiPhongPhongTrangThaiPhong treetable = new LoaiPhongPhongTrangThaiPhong();
         [HttpGet]
         [HttpPost]
-        public IActionResult Index(string loaiphong = null,string trangthaiphong = null)
+        public IActionResult Index(string loaiphong = null, string trangthaiphong = null)
         {
             if (loaiphong == null && trangthaiphong == null) treetable.phongs = repo.getPhongByLoaiPhong(null);
             else if (loaiphong == null) treetable.phongs = repo.getPhongByMaTrangThai(trangthaiphong);
@@ -29,7 +29,7 @@ namespace HotelManagement.Controllers
             return View(treetable);
         }
 
-        
+
         public IActionResult datPhongVaDichVu(string hoten,
             int tuoi,
             int gioitinh,
@@ -60,48 +60,54 @@ namespace HotelManagement.Controllers
                 PersonId = cccd,
                 MaPhong = maphong,
                 Person = person,
+                TrangThaiThanhToan = 0,
                 MaPhongNavigation = repo.getPhongByMaPhong(maphong)
             };
 
 
-           
-
-            List<string> madichvu = selectedServiceIds.Split(',').ToList();
-            List<int> soLuongMoiDichVu = selectedQuantities.Split(",").Select(int.Parse).ToList();
-            List<float> giaMoiDichVu = servicePrice.Split(",").Select(float.Parse).ToList();
-
-            List<OrderPhongDichVu> orderphongdichvu = new List<OrderPhongDichVu>();
-            for (int i = 0; i < madichvu.Count(); i++)
-            {
-                orderphongdichvu.Add(new OrderPhongDichVu
-                {
-                    MaOrderPhong = maorderphong,
-                    MaDichVu = madichvu[i],
-                    SoLuong = soLuongMoiDichVu[i],
-                    DonGia = giaMoiDichVu[i]
-                });
-            }
             //đầu tiên add order phòng
             repo.addOrderPhong(orderphong);
 
             //tiếp theo add order phòng và danh sách dịch vụ của order phòng đó
-            repo.addOrderPhongDichVu(orderphongdichvu);
+            if (selectedServiceIds != null && selectedQuantities != null && servicePrice != null)
+            {
+                List<string> madichvu = selectedServiceIds.Split(',').ToList();
+                List<int> soLuongMoiDichVu = selectedQuantities.Split(",").Select(int.Parse).ToList();
+                List<float> giaMoiDichVu = servicePrice.Split(",").Select(float.Parse).ToList();
+
+                List<OrderPhongDichVu> orderphongdichvu = new List<OrderPhongDichVu>();
+                for (int i = 0; i < madichvu.Count(); i++)
+                {
+                    orderphongdichvu.Add(new OrderPhongDichVu
+                    {
+                        MaOrderPhong = maorderphong,
+                        MaDichVu = madichvu[i],
+                        SoLuong = soLuongMoiDichVu[i],
+                        DonGia = giaMoiDichVu[i]
+                    });
+                }
+
+                repo.addOrderPhongDichVu(orderphongdichvu);
+            }
+
 
 
             //cuối cùng update trạng thái phòng là đăng thuê
             repo.updateTrangThaiPhong(maphong, "MTT2");
-            return RedirectToAction("Index","Room",new { maorder = maorderphong });
+            return RedirectToAction("Index", "Room", new { maorder = maorderphong });
         }
 
         [Route("[controller]/[action]/{maphong}/{successOrFail?}")]
-        public IActionResult thanhToan(string maphong,string successOrFail = "0")
+        public IActionResult thanhToan(string maphong, string successOrFail = "0")
         {
-            OrderPhong order = repo.getOrderPhongByMaPhong(maphong).FirstOrDefault();
-            return View("thanhToan",new OrderPhongVaTrangThai { orderPhong = order, trangthai = successOrFail } );
+            //TrangThaiThanhToan == 0 : chưa thanh toán
+            //TrangThaiThanhToan == 1: đã thanh toán
+            OrderPhong order = repo.getOrderPhongByMaPhong(maphong).FirstOrDefault(od => od.TrangThaiThanhToan == 0);
+            return View("thanhToan",order);
         }
 
         [Route("[controller]/[action]/maorder")]
-        public IActionResult addHoadon(string maorder,string tongtien,string maphong)
+        public IActionResult addHoadon(string maorder, string tongtien, string maphong)
         {
             HoaDon hd = new HoaDon
             {
@@ -117,11 +123,14 @@ namespace HotelManagement.Controllers
                 //sao khi thanh toán thì cập nhật trạng thái phòng lại
                 repo.updateTrangThaiPhong(maphong, "MTT1");
 
-                return RedirectToAction("thanhToan", "Room", new { maphong = maphong, successOrFail = "1" });
+                //cập nhật lại trạng thái thanh toán của order phòng
+                repo.updateTrangThaiThanhtoanOrderPhong(maorder);
+
+                return RedirectToAction("thanhToan", "Room", new { maphong = maphong});
             }
             else
             {
-                return RedirectToAction("thanhToan", "Room", new { maphong = maphong, successOrFail = "2" });
+                return RedirectToAction("thanhToan", "Room", new { maphong = maphong});
             }
 
         }
@@ -131,21 +140,12 @@ namespace HotelManagement.Controllers
     {
         public LoaiPhongPhongTrangThaiPhong()
         {
-            
+
         }
-        public IEnumerable<LoaiPhong> loaiphongs { get; set; }   
+        public IEnumerable<LoaiPhong> loaiphongs { get; set; }
         public IEnumerable<Phong> phongs { get; set; }
         public IEnumerable<TrangThaiPhong> trangthaiphongs { get; set; }
         public IEnumerable<DichVu> dichvus { get; set; }
-    }
-
-    public class OrderPhongVaTrangThai
-    {
-        public OrderPhongVaTrangThai() { }
-
-        public OrderPhong orderPhong { get; set; }
-
-        public string trangthai { get; set; }
     }
 
 }

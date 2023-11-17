@@ -156,6 +156,8 @@ namespace HotelManagement.Models
 
                 entity.Property(e => e.NgayDi).HasColumnType("datetime");
 
+                //entity.Property(e => e.TrangThaiThanhToan).HasColumnType("int");
+
                 entity.Property(e => e.PersonId)
                     .HasMaxLength(255)
                     .HasColumnName("PersonID");

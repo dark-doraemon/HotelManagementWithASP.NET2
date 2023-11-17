@@ -54,6 +54,10 @@ namespace HotelManagement.DataAccess
 
         string createHoaDonId();
 
+        void updateTrangThaiThanhtoanOrderPhong(string orderPhongId);
+
         bool addHoaDon(HoaDon hoaDon);
+
+
     }
 }
