@@ -19,7 +19,7 @@ namespace HotelManagement.Controllers
         public IActionResult QLPhong(string id)
         {
             var loaiphong = repo.getLoaiPhong.ToList();
-            var phong = repo.getPhong(id).ToList();
+            var phong = repo.getPhongByLoaiPhong(id).ToList();
             var trangthaiphong = repo.getTrangThaiPhong.ToList();
             return View(new LoaiPhongAndPhong { lp = loaiphong, p = phong ,ttp = trangthaiphong});
         }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using HotelManagement.Models.Authentication;
 using HotelManagement.DataAccess;
 using HotelManagement.Models;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace HotelManagement.Controllers
 {
@@ -18,9 +19,9 @@ namespace HotelManagement.Controllers
         [HttpPost]
         public IActionResult Index(string loaiphong = null,string trangthaiphong = null)
         {
-            if (loaiphong == null && trangthaiphong == null) treetable.phongs = repo.getPhong(null);
+            if (loaiphong == null && trangthaiphong == null) treetable.phongs = repo.getPhongByLoaiPhong(null);
             else if (loaiphong == null) treetable.phongs = repo.getPhongByMaTrangThai(trangthaiphong);
-            else if (trangthaiphong == null) treetable.phongs = repo.getPhong(loaiphong);
+            else if (trangthaiphong == null) treetable.phongs = repo.getPhongByLoaiPhong(loaiphong);
 
             treetable.trangthaiphongs = repo.getTrangThaiPhong;
             treetable.loaiphongs = repo.getLoaiPhong;
@@ -59,7 +60,11 @@ namespace HotelManagement.Controllers
                 PersonId = cccd,
                 MaPhong = maphong,
                 Person = person,
+                MaPhongNavigation = repo.getPhongByMaPhong(maphong)
             };
+
+
+           
 
             List<string> madichvu = selectedServiceIds.Split(',').ToList();
             List<int> soLuongMoiDichVu = selectedQuantities.Split(",").Select(int.Parse).ToList();
@@ -82,11 +87,18 @@ namespace HotelManagement.Controllers
             //tiếp theo add order phòng và danh sách dịch vụ của order phòng đó
             repo.addOrderPhongDichVu(orderphongdichvu);
 
+
             //cuối cùng update trạng thái phòng là đăng thuê
             repo.updateTrangThaiPhong(maphong, "MTT2");
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Room",new { maorder = maorderphong });
         }
-       
+
+        [Route("[controller]/[action]/{maphong}")]
+        public IActionResult thanhToan(string maphong)
+        {
+            OrderPhong order = repo.getOrderPhongByMaPhong(maphong).FirstOrDefault();
+            return View("thanhToan",order);
+        }
     }
 
     public class LoaiPhongPhongTrangThaiPhong

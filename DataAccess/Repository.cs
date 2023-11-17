@@ -1,4 +1,6 @@
 ﻿using HotelManagement.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using System.Transactions;
 
@@ -43,7 +45,7 @@ namespace HotelManagement.DataAccess
 
         public IEnumerable<LoaiPhong> getLoaiPhong => context.LoaiPhongs;
 
-        public IEnumerable<Phong> getPhong(string id)
+        public IEnumerable<Phong> getPhongByLoaiPhong(string id)
         {
             if (id == null) return context.Phongs;
             return context.Phongs.Where(p => p.MaLoaiPhong == id);
@@ -99,6 +101,7 @@ namespace HotelManagement.DataAccess
 
         public IEnumerable<DichVu> getDichvu => context.DichVus;
 
+
         public string createOrderPhongId()
         {
             var orderPhong = context.OrderPhongs.OrderByDescending(o => o.MaOrderPhong).FirstOrDefault();
@@ -145,5 +148,39 @@ namespace HotelManagement.DataAccess
             context.OrderPhongDichVus.AddRange(orderphongdichvu);
             context.SaveChanges();  
         }
+        public Phong getPhongByMaPhong(string id)
+        {
+            return context.Phongs.Where(p =>p.MaPhong == id).FirstOrDefault();  
+        }
+
+        public void phongUpdateOrderDatPhong(Phong phongOrder)
+        {
+            context.Phongs.Update(phongOrder);
+            context.SaveChanges();
+        }
+
+        public IEnumerable<OrderPhong> getOrderPhongByMaPhong(string id)
+        {
+            if (id == null)
+            {
+                return context.OrderPhongs.
+                    Include(o => o.Person).
+                    Include(o => o.MaPhongNavigation).ThenInclude(p => p.MaLoaiPhongNavigation).
+                    Include(o => o.OrderPhongDichVus).
+                    ThenInclude(od => od.MaDichVuNavigation);
+            }
+
+            else
+            {
+                return context.OrderPhongs.
+                    Where(o => o.MaPhong == id).
+                    Include(o => o.Person).
+                    Include(o => o.MaPhongNavigation).ThenInclude(p => p.MaLoaiPhongNavigation).
+                    Include(o => o.OrderPhongDichVus).
+                    ThenInclude(od => od.MaDichVuNavigation);
+            }
+
+        }
+
     }
 }

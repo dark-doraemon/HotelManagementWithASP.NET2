@@ -127,7 +127,7 @@
                                                                                         <td>
                                                                                             <input style=" transform: scale(2.5); " type="checkbox" class="checkbox" data-gia="@dichvu.GiaDichVu" onclick="updateTotal(this)">
                                                                                         </td>
-                                                                                        <td class="madichvu" data-madichvu ="@dichvu.MaDichVu">@dichvu.TenDichVu</td>
+                                                                                        <td class="madichvu" data-madichvu="@dichvu.MaDichVu">@dichvu.TenDichVu</td>
                                                                                         <td>@String.Format("{0:N0}",dichvu.GiaDichVu)</td>
                                                                                         <td>
                                                                                             <input style="width:50px" class="form-control quantity" data-gia="@dichvu.GiaDichVu" oninput="updateTotal(this)" />
@@ -161,37 +161,12 @@
                                                 </div>
                                             </div>
                                         }
-                                        else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT2")
+                                        else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT2") // đang thuê
                                         {
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
-                                                Thanh toán
-                                            </button>
-                                            <!-- The Modal -->
-                                            <div class="modal" id="@phong.MaPhong">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
 
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Thanh toán</h4>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                        </div>
-
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body">
-                                                            Modal body..
-                                                        </div>
-
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <a class="btn btn-primary" asp-controller="Room" asp-action="thanhToan" asp-route-maphong="@phong.MaPhong">Thanh toán</a>
                                         }
-                                        else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT3")
+                                        else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT3") // đặt trước
                                         {
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
                                                 Xác nhận

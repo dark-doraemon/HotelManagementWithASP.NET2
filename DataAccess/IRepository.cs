@@ -16,7 +16,7 @@ namespace HotelManagement.DataAccess
 
         IEnumerable<LoaiPhong> getLoaiPhong { get; }
 
-        IEnumerable<Phong> getPhong(string id);
+        IEnumerable<Phong> getPhongByLoaiPhong(string id);
 
         void removeLoaiPhong(string id);
 
@@ -32,18 +32,24 @@ namespace HotelManagement.DataAccess
 
         void suaPhong(Phong phongcansua);
 
-        public IEnumerable<Phong> getPhongByMaTrangThai(string trangthai);    
+        public IEnumerable<Phong> getPhongByMaTrangThai(string trangthai);
 
         public IEnumerable<DichVu> getDichvu { get; }
 
         string createOrderPhongId();
 
-        void updateTrangThaiPhong(string maphong,string maTrangThai);
+        void updateTrangThaiPhong(string maphong, string maTrangThai);
 
         void addKhachHang(KhachHang kh);
 
         void addOrderPhong(OrderPhong orderPhong);
 
         void addOrderPhongDichVu(List<OrderPhongDichVu> orderphongdichvu);
+
+        Phong getPhongByMaPhong(string id);
+
+        void phongUpdateOrderDatPhong(Phong phongOrder);
+
+        IEnumerable<OrderPhong> getOrderPhongByMaPhong(string id);
     }
 }

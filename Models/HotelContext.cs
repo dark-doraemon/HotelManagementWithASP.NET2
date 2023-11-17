@@ -161,10 +161,10 @@ namespace HotelManagement.Models
                     .HasColumnName("PersonID");
 
                 entity.HasOne(d => d.MaPhongNavigation)
-                    .WithMany(p => p.OrderPhongs)
-                    .HasForeignKey(d => d.MaPhong)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKOrder_Phon460975");
+                     .WithMany(p => p.OrderPhongs)
+                     .HasForeignKey(d => d.MaPhong)
+                     .OnDelete(DeleteBehavior.ClientSetNull)
+                     .HasConstraintName("FKOrder_Phon460975");
 
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.OrderPhongs)
