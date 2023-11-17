@@ -10,9 +10,11 @@ namespace HotelManagement.Controllers
     public class RoomController : Controller
     {
         private IRepository repo;
-        public RoomController(IRepository repo)
+        IHttpContextAccessor accessor;
+        public RoomController(IRepository repo,IHttpContextAccessor accessor)
         {
             this.repo = repo;
+            this.accessor = accessor;
         }
         LoaiPhongPhongTrangThaiPhong treetable = new LoaiPhongPhongTrangThaiPhong();
         [HttpGet]
@@ -29,7 +31,7 @@ namespace HotelManagement.Controllers
             return View(treetable);
         }
 
-
+        [Authentication]
         public IActionResult datPhongVaDichVu(string hoten,
             int tuoi,
             int gioitinh,
@@ -91,12 +93,19 @@ namespace HotelManagement.Controllers
             }
 
 
-
             //cuối cùng update trạng thái phòng là đăng thuê
-            repo.updateTrangThaiPhong(maphong, "MTT2");
+
+            //người đăng kí phòng là use thì mã trạng thái phòng là đặt trước
+            if(accessor.HttpContext.Session.GetString("UserName") != null)
+            {
+                repo.updateTrangThaiPhong(maphong, "MTT3");
+
+            }
+            else repo.updateTrangThaiPhong(maphong, "MTT2");
             return RedirectToAction("Index", "Room", new { maorder = maorderphong });
         }
 
+        [AdminAuthentication]
         [Route("[controller]/[action]/{maphong}/{successOrFail?}")]
         public IActionResult thanhToan(string maphong, string successOrFail = "0")
         {
@@ -106,6 +115,7 @@ namespace HotelManagement.Controllers
             return View("thanhToan",order);
         }
 
+        [AdminAuthentication]
         [Route("[controller]/[action]/maorder")]
         public IActionResult addHoadon(string maorder, string tongtien, string maphong)
         {
@@ -125,8 +135,8 @@ namespace HotelManagement.Controllers
 
                 //cập nhật lại trạng thái thanh toán của order phòng
                 repo.updateTrangThaiThanhtoanOrderPhong(maorder);
-
-                return RedirectToAction("thanhToan", "Room", new { maphong = maphong});
+                
+                return View("ThanhToanThanhCong");
             }
             else
             {

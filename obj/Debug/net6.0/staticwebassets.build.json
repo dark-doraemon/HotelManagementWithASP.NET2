@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ooZ8ipBVPXJYLM83uhJOD5pRDBLAm4KZMbYdBa8MqAs=",
+  "Hash": "gOG9RX7gJGVTdG++qrjKGDDT2F7v+vy8CsxzlulvRpk=",
   "Source": "HotelManagement",
   "BasePath": "_content/HotelManagement",
   "Mode": "Default",
@@ -1069,6 +1069,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\87932.png",
+      "SourceId": "HotelManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\",
+      "BasePath": "_content/HotelManagement",
+      "RelativePath": "pictures/87932.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\pictures\\87932.png"
     },
     {
       "Identity": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\hotel1.jpg",

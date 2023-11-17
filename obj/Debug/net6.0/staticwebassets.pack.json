@@ -245,6 +245,10 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\87932.png",
+      "PackagePath": "staticwebassets\\pictures\\87932.png"
+    },
+    {
       "Id": "D:\\AllWebProjects\\HotelManagement\\wwwroot\\pictures\\hotel1.jpg",
       "PackagePath": "staticwebassets\\pictures\\hotel1.jpg"
     },
