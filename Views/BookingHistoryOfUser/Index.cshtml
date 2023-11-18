@@ -1,0 +1,36 @@
+﻿@model IEnumerable<OrderPhong>
+<div class="container" style="border:1px solid black">
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Phòng</th>
+                        <th>Ngày đến</th>
+                        <th>Ngày đi</th>
+                        <th>Hủy</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{
+                        int i = 1;
+                        foreach (var order in Model)
+                        {
+                            <tr>
+                                <th>@(i++)</th>
+                                <th>@order.MaPhongNavigation.TenPhong</th>
+                                <th>@order.NgayDen</th>
+                                <th>@order.NgayDi</th>
+                                <th>
+                                    <a class="btn btn-primary">Hủy</a>
+                                </th>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

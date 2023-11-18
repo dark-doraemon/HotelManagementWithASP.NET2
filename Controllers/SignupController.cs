@@ -29,14 +29,19 @@ namespace HotelManagement.Controllers
             }
             else
             {
-                repo.CreateAccount(new TaiKhoan
+                bool taoTaiKhoan = repo.CreateAccount(new TaiKhoan
                 {
                     MaTaiKhoan = repo.GetLastIndexOfAccount(),
                     UserName = paa.a.UserName,
                     Password = paa.a.Password,
                     LoaiTaiKhoan = "LTK3",
                     Person = paa.p
-                }); ; ; 
+                });
+                if (taoTaiKhoan == false)
+                {
+                    ModelState.AddModelError("", "Tài khoản đã tồn tại");
+                }
+                else ModelState.AddModelError("", "Tạo tài khoản thành công");
             }
             return View();
         }

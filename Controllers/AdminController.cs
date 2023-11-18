@@ -97,6 +97,12 @@ namespace HotelManagement.Controllers
             return View();
         }
 
+
+        public IActionResult QLHoaDon()
+        {
+            return View();
+        }
+
     }
 
     public class LoaiPhongAndPhong

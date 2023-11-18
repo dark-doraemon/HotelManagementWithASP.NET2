@@ -30,6 +30,17 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Admin" asp-action="QLDichVu">Quản lý dịch vụ</a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Admin" asp-action="QLHoaDon">Quản lý hóa đơn</a>
+                            </li>
+                        }
+
+                        else if(accessor.HttpContext.Session.GetString("UserName") != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="BookingHistoryOfUser" asp-action="Index">Phòng đã đặt trước</a>
+                            </li>
                         }
                     }
                 </ul>
@@ -46,7 +57,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/login/index">Đăng kí</a>
+                                    <a class="nav-link" href="/signup/index">Đăng kí</a>
                                 </li>
                             }
                             else

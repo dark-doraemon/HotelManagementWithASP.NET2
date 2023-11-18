@@ -6,11 +6,10 @@ namespace HotelManagement.DataAccess
     {
         IEnumerable<Person> getPeople { get; }
 
-        void CreateAccount(TaiKhoan a);
+        bool CreateAccount(TaiKhoan a);
 
         TaiKhoan CheckAccount(TaiKhoan a);
 
-        string GetLastIndexOfPerson();
 
         string GetLastIndexOfAccount();
 
@@ -48,16 +47,23 @@ namespace HotelManagement.DataAccess
 
         Phong getPhongByMaPhong(string id);
 
-        void phongUpdateOrderDatPhong(Phong phongOrder);
 
         IEnumerable<OrderPhong> getOrderPhongByMaPhong(string id);
 
         string createHoaDonId();
 
-        void updateTrangThaiThanhtoanOrderPhong(string orderPhongId);
+        void updateTrangThaiOrderPhong(string orderPhongId);
+        //0 là chưa thanh toán
+        //1 là đã thanh toán
+        //2 là phòng đặt trước
 
         bool addHoaDon(HoaDon hoaDon);
 
+        Person getPersonByUserName(string username);
+    
+        public IEnumerable<OrderPhong> getOrdrPhongByPerson(Person person);
+
+        public int funcGetLastIndex(List<string> maid,int vt);
 
     }
 }

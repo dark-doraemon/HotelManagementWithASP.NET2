@@ -11,7 +11,7 @@ namespace HotelManagement.Controllers
     {
         private IRepository repo;
         IHttpContextAccessor accessor;
-        public RoomController(IRepository repo,IHttpContextAccessor accessor)
+        public RoomController(IRepository repo, IHttpContextAccessor accessor)
         {
             this.repo = repo;
             this.accessor = accessor;
@@ -28,6 +28,10 @@ namespace HotelManagement.Controllers
             treetable.trangthaiphongs = repo.getTrangThaiPhong;
             treetable.loaiphongs = repo.getLoaiPhong;
             treetable.dichvus = repo.getDichvu;
+            if (accessor.HttpContext.Session.GetString("UserName") != null)
+            {
+                treetable.Person = repo.getPersonByUserName(accessor.HttpContext.Session.GetString("UserName"));
+            }
             return View(treetable);
         }
 
@@ -44,14 +48,22 @@ namespace HotelManagement.Controllers
             string servicePrice,
             string selectedQuantities)
         {
-            Person person = new Person
+            Person person = new Person();
+            if (accessor.HttpContext.Session.GetString("UserName") != null)
             {
-                PersonId = cccd,
-                HoTen = hoten,
-                Tuoi = tuoi,
-                GioiTinh = gioitinh,
-                Sdt = sdt,
-            };
+                person = repo.getPersonByUserName(accessor.HttpContext.Session.GetString("UserName"));
+            }
+            else
+            {
+                person = new Person
+                {
+                    PersonId = cccd,
+                    HoTen = hoten,
+                    Tuoi = tuoi,
+                    GioiTinh = gioitinh,
+                    Sdt = sdt
+                };
+            }
 
             string maorderphong = repo.createOrderPhongId();
             OrderPhong orderphong = new OrderPhong
@@ -95,11 +107,10 @@ namespace HotelManagement.Controllers
 
             //cuối cùng update trạng thái phòng là đăng thuê
 
-            //người đăng kí phòng là use thì mã trạng thái phòng là đặt trước
-            if(accessor.HttpContext.Session.GetString("UserName") != null)
+            //người đăng kí phòng là user thì mã trạng thái phòng là đặt trước,nếu là admin thì trạng thái đang thuê
+            if (accessor.HttpContext.Session.GetString("UserName") != null)
             {
                 repo.updateTrangThaiPhong(maphong, "MTT3");
-
             }
             else repo.updateTrangThaiPhong(maphong, "MTT2");
             return RedirectToAction("Index", "Room", new { maorder = maorderphong });
@@ -112,7 +123,7 @@ namespace HotelManagement.Controllers
             //TrangThaiThanhToan == 0 : chưa thanh toán
             //TrangThaiThanhToan == 1: đã thanh toán
             OrderPhong order = repo.getOrderPhongByMaPhong(maphong).FirstOrDefault(od => od.TrangThaiThanhToan == 0);
-            return View("thanhToan",order);
+            return View("thanhToan", order);
         }
 
         [AdminAuthentication]
@@ -134,13 +145,13 @@ namespace HotelManagement.Controllers
                 repo.updateTrangThaiPhong(maphong, "MTT1");
 
                 //cập nhật lại trạng thái thanh toán của order phòng
-                repo.updateTrangThaiThanhtoanOrderPhong(maorder);
-                
+                repo.updateTrangThaiOrderPhong(maorder);
+
                 return View("ThanhToanThanhCong");
             }
             else
             {
-                return RedirectToAction("thanhToan", "Room", new { maphong = maphong});
+                return RedirectToAction("thanhToan", "Room", new { maphong = maphong });
             }
 
         }
@@ -156,6 +167,7 @@ namespace HotelManagement.Controllers
         public IEnumerable<Phong> phongs { get; set; }
         public IEnumerable<TrangThaiPhong> trangthaiphongs { get; set; }
         public IEnumerable<DichVu> dichvus { get; set; }
+        public Person Person { get; set; } = null;
     }
 
 }

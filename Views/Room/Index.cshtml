@@ -58,7 +58,7 @@
                                     @{
                                         if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT1")//phòng trống
                                         {
-                                            if(accessor.HttpContext.Session.GetString("UserName") != null)
+                                            if (accessor.HttpContext.Session.GetString("UserName") != null)
                                             {
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
                                                     Đặt trước
@@ -68,11 +68,11 @@
                                             else
                                             {
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
-                                                    Đặt trước
+                                                    Đặt phòng
                                                 </button>
 
                                             }
-                                                <!-- The Modal -->
+                                            <!-- The Modal -->
                                             <div class="modal fade " id="@phong.MaPhong">
                                                 <div class="modal-dialog modal-dialog-centered modal-xl">
                                                     <div class="modal-content">
@@ -87,25 +87,49 @@
                                                         <div class="modal-body row ">
                                                             <form method="post" class="form-group row" asp-controller="Room" asp-action="datPhongVaDichVu" id="myForm">
                                                                 <div class="col-6 p-5" style="border:1px solid black">
-                                                                    <div class="text-center"><b>Thông tin khách hàng</b></div>
-                                                                    <label class="form-label">Họ và tên</label>
-                                                                    <input class="form-control" name="hoten" />
+                                                                    @if (accessor.HttpContext.Session.GetString("UserName") != null)
+                                                                    {
+                                                                        <div class="text-center"><b>Thông tin khách hàng</b></div>
+                                                                        <label class="form-label">Họ và tên</label>
+                                                                        <input class="form-control" name="hoten" value="@Model.Person.HoTen" disabled />
 
-                                                                    <label class="form-label">Tuổi</label>
-                                                                    <input class="form-control" type="number" name="tuoi" />
+                                                                        <label class="form-label">Tuổi</label>
+                                                                        <input class="form-control" type="number" name="tuoi" value="@Model.Person.Tuoi" disabled/>
 
-                                                                    <label class="form-label">Giới tính</label>
-                                                                    <select class="form-select" name="gioitinh">
-                                                                        <option value="0">Nam</option>
-                                                                        <option value="1">Nữ</option>
-                                                                    </select>
+                                                                        <label class="form-label">Giới tính</label>
+                                                                        <select class="form-select" name="gioitinh">
+                                                                            <option disabled value="0" selected="@Equals(Model.Person.GioiTinh,0)">Nam</option>
+                                                                            <option disabled value="1" selected="@Equals(Model.Person.GioiTinh,1)">Nữ</option>
+                                                                        </select>
 
-                                                                    <label class="form-label">CCCD</label>
-                                                                    <input class="form-control" name="cccd">
+                                                                        <label class="form-label">CCCD</label>
+                                                                        <input class="form-control" name="cccd" value="@Model.Person.PersonId " disabled>
 
-                                                                    <label class="form-label">SĐT</label>
-                                                                    <input class="form-control" name="sdt">
+                                                                        <label class="form-label">SĐT</label>
+                                                                        <input class="form-control" name="sdt" value="@Model.Person.Sdt" disabled>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="text-center"><b>Thông tin khách hàng</b></div>
+                                                                        <label class="form-label">Họ và tên</label>
+                                                                        <input class="form-control" name="hoten" />
 
+                                                                        <label class="form-label">Tuổi</label>
+                                                                        <input class="form-control" type="number" name="tuoi" />
+
+                                                                        <label class="form-label">Giới tính</label>
+                                                                        <select class="form-select" name="gioitinh">
+                                                                            <option value="0">Nam</option>
+                                                                            <option value="1">Nữ</option>
+                                                                        </select>
+
+                                                                        <label class="form-label">CCCD</label>
+                                                                        <input class="form-control" name="cccd">
+
+                                                                        <label class="form-label">SĐT</label>
+                                                                        <input class="form-control" name="sdt">
+
+                                                                    }
                                                                     <label class="form-label">Ngày đến:</label>
                                                                     <input class="dayIn" type="date" oninput="tinhNgay(this)" name="ngayden">
 
@@ -175,9 +199,9 @@
                                         else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT2") // đang thuê
                                         {
                                             //nếu không có tài khoản nào đăng nhập thì ko hiện gì cả
-                                            if((accessor.HttpContext.Session.GetString("UserName") == null || accessor.HttpContext.Session.GetString("admin") == null))
+                                            if ((accessor.HttpContext.Session.GetString("UserName") == null || accessor.HttpContext.Session.GetString("admin") == null))
                                             {
-                                                
+
                                             }
                                             //nếu có tài khoản admin đăng nhập thì hiện nút thanh toán
                                             if (accessor.HttpContext.Session.GetString("admin") != null)
@@ -185,40 +209,43 @@
                                                 <a class="btn btn-primary" asp-controller="Room" asp-action="thanhToan" asp-route-maphong="@phong.MaPhong">Thanh toán</a>
                                             }
                                             //nếu đăng nhập tài khoản user
-                                            else if(accessor.HttpContext.Session.GetString("UserName") != null)
+                                            else if (accessor.HttpContext.Session.GetString("UserName") != null)
                                             {
                                                 <button class="btn btn-primary" disabled>Đang thuê</button>
                                             }
                                         }
                                         else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT3") // đặt trước
                                         {
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
-                                                Xác nhận
-                                            </button>
-                                            <!-- The Modal -->
-                                            <div class="modal" id="@phong.MaPhong">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
+                                            if (accessor.HttpContext.Session.GetString("admin") != null)
+                                            {
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
+                                                    Xác nhận
+                                                </button>
+                                                <!-- The Modal -->
+                                                <div class="modal" id="@phong.MaPhong">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
 
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Xác nhận</h4>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Xác nhận</h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            </div>
+
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+                                                                Modal body..
+                                                            </div>
+
+                                                            <!-- Modal footer -->
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+
                                                         </div>
-
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body">
-                                                            Modal body..
-                                                        </div>
-
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                        </div>
-
                                                     </div>
                                                 </div>
-                                            </div>
+                                            }
                                         }
                                     }
                                 </div>
