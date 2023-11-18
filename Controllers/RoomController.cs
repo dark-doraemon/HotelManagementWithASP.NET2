@@ -16,7 +16,9 @@ namespace HotelManagement.Controllers
             this.repo = repo;
             this.accessor = accessor;
         }
+
         LoaiPhongPhongTrangThaiPhong treetable = new LoaiPhongPhongTrangThaiPhong();
+
         [HttpGet]
         [HttpPost]
         public IActionResult Index(string loaiphong = null, string trangthaiphong = null)

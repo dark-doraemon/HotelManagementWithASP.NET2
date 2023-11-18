@@ -65,5 +65,7 @@ namespace HotelManagement.DataAccess
 
         public int funcGetLastIndex(List<string> maid,int vt);
 
+        public void removeOrderPhong(string maorder);
+
     }
 }

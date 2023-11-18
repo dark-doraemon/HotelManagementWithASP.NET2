@@ -189,13 +189,13 @@ namespace HotelManagement.Models
                 entity.HasOne(d => d.MaDichVuNavigation)
                     .WithMany(p => p.OrderPhongDichVus)
                     .HasForeignKey(d => d.MaDichVu)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKOrder_Phon597344");
 
                 entity.HasOne(d => d.MaOrderPhongNavigation)
                     .WithMany(p => p.OrderPhongDichVus)
                     .HasForeignKey(d => d.MaOrderPhong)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKOrder_Phon17642");
             });
 

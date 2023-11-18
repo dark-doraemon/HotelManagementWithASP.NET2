@@ -25,5 +25,14 @@ namespace HotelManagement.Controllers
             IEnumerable<OrderPhong> oderPhongs = repo.getOrdrPhongByPerson(p);
             return View(oderPhongs);
         }
+
+        public IActionResult removeOrder(string maorder,string maphong)
+        {
+            repo.removeOrderPhong(maorder);
+            //sau khí xóa order phòng xong thì cập nhật lại trạng thái là trống
+
+            repo.updateTrangThaiPhong(maphong, "MTT1");
+            return RedirectToAction("Index");
+        }
     }
 }

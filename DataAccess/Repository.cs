@@ -263,5 +263,12 @@ namespace HotelManagement.DataAccess
             return STT[STT.Count - 1];
         }
 
+        public void removeOrderPhong(string maorder)
+        {
+            OrderPhong order = context.OrderPhongs.FirstOrDefault(od => od.MaOrderPhong == maorder);
+            context.OrderPhongs.Remove(order);
+            context.SaveChanges();
+        }
+
     }
 }

@@ -24,7 +24,35 @@
                                 <th>@order.NgayDen</th>
                                 <th>@order.NgayDi</th>
                                 <th>
-                                    <a class="btn btn-primary">Hủy</a>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@order.MaOrderPhong">
+                                        Hủy
+                                    </button>
+
+                                    <!-- The Modal -->
+                                    <div class="modal fade" id="@order.MaOrderPhong">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Hủy phòng</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    Bạn có muốn hủy
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <a class="btn btn-danger" asp-action="removeOrder"  asp-route-maorder="@order.MaOrderPhong" asp-route-maphong="@order.MaPhong">Xác nhận</a>
+                                                    <a class="btn btn-danger" data-bs-dismiss="modal">Close</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </th>
                             </tr>
                         }

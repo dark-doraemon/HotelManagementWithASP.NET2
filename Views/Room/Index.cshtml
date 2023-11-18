@@ -94,7 +94,7 @@
                                                                         <input class="form-control" name="hoten" value="@Model.Person.HoTen" disabled />
 
                                                                         <label class="form-label">Tuổi</label>
-                                                                        <input class="form-control" type="number" name="tuoi" value="@Model.Person.Tuoi" disabled/>
+                                                                        <input class="form-control" type="number" name="tuoi" value="@Model.Person.Tuoi" disabled />
 
                                                                         <label class="form-label">Giới tính</label>
                                                                         <select class="form-select" name="gioitinh">
@@ -216,36 +216,33 @@
                                         }
                                         else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT3") // đặt trước
                                         {
-                                            if (accessor.HttpContext.Session.GetString("admin") != null)
-                                            {
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
-                                                    Xác nhận
-                                                </button>
-                                                <!-- The Modal -->
-                                                <div class="modal" id="@phong.MaPhong">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
+                                                Xác nhận
+                                            </button>
+                                            <!-- The Modal -->
+                                            <div class="modal fade" id="@phong.MaPhong">
+                                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                    <div class="modal-content">
 
-                                                            <!-- Modal Header -->
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Xác nhận</h4>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                            </div>
-
-                                                            <!-- Modal body -->
-                                                            <div class="modal-body">
-                                                                Modal body..
-                                                            </div>
-
-                                                            <!-- Modal footer -->
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                            </div>
-
+                                                        <!-- Modal Header -->
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Xác nhận</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
+
+                                                        <!-- Modal body -->
+                                                        <div class="modal-body">
+                                                            Modal body..
+                                                        </div>
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+
                                                     </div>
                                                 </div>
-                                            }
+                                            </div>
                                         }
                                     }
                                 </div>
