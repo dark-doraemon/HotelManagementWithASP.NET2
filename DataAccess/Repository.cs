@@ -63,8 +63,23 @@ namespace HotelManagement.DataAccess
 
         public IEnumerable<Phong> getPhongByLoaiPhong(string id)
         {
-            if (id == null) return context.Phongs;
-            return context.Phongs.Where(p => p.MaLoaiPhong == id);
+            if (id == null)
+            {
+                var s1 = context.Phongs;
+                var s2 = s1
+                    .Include(p => p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
+                    .ThenInclude(od => od.Person)
+                    .Include( p=> p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
+                    .ThenInclude(od => od.OrderPhongDichVus);
+                return s2;
+            }
+            var s3 = context.Phongs.Where(p => p.MaLoaiPhong == id);
+            var s4 = s3
+                .Include(p => p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
+                .ThenInclude(od => od.Person)
+                .Include(p => p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
+                .ThenInclude(od =>od.OrderPhongDichVus);
+            return s4; 
         }
 
         public void removeLoaiPhong(string id)
@@ -112,7 +127,11 @@ namespace HotelManagement.DataAccess
 
         public IEnumerable<Phong> getPhongByMaTrangThai(string trangthai)
         {
-            return context.Phongs.Where(p => p.MaTrangThai == trangthai);
+            return context.Phongs.Where(p => p.MaTrangThai == trangthai)
+                .Include(p =>p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
+                .ThenInclude(od => od.Person)
+                .Include(p =>p.OrderPhongs.Where(od =>od.TrangThaiThanhToan == 0))
+                .ThenInclude(od => od.OrderPhongDichVus);
         }
 
         public IEnumerable<DichVu> getDichvu => context.DichVus;

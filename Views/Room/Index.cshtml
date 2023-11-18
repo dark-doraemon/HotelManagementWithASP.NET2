@@ -231,8 +231,29 @@
                                                         </div>
 
                                                         <!-- Modal body -->
-                                                        <div class="modal-body">
-                                                            Modal body..
+                                                        <div class="modal-body row">
+                                                            <form method="post" class="form-group row" >
+                                                                <div class="col-6 p-5" style="border:1px solid black">
+                                                                    <div class="text-center"><b>Thông tin khách hàng</b></div>
+                                                                    <label class="form-label">Họ và tên</label>
+                                                                    <input class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.HoTen" disabled>
+
+                                                                    <label class="form-label">Tuổi</label>
+                                                                    <input action="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.Tuoi" disabled>
+
+                                                                    <lable class="form-lable">Giới tính</lable>
+                                                                    <select class="form-select">
+                                                                        <option disabled value="0">Nam</option>
+                                                                        <option disabled value="1">Nữ</option>
+                                                                    
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-6 p-5" style="border:1px solid black">
+                                                                    
+                                                                </div>
+                                                            </form>
+
                                                         </div>
 
                                                         <!-- Modal footer -->
