@@ -164,13 +164,21 @@ namespace HotelManagement.DataAccess
 
         public void addKhachHang(KhachHang kh)
         {
-            context.KhachHangs.Add(kh);
-            context.SaveChanges();
+            if(context.KhachHangs.Find(kh.KhachHangId) == null)
+            {
+                context.KhachHangs.Add(kh);
+                context.SaveChanges();
+            }
         }
 
 
         public void addOrderPhong(OrderPhong orderPhong)
         {
+            if(context.People.Where(p => p.PersonId == orderPhong.PersonId).Any())
+            {
+                context.People.Update(orderPhong.Person);
+                context.SaveChanges();
+            }
             //khi add orderPhong thi thông tin người order cũng được lưu tại vì trong orderPhong có Person 
             context.OrderPhongs.Add(orderPhong);
             context.SaveChanges();
@@ -178,7 +186,6 @@ namespace HotelManagement.DataAccess
             KhachHang kh = new KhachHang
             {
                 KhachHangId = orderPhong.PersonId,
-                KhachHangNavigation = orderPhong.Person
             };
             //nếu người đặt phòng không phải là user
             if (accessor.HttpContext.Session.GetString("UserName") == null)
@@ -270,11 +277,11 @@ namespace HotelManagement.DataAccess
             //return tk.Person;
         }
 
-        public IEnumerable<OrderPhong> getOrdrPhongByPerson(Person person)
+        public IEnumerable<OrderPhong> getOrdrPhongByPerson(string personid)
         {
             var result = context.OrderPhongs.
                 Include(od => od.MaPhongNavigation).
-                Where(od => od.PersonId == person.PersonId && od.TrangThaiThanhToan == 0);
+                Where(od => od.PersonId == personid && od.TrangThaiThanhToan == 0);
             return result;
         }
 
@@ -305,6 +312,16 @@ namespace HotelManagement.DataAccess
                          .ThenInclude(odpdv => odpdv.MaDichVuNavigation)
                          .Include(hd => hd.MaOrderPhongNavigation)
                          .ThenInclude(od => od.Person);
+        }
+
+        public IEnumerable<KhachHang> getKhachHang => context.KhachHangs.Include(kh => kh.KhachHangNavigation)
+                                                                        .ThenInclude(p => p.OrderPhongs);
+
+        public void removeKhachHang(string makhachhang)
+        {
+            Person person = context.People.Where(p => p.PersonId == makhachhang).FirstOrDefault();
+            context.People.Remove(person);
+            context.SaveChanges();
         }
 
 

@@ -4,6 +4,7 @@ using HotelManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelManagement.Migrations
 {
     [DbContext(typeof(HotelContext))]
-    partial class HotelContextModelSnapshot : ModelSnapshot
+    [Migration("20231119064336_eighth")]
+    partial class eighth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -375,13 +377,11 @@ namespace HotelManagement.Migrations
                     b.HasOne("HotelManagement.Models.Phong", "MaPhongNavigation")
                         .WithMany("OrderPhongs")
                         .HasForeignKey("MaPhong")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FKOrder_Phon460975");
 
                     b.HasOne("HotelManagement.Models.Person", "Person")
                         .WithMany("OrderPhongs")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FKOrder_Phon746646");
 
                     b.Navigation("MaPhongNavigation");

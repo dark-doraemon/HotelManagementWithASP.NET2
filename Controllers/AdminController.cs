@@ -117,6 +117,45 @@ namespace HotelManagement.Controllers
             repo.removeOrderPhong(maorder);
             return RedirectToAction("QLHoaDon");
         }
+
+        [AdminAuthentication]
+        public IActionResult QLUser()
+        {
+            
+            return View(repo.getKhachHang);
+        }
+
+
+        [AdminAuthentication]
+        public IActionResult QLNhanVien()
+        {
+            return View();
+        }
+
+        [AdminAuthentication]
+        public IActionResult updateThongTinKhachHang(string personid,string hoten,int tuoi,int gioitinh, string sdt)
+        {
+            return RedirectToAction("QLUser");
+        }
+
+        [AdminAuthentication]
+        public IActionResult xoaKhachHang(string personid)
+        {
+            var orderphongs = repo.getOrdrPhongByPerson(personid);
+
+            //khi xóa khách hàng xong thì những phòng mà khách hàng order phải xóa theo
+            //mà khi order phòng bị xóa thì trạng thái phòng phải chuyển sang thành là "trống" (MTT1)
+            foreach (var orderphong in orderphongs)
+            {
+                repo.updateTrangThaiPhong(orderphong.MaPhongNavigation.MaPhong, "MTT1");
+            }
+
+            repo.removeKhachHang(personid);
+
+
+
+            return RedirectToAction("QLUser");
+        }
     }
 
     public class LoaiPhongAndPhong

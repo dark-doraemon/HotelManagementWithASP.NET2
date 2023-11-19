@@ -20,10 +20,6 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cY2hpVGlldEhvYURvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/AllWebProjects/HotelManagement/Views/Admin/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/AllWebProjects/HotelManagement/Views/Admin/QLDichVu.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUUxEaWNoVnUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -32,8 +28,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUUxIb2FEb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/AllWebProjects/HotelManagement/Views/Admin/QLNhanVien.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUUxOaGFuVmllbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/AllWebProjects/HotelManagement/Views/Admin/QLPhong.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUUxQaG9uZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AllWebProjects/HotelManagement/Views/Admin/QLUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUUxVc2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/AllWebProjects/HotelManagement/Views/BookingHistoryOfUser/Index.cshtml]

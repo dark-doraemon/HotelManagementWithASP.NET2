@@ -216,93 +216,100 @@
                                         }
                                         else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT3") // đặt trước
                                         {
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
-                                                Xác nhận
-                                            </button>
-                                            <!-- The Modal -->
-                                            <div class="modal fade" id="@phong.MaPhong">
-                                                <div class="modal-dialog modal-dialog-centered modal-xl">
-                                                    <div class="modal-content">
+                                            if (accessor.HttpContext.Session.GetString("UserName") == null && accessor.HttpContext.Session.GetString("admin") != null)
+                                            {
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
+                                                    Xác nhận
+                                                </button>
+                                                <!-- The Modal -->
+                                                <div class="modal fade" id="@phong.MaPhong">
+                                                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                        <div class="modal-content">
 
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Xác nhận</h4>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                        </div>
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Xác nhận</h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            </div>
 
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body row">
-                                                            <form method="post" class="form-group row" >
-                                                                <div class="col-6 p-5" style="border:1px solid black">
-                                                                    <div class="text-center"><b>Thông tin khách hàng</b></div>
-                                                                    <label class="form-label">Họ và tên</label>
-                                                                    <input class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.HoTen" disabled>
-                                                                   
-                                                                    <label class="form-label">Tuổi</label>
-                                                                    <input class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.Tuoi" type="number" disabled>
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body row">
+                                                                <form method="post" class="form-group row">
+                                                                    <div class="col-6 p-5" style="border:1px solid black">
+                                                                        <div class="text-center"><b>Thông tin khách hàng</b></div>
+                                                                        <label class="form-label">Họ và tên</label>
+                                                                        <input class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.HoTen" disabled>
 
-                                                                    <lable class="form-lable">Giới tính</lable>
-                                                                    <select class="form-select">
-                                                                        <option disabled value="0" selected="@Equals(phong.OrderPhongs.FirstOrDefault().Person.GioiTinh,0)">Nam</option>
-                                                                        <option disabled value="1" selected="@Equals(@phong.OrderPhongs.FirstOrDefault().Person.GioiTinh,1)">Nữ</option>
-                                                                    </select>
+                                                                        <label class="form-label">Tuổi</label>
+                                                                        <input class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.Tuoi" type="number" disabled>
 
-                                                                    <label class="form-label">CCCD</label>
-                                                                    <input disabled class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.PersonId">
+                                                                        <lable class="form-lable">Giới tính</lable>
+                                                                        <select class="form-select">
+                                                                            <option disabled value="0" selected="@Equals(phong.OrderPhongs.FirstOrDefault().Person.GioiTinh,0)">Nam</option>
+                                                                            <option disabled value="1" selected="@Equals(@phong.OrderPhongs.FirstOrDefault().Person.GioiTinh,1)">Nữ</option>
+                                                                        </select>
 
-                                                                    <label class="form-label">SĐT</label>
-                                                                    <input disabled class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.Sdt">
+                                                                        <label class="form-label">CCCD</label>
+                                                                        <input disabled class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.PersonId">
 
-                                                                    <label>Ngày đến</label>
-                                                                    <div>@phong.OrderPhongs.FirstOrDefault().NgayDen.ToString()</div>
+                                                                        <label class="form-label">SĐT</label>
+                                                                        <input disabled class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.Sdt">
 
-                                                                    <label>Ngày đi</label>
-                                                                    <div>@phong.OrderPhongs.FirstOrDefault().NgayDi</div>
-                                                                    
-                                                                </div>
+                                                                        <label>Ngày đến</label>
+                                                                        <div>@phong.OrderPhongs.FirstOrDefault().NgayDen.ToString()</div>
 
-                                                                <div class="col-6 p-5" style="border:1px solid black">
-                                                                    <div class="text-center">Dịch vụ</div>
-                                                                    <table class="table">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>STT</th>
-                                                                                <th>Tên dịch vụ</th>
-                                                                                <th>Giá dịch vụ</th>
-                                                                                <th>Số lượng</th>
-                                                                                <th>Tổng tiền</th>
-                                                                            </tr>
-                                                                        </thead>
+                                                                        <label>Ngày đi</label>
+                                                                        <div>@phong.OrderPhongs.FirstOrDefault().NgayDi</div>
 
-                                                                        <tbody>
-                                                                            @{
-                                                                                int i = 1;
-                                                                                foreach(var dichvu in phong.OrderPhongs.FirstOrDefault().OrderPhongDichVus)
-                                                                                {
-                                                                                    <tr>
-                                                                                        <th>@(i++)</th>
-                                                                                        <th>@dichvu.MaDichVuNavigation.TenDichVu</th>
-                                                                                        <th>@String.Format("{0:N0}",@dichvu.DonGia)</th>
-                                                                                        <th>@dichvu.SoLuong</th>
-                                                                                        <th>@String.Format("{0:N0}",(dichvu.DonGia * dichvu.SoLuong))</th>
-                                                                                    </tr>
+                                                                    </div>
+
+                                                                    <div class="col-6 p-5" style="border:1px solid black">
+                                                                        <div class="text-center">Dịch vụ</div>
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>STT</th>
+                                                                                    <th>Tên dịch vụ</th>
+                                                                                    <th>Giá dịch vụ</th>
+                                                                                    <th>Số lượng</th>
+                                                                                    <th>Tổng tiền</th>
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                            <tbody>
+                                                                                @{
+                                                                                    int i = 1;
+                                                                                    foreach (var dichvu in phong.OrderPhongs.FirstOrDefault().OrderPhongDichVus)
+                                                                                    {
+                                                                                        <tr>
+                                                                                            <th>@(i++)</th>
+                                                                                            <th>@dichvu.MaDichVuNavigation.TenDichVu</th>
+                                                                                            <th>@String.Format("{0:N0}",@dichvu.DonGia)</th>
+                                                                                            <th>@dichvu.SoLuong</th>
+                                                                                            <th>@String.Format("{0:N0}",(dichvu.DonGia * dichvu.SoLuong))</th>
+                                                                                        </tr>
+                                                                                    }
                                                                                 }
-                                                                            }
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </form>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </form>
+
+                                                            </div>
+
+                                                            <!-- Modal footer -->
+                                                            <div class="modal-footer">
+                                                                <a class="btn btn-danger" asp-action="xacNhanDatPhong" asp-route-maphong="@phong.MaPhong">Xác nhận</a>
+                                                            </div>
 
                                                         </div>
-
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <a class="btn btn-danger" asp-action="xacNhanDatPhong" asp-route-maphong ="@phong.MaPhong">Xác nhận</a>
-                                                        </div>
-
                                                     </div>
                                                 </div>
-                                            </div>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-primary" disabled >Đã đặt trước</button>
+                                            }
                                         }
                                     }
                                 </div>

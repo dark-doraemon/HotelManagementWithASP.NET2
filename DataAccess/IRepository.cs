@@ -61,7 +61,7 @@ namespace HotelManagement.DataAccess
 
         Person getPersonByUserName(string username);
     
-        public IEnumerable<OrderPhong> getOrdrPhongByPerson(Person person);
+        public IEnumerable<OrderPhong> getOrdrPhongByPerson(string personid);
 
         public int funcGetLastIndex(List<string> maid,int vt);
 
@@ -70,6 +70,10 @@ namespace HotelManagement.DataAccess
         IEnumerable<HoaDon> GetHoaDon { get; }
 
         IEnumerable<HoaDon> getChiTietHoaDon(string mahoadon);
+
+        IEnumerable<KhachHang> getKhachHang { get; }
+
+        public void removeKhachHang(string makhachhang);
 
     }
 }

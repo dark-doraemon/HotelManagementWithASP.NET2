@@ -1,0 +1,119 @@
+﻿@model IEnumerable<KhachHang>
+<div class="container">
+    <h1 class="text-center bg-primary">Quản lý khách hàng</h1>
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Person ID</th>
+                        <th>Họ tên</th>
+                        <th>Tuổi</th>
+                        <th>Giới tính</th>
+                        <th>SDT</th>
+                        <th>Chỉnh sửa</th>
+                        <th>Xóa</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{
+                        int i = 1;
+                        foreach (var khachhang in Model)
+                        {
+                            <tr>
+                                <th>@(i++)</th>
+                                <th>@khachhang.KhachHangNavigation.PersonId</th>
+                                <th>@khachhang.KhachHangNavigation.HoTen</th>
+                                <th>@khachhang.KhachHangNavigation.Tuoi</th>
+                                <th>@(khachhang.KhachHangNavigation.GioiTinh == 0 ? "Nam" : "Nữ")</th>
+                                <th>@khachhang.KhachHangNavigation.Sdt</th>
+                                <th>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@("x" + khachhang.KhachHangId)">
+                                        Sửa
+                                    </button>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="@("x" + khachhang.KhachHangId)">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Chỉnh sửa thông tin khách hàng</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <form method="post" asp-action="updateThongTinKhachHang">
+                                                        <label class="form-label">Person ID</label>
+                                                        <input class="form-control" value="@khachhang.KhachHangNavigation.PersonId" name="personid">
+
+                                                        <label class="form-label">Họ tên</label>
+                                                        <input class="form-control" value="@khachhang.KhachHangNavigation.HoTen" name="hoten">
+
+                                                        <label class="form-label">Tuổi</label>
+                                                        <input class="form-control" type="number" value="@khachhang.KhachHangNavigation.Tuoi" name="tuoi">
+
+                                                        <label class="form-label">Giới tính</label>
+                                                        <select class="form-select" name="gioitinh" >
+                                                            <option value="0" selected="@Equals(khachhang.KhachHangNavigation.GioiTinh,0)">Nam</option>
+                                                            <option value="1" selected="@Equals(khachhang.KhachHangNavigation.GioiTinh,0)">Nữ</option>
+                                                        </select>
+
+                                                        <label class="form-label">SĐT</label>
+                                                        <input class="form-control" value="@khachhang.KhachHangNavigation.Sdt" name="sdt">
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xác nhận</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@("y" + khachhang.KhachHangId)">
+                                        Xóa
+                                    </button>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="@("y" + khachhang.KhachHangId)">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Xóa khách hàng</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <div class="text-center">Bạn có muốn xóa khách hàng không ?</div>
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <a class="btn btn-danger" asp-action="xoaKhachHang" asp-route-personid="@khachhang.KhachHangId">Xác nhận</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

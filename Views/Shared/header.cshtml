@@ -23,20 +23,37 @@
                     @{
                         if (accessor.HttpContext.Session.GetString("admin") != null)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Admin" asp-action="QLPhong">Quản lý phòng</a>
-                            </li>
+                            <li class="dropdown">
+                                <button class="btn btn-light dropdown-toggle text-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Các mục quản lý
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Admin" asp-action="QLPhong">Quản lý phòng</a>
+                                    </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Admin" asp-action="QLDichVu">Quản lý dịch vụ</a>
-                            </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Admin" asp-action="QLDichVu">Quản lý dịch vụ</a>
+                                    </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Admin" asp-action="QLHoaDon">Quản lý hóa đơn</a>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Admin" asp-action="QLHoaDon">Quản lý hóa đơn</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Admin" asp-action="QLUser">Quản lý khách hàng</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Admin" asp-action="QLTaiKhoan">Quản lý tài khoản</a>
+                                    </li>
+
+
+                                </ul>
                             </li>
                         }
 
-                        else if(accessor.HttpContext.Session.GetString("UserName") != null)
+                        else if (accessor.HttpContext.Session.GetString("UserName") != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="BookingHistoryOfUser" asp-action="Index">Phòng đã đặt trước</a>

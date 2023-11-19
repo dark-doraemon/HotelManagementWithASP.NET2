@@ -84,7 +84,7 @@ namespace HotelManagement.Models
                 entity.HasOne(d => d.KhachHangNavigation)
                     .WithOne(p => p.KhachHang)
                     .HasForeignKey<KhachHang>(d => d.KhachHangId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKKhach_Hang279424");
             });
 
@@ -131,13 +131,13 @@ namespace HotelManagement.Models
                 entity.HasOne(d => d.MaVaiTroNavigation)
                     .WithMany(p => p.NhanViens)
                     .HasForeignKey(d => d.MaVaiTro)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKNhan_Vien799741");
 
                 entity.HasOne(d => d.NhanVienNavigation)
                     .WithOne(p => p.NhanVien)
                     .HasForeignKey<NhanVien>(d => d.NhanVienId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKNhan_Vien605300");
             });
 
@@ -165,13 +165,13 @@ namespace HotelManagement.Models
                 entity.HasOne(d => d.MaPhongNavigation)
                      .WithMany(p => p.OrderPhongs)
                      .HasForeignKey(d => d.MaPhong)
-                     .OnDelete(DeleteBehavior.ClientSetNull)
+                     .OnDelete(DeleteBehavior.Cascade)
                      .HasConstraintName("FKOrder_Phon460975");
 
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.OrderPhongs)
                     .HasForeignKey(d => d.PersonId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKOrder_Phon746646");
             });
 
@@ -274,13 +274,13 @@ namespace HotelManagement.Models
                 entity.HasOne(d => d.LoaiTaiKhoanNavigation)
                     .WithMany(p => p.TaiKhoans)
                     .HasForeignKey(d => d.LoaiTaiKhoan)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKTai_Khoan92928");
 
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.TaiKhoans)
                     .HasForeignKey(d => d.PersonId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKTai_Khoan172310");
             });
 
