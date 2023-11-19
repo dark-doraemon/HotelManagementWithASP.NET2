@@ -10,11 +10,11 @@ namespace HotelManagement.DataAccess
     {
         private HotelContext context;
         private IHttpContextAccessor accessor;
-        public Repository(HotelContext context,IHttpContextAccessor accessor)
+        public Repository(HotelContext context, IHttpContextAccessor accessor)
         {
 
             this.context = context;
-            this.accessor = accessor;   
+            this.accessor = accessor;
         }
 
         public IEnumerable<Person> getPeople => this.context.People;
@@ -47,10 +47,10 @@ namespace HotelManagement.DataAccess
                 else { return false; }
             }
         }
-       
+
         public string GetLastIndexOfAccount()
         {
-            if(context.TaiKhoans.Any() == false)
+            if (context.TaiKhoans.Any() == false)
             {
                 return "TK1";
             }
@@ -69,8 +69,9 @@ namespace HotelManagement.DataAccess
                 var s2 = s1
                     .Include(p => p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
                     .ThenInclude(od => od.Person)
-                    .Include( p=> p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
-                    .ThenInclude(od => od.OrderPhongDichVus);
+                    .Include(p => p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
+                    .ThenInclude(od => od.OrderPhongDichVus)
+                    .ThenInclude(odpdv => odpdv.MaDichVuNavigation);
                 return s2;
             }
             var s3 = context.Phongs.Where(p => p.MaLoaiPhong == id);
@@ -78,8 +79,9 @@ namespace HotelManagement.DataAccess
                 .Include(p => p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
                 .ThenInclude(od => od.Person)
                 .Include(p => p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
-                .ThenInclude(od =>od.OrderPhongDichVus);
-            return s4; 
+                .ThenInclude(od => od.OrderPhongDichVus)
+                .ThenInclude(odpdv => odpdv.MaDichVuNavigation);
+            return s4;
         }
 
         public void removeLoaiPhong(string id)
@@ -128,10 +130,11 @@ namespace HotelManagement.DataAccess
         public IEnumerable<Phong> getPhongByMaTrangThai(string trangthai)
         {
             return context.Phongs.Where(p => p.MaTrangThai == trangthai)
-                .Include(p =>p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
+                .Include(p => p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
                 .ThenInclude(od => od.Person)
-                .Include(p =>p.OrderPhongs.Where(od =>od.TrangThaiThanhToan == 0))
-                .ThenInclude(od => od.OrderPhongDichVus);
+                .Include(p => p.OrderPhongs.Where(od => od.TrangThaiThanhToan == 0))
+                .ThenInclude(od => od.OrderPhongDichVus)
+                .ThenInclude(odpdv => odpdv.MaDichVuNavigation);
         }
 
         public IEnumerable<DichVu> getDichvu => context.DichVus;
@@ -178,7 +181,7 @@ namespace HotelManagement.DataAccess
                 KhachHangNavigation = orderPhong.Person
             };
             //nếu người đặt phòng không phải là user
-            if(accessor.HttpContext.Session.GetString("UserName") == null)
+            if (accessor.HttpContext.Session.GetString("UserName") == null)
             {
                 addKhachHang(kh);
             }
@@ -288,6 +291,22 @@ namespace HotelManagement.DataAccess
             context.OrderPhongs.Remove(order);
             context.SaveChanges();
         }
+
+        public IEnumerable<HoaDon> GetHoaDon => context.HoaDons.Include(hd => hd.MaOrderPhongNavigation);
+
+        public IEnumerable<HoaDon> getChiTietHoaDon(string mahoadon)
+        {
+            var hoadon = context.HoaDons.Where(hd => hd.MaHoaDon == mahoadon);
+            return hoadon.Include(hd => hd.MaOrderPhongNavigation)
+                         .ThenInclude(od => od.MaPhongNavigation)
+                         .ThenInclude(od => od.MaLoaiPhongNavigation)
+                         .Include(hd => hd.MaOrderPhongNavigation)
+                         .ThenInclude(od => od.OrderPhongDichVus)
+                         .ThenInclude(odpdv => odpdv.MaDichVuNavigation)
+                         .Include(hd => hd.MaOrderPhongNavigation)
+                         .ThenInclude(od => od.Person);
+        }
+
 
     }
 }

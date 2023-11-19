@@ -97,12 +97,26 @@ namespace HotelManagement.Controllers
             return View();
         }
 
-
+        [AdminAuthentication]
         public IActionResult QLHoaDon()
         {
-            return View();
+            return View(repo.GetHoaDon);
         }
 
+        [AdminAuthentication]
+        public IActionResult chiTietHoaDon(string mahoadon)
+        {
+            var s = repo.getChiTietHoaDon(mahoadon).FirstOrDefault();
+            return View(s);
+        }
+
+        //khi xóa hóa đơn thì ta nên xóa order phòng
+        [AdminAuthentication]
+        public IActionResult xoaHoadon(string maorder)
+        {
+            repo.removeOrderPhong(maorder);
+            return RedirectToAction("QLHoaDon");
+        }
     }
 
     public class LoaiPhongAndPhong

@@ -1,0 +1,114 @@
+﻿@model HoaDon
+<h1 class="text-center bg-primary">Chi tiết hóa đơn</h1>
+<div class="container" id="data">
+    <div class="row">
+        @{
+            float tienphong = Model.MaOrderPhongNavigation.MaPhongNavigation.MaLoaiPhongNavigation.GiaPhong;
+            string tenphong = Model.MaOrderPhongNavigation.MaPhongNavigation.TenPhong;
+            <h2>@tenphong - @String.Format("{0:N0}",tienphong)</h2>
+            DateTime ngayden = Convert.ToDateTime(Model.MaOrderPhongNavigation.NgayDen);
+            DateTime ngaydi = Convert.ToDateTime(Model.MaOrderPhongNavigation.NgayDi);
+            int totalDays = Convert.ToInt32((ngaydi - ngayden).TotalDays);
+            float tongtienphong = totalDays * tienphong;
+            <div class="row">
+                <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12 col-12">
+                    <h2>Ngày đến : @ngayden.ToString("dd/MM/yyyy")</h2>
+                    <h2>Ngày đi : @ngaydi.ToString("dd/MM/yyyy")</h2>
+                </div>
+                <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12 col-12">
+                    <h2>Số ngày : @totalDays</h2>
+                    <h2>Tổng tiền phòng : @(String.Format("{0:N0}", tongtienphong))</h2>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12 col-12 p-5" style="border: 1px solid black">
+                <form class="form-group">
+                    <label class="form-label">Họ và tên</label>
+                    <input class="form-control" disabled value="@Model.MaOrderPhongNavigation.Person.HoTen" />
+
+                    <label class="form-label">Tuổi</label>
+                    <input class="form-control" disabled value="@Model.MaOrderPhongNavigation.Person.Tuoi" />
+
+                    <label class="form-label">Giới tính</label>
+                    <input class="form-control" disabled value="@(@Model.MaOrderPhongNavigation.Person.GioiTinh == 0 ? "Nam" : "Nữ")" />
+
+                    <label class="form-label">CCCD</label>
+                    <input class="form-control" disabled value="@Model.MaOrderPhongNavigation.Person.PersonId" />
+
+                    <label class="form-label">SĐT</label>
+                    <input class="form-control" disabled value="@Model.MaOrderPhongNavigation.Person.Sdt" />
+                </form>
+            </div>
+            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12 col-12 " style="border: 1px solid black">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên dịch vụ</th>
+                            <th>Giá dịch vụ</th>
+                            <th>Số lượng</th>
+                            <th>Tổng</th>
+                        </tr>
+                    </thead>
+                    @{
+                        int i = 1;
+                        float tongtiendichvu = 0;
+                        foreach (var dv in Model.MaOrderPhongNavigation.OrderPhongDichVus)
+                        {
+                            tongtiendichvu += Convert.ToInt32((dv.SoLuong * dv.DonGia));
+                            <tr>
+                                <th>@(i++)</th>
+                                <th>@dv.MaDichVuNavigation.TenDichVu</th>
+                                <th>@dv.SoLuong</th>
+                                <th>@String.Format("{0:N0}",@dv.DonGia)</th>
+                                <th>@String.Format("{0:N0}",(dv.SoLuong * dv.DonGia))</th>
+                            </tr>
+                        }
+                        <tr>
+                            <th class="text-center -groupenter" colspan="4">Tổng tiền dịch vụ</th>
+                            <th>@String.Format("{0:N0}",Math.Floor(tongtiendichvu))</th>
+                        </tr>
+
+                        <tr>
+                            <th class="text-center" colspan="4">Tổng tiền phòng</th>
+                            <th>@String.Format("{0:N0}",tongtienphong)</th>
+                        </tr>
+
+                        <tr>
+                            <th class="text-center" colspan="4">
+                                Tổng cộng
+                            </th>
+
+                            @{
+                                float tongtientatca = tongtienphong + tongtiendichvu;
+                            }
+                            <th>@String.Format("{0:N0}",tongtientatca)</th>
+                        </tr>
+
+
+                    }
+                </table>
+                <div class="float-end mt-1">
+                    <button class="btn btn-dark" onclick="inHoaDon()">In hóa đơn</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function inHoaDon() {
+        var data = document.getElementById('data'); //tham chiếu đến thẻ cần in
+        var dataBackUp = document.getElementById('data').innerHTML;
+        var dataRemoveSomeElements = data.querySelectorAll('div.float-end.mt-1');//lấy các thẻ cần xóa
+        //xóa từng phần tử trong NodeList
+        dataRemoveSomeElements.forEach((div) => {
+            div.parentNode.removeChild(div);
+        });
+        window.print()
+        document.getElementById('data').innerHTML = dataBackUp;
+
+    }
+</script>

@@ -1,5 +1,6 @@
 ﻿using HotelManagement.DataAccess;
 using HotelManagement.Models;
+using HotelManagement.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
 
@@ -14,6 +15,8 @@ namespace HotelManagement.Controllers
             this.repo = repo;
             this.accessor = accessor;
         }
+
+        [Authentication]
         public IActionResult Index()
         {
             //đầu tiên lấy Person
@@ -26,6 +29,7 @@ namespace HotelManagement.Controllers
             return View(oderPhongs);
         }
 
+        [Authentication]
         public IActionResult removeOrder(string maorder,string maphong)
         {
             repo.removeOrderPhong(maorder);

@@ -69,7 +69,7 @@ namespace HotelManagement.Models
                 entity.HasOne(d => d.MaOrderPhongNavigation)
                     .WithMany(p => p.HoaDons)
                     .HasForeignKey(d => d.MaOrderPhong)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FKHoa_Don624260");
             });
 

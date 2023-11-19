@@ -67,5 +67,9 @@ namespace HotelManagement.DataAccess
 
         public void removeOrderPhong(string maorder);
 
+        IEnumerable<HoaDon> GetHoaDon { get; }
+
+        IEnumerable<HoaDon> getChiTietHoaDon(string mahoadon);
+
     }
 }

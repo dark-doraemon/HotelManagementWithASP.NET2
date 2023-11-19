@@ -1,0 +1,69 @@
+﻿@model IEnumerable<HoaDon>
+<div class="container" >
+    <div class="row">
+        <h1 class="text-center bg-primary">Danh sách các hóa đơn</h1>
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã hóa đơn</th>
+                        <th>Ngày in</th>
+                        <th>Tổng tiền</th>
+                        <th>Chi tiết</th>
+                        <th>Xóa</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{
+                        int i = 1;
+                        foreach(var hoadon in Model)
+                        {
+                            <tr>
+                                <th>@(i++)</th>
+                                <th>@hoadon.MaHoaDon</th>
+                                <th>@hoadon.NgayIn</th>
+                                <th>@String.Format("{0:N0}",@hoadon.TongTien)</th>
+                                <th>
+                                    <a target="_blank" class="btn btn-primary" asp-action="chiTietHoaDon" asp-route-mahoadon="@hoadon.MaHoaDon">Chi tiết</a>
+                                </th>
+
+                                <th>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@hoadon.MaHoaDon">
+                                        Xóa 
+                                    </button>
+                                    <!-- The Modal -->
+                                    <div class="modal" id="@hoadon.MaHoaDon">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title text-center">Xóa hóa đơn</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    Bạn có muốn xóa không ?
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                <a class="btn btn-danger" asp-action="xoaHoadon" asp-route-maorder="@hoadon.MaOrderPhongNavigation.MaOrderPhong">Xác nhận</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

@@ -157,6 +157,15 @@ namespace HotelManagement.Controllers
             }
 
         }
+        [AdminAuthentication]
+        public IActionResult xacNhanDatPhong(string maphong)
+        {
+            //khi xác nhận đặt phòng thì phòng chuyển sang trạng thái đã đặt nghĩa là khách đang ở
+            repo.updateTrangThaiPhong(maphong, "MTT2");
+            return RedirectToAction("Index");
+        }
+
+
     }
 
     public class LoaiPhongPhongTrangThaiPhong

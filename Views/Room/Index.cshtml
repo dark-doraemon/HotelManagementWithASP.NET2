@@ -237,20 +237,59 @@
                                                                     <div class="text-center"><b>Thông tin khách hàng</b></div>
                                                                     <label class="form-label">Họ và tên</label>
                                                                     <input class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.HoTen" disabled>
-
+                                                                   
                                                                     <label class="form-label">Tuổi</label>
-                                                                    <input action="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.Tuoi" disabled>
+                                                                    <input class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.Tuoi" type="number" disabled>
 
                                                                     <lable class="form-lable">Giới tính</lable>
                                                                     <select class="form-select">
-                                                                        <option disabled value="0">Nam</option>
-                                                                        <option disabled value="1">Nữ</option>
-                                                                    
+                                                                        <option disabled value="0" selected="@Equals(phong.OrderPhongs.FirstOrDefault().Person.GioiTinh,0)">Nam</option>
+                                                                        <option disabled value="1" selected="@Equals(@phong.OrderPhongs.FirstOrDefault().Person.GioiTinh,1)">Nữ</option>
                                                                     </select>
+
+                                                                    <label class="form-label">CCCD</label>
+                                                                    <input disabled class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.PersonId">
+
+                                                                    <label class="form-label">SĐT</label>
+                                                                    <input disabled class="form-control" value="@phong.OrderPhongs.FirstOrDefault().Person.Sdt">
+
+                                                                    <label>Ngày đến</label>
+                                                                    <div>@phong.OrderPhongs.FirstOrDefault().NgayDen.ToString()</div>
+
+                                                                    <label>Ngày đi</label>
+                                                                    <div>@phong.OrderPhongs.FirstOrDefault().NgayDi</div>
+                                                                    
                                                                 </div>
 
                                                                 <div class="col-6 p-5" style="border:1px solid black">
-                                                                    
+                                                                    <div class="text-center">Dịch vụ</div>
+                                                                    <table class="table">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>STT</th>
+                                                                                <th>Tên dịch vụ</th>
+                                                                                <th>Giá dịch vụ</th>
+                                                                                <th>Số lượng</th>
+                                                                                <th>Tổng tiền</th>
+                                                                            </tr>
+                                                                        </thead>
+
+                                                                        <tbody>
+                                                                            @{
+                                                                                int i = 1;
+                                                                                foreach(var dichvu in phong.OrderPhongs.FirstOrDefault().OrderPhongDichVus)
+                                                                                {
+                                                                                    <tr>
+                                                                                        <th>@(i++)</th>
+                                                                                        <th>@dichvu.MaDichVuNavigation.TenDichVu</th>
+                                                                                        <th>@String.Format("{0:N0}",@dichvu.DonGia)</th>
+                                                                                        <th>@dichvu.SoLuong</th>
+                                                                                        <th>@String.Format("{0:N0}",(dichvu.DonGia * dichvu.SoLuong))</th>
+                                                                                    </tr>
+                                                                                }
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
                                                             </form>
 
@@ -258,7 +297,7 @@
 
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                            <a class="btn btn-danger" asp-action="xacNhanDatPhong" asp-route-maphong ="@phong.MaPhong">Xác nhận</a>
                                                         </div>
 
                                                     </div>
