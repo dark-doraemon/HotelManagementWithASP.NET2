@@ -1,1 +1,112 @@
-﻿
+﻿@model NhanVien_VaiTro
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center bg-primary">Quản lý nhân viên</h1>
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Thêm nhân viên</button>
+            <!-- The Modal -->
+            <div class="modal" id="myModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Thêm nhân viên</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form method="post" class="form-group" asp-controller="admin" asp-action="QLNhanVien">
+                                <label class="form-label">Nhân viên ID</label>
+                                <input class="form-control" name="manhanvien" />
+
+                                <label class="form-label">Họ tên</label>
+                                <input class="form-control" name="hoten"/>
+
+                                <label class="form-label" >Tuổi</label>
+                                <input class="form-control" type="number" name="tuoi"/>
+
+                                <label class="form-label">Giới tính</label>
+                                <select class="form-select" name="gioitinh">
+                                    <option value="0">Nam</option>
+                                    <option value="1">Nữ</option>
+                                </select> 
+
+                                <label class="form-label">SĐT</label>
+                                <input class="form-control" name="sdt"/>
+
+                                <label class="form-label">Vai trò</label>
+                                <select class="form-select" name="vaitro">
+                                    @foreach(var vaitro in Model.vaitros)
+                                    {
+                                        <option value="@vaitro.MaVaiTro">@vaitro.TenVaiTro</option>
+                                    }
+                                </select>
+
+                                <label class="form-label">Tài khoản</label>
+                                <input class="form-control" name="username"/>
+
+                                <label class="form-label">Mật khẩu</label>
+                                <input class="form-control" name="password"/>
+
+                                <label class="form-label">Xác nhận mật khẩu</label>
+                                <input class="form-control" name="confirm"/>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xác nhận</button>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Nhân Viên ID</th>
+                        <th>Họ tên</th>
+                        <th>Tuổi</th>
+                        <th>Giới tính</th>
+                        <th>SĐT</th>
+                        <th>Vai trò</th>
+                        <th>Chỉnh sửa</th>
+                        <th>Xóa</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{
+                        int i = 1;
+                        foreach (var nhanvien in Model.nhanviens)
+                        {
+                            <tr>
+                                <th>@(i++)</th>
+                                <th>@nhanvien.NhanVienNavigation.PersonId</th>
+                                <th>@nhanvien.NhanVienNavigation.HoTen</th>
+                                <th>@nhanvien.NhanVienNavigation.Tuoi</th>
+                                <th>@nhanvien.NhanVienNavigation.GioiTinh</th>
+                                <th>@nhanvien.NhanVienNavigation.Sdt</th>
+                                <th>@nhanvien.MaVaiTroNavigation.TenVaiTro</th>
+                                <th>
+                                    <button class="btn btn-primary">Sửa</button>
+                                </th>
+
+                                <th>
+                                    <button class="btn btn-danger">Xóa</button>
+                                </th>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

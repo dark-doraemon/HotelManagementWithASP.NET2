@@ -11,7 +11,7 @@ namespace HotelManagement.DataAccess
         TaiKhoan CheckAccount(TaiKhoan a);
 
 
-        string GetLastIndexOfAccount();
+        string CreateMaTaiKhoan();
 
         IEnumerable<LoaiPhong> getLoaiPhong { get; }
 
@@ -74,6 +74,25 @@ namespace HotelManagement.DataAccess
         IEnumerable<KhachHang> getKhachHang { get; }
 
         public void removeKhachHang(string makhachhang);
+
+        IEnumerable<LoaiTaiKhoan> getLoaiTaiKhoan {  get; }
+
+        IEnumerable<TaiKhoan> getTaiKhoan { get; }
+
+        IEnumerable<NhanVien> getTaiKhoanNhanVien { get; }
+
+        IEnumerable<KhachHang> getTaiKhoanKhachHang { get; }
+
+        IEnumerable<VaiTro> GetVaiTros { get; }
+
+        bool checkTonTaiUserName(string username);
+
+
+        bool checkTonTaiMaNhanVien(string manhanvien);
+        
+        bool addNhanVien(NhanVien nhanvien);
+
+        bool addTaiKhoanNhanVien(TaiKhoan taiKhoan);
 
     }
 }

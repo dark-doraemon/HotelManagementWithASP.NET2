@@ -1,0 +1,132 @@
+﻿@model LoaiTaiKhoan_TaiKhoan_NhanVien_KhacHang
+<div class="container">
+    <h1 class="text-center bg-primary">Quản lý tài khoản</h1>
+    <div class="row" > 
+        <div class="col-12">
+            <h2>Các loại tài khoản</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã loại</th>
+                        <th>Tên loại</th>
+                        <th>Sửa</th>
+                        <th>Xóa</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{
+                        int i = 1;
+                        foreach(var loaiphong in Model.loaiTaiKhoans)
+                        {
+                            <tr>
+                                <th>@(i++)</th>
+                                <th>@loaiphong.MaLoaiTaiKhoan</th>
+                                <th>@loaiphong.TenLoai</th>
+                                <th>
+                                    <button class="btn btn-primary">Sửa</button>
+                                </th>
+
+                                <th>
+                                    <button class="btn btn-primary">Xóa</button>
+                                </th>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12">
+            <h2>Tài khoản nhân viên</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã tài khoản</th>
+                        <th>User name</th>
+                        <th>Password</th>
+                        <th>Loại tài khoản</th>
+                        <th>Person ID</th>
+                        <th>Sửa</th>
+                        <th>Xóa</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{
+                        int x = 1;
+                        foreach(var nhanvien in Model.nhanviens)
+                        {
+                            foreach(var tk in nhanvien.NhanVienNavigation.TaiKhoans)
+                            {
+                                <tr>
+                                    <th>@(x++)</th>
+                                    <th>@tk.MaTaiKhoan</th>
+                                    <th>@tk.UserName</th>
+                                    <th>@tk.Password</th>
+                                    <th>@tk.LoaiTaiKhoan</th>
+                                    <th>@tk.Person.PersonId</th>
+                                    <th>
+                                        <button class="btn btn-primary">Sửa</button>
+                                    </th>
+                                    <th>
+                                        <button class="btn btn-danger">Xóa</button>
+                                    </th>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-12">
+            <h2>Tài khoản khách hàng</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã tài khoản</th>
+                        <th>User name</th>
+                        <th>Password</th>
+                        <th>Loại tài khoản</th>
+                        <th>Person ID</th>
+                        <th>Sửa</th>
+                        <th>Xóa</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{
+                        int y = 1;
+                        foreach(var khachhang in Model.khachhangs)
+                        {
+                            foreach(var taikhoan in khachhang.KhachHangNavigation.TaiKhoans)
+                            {
+                                <tr>
+                                    <th>@(y++)</th>
+                                    <th>@taikhoan.MaTaiKhoan</th>
+                                    <th>@taikhoan.UserName</th>
+                                    <th>@taikhoan.Password</th>
+                                    <th>@taikhoan.LoaiTaiKhoan</th>
+                                    <th>@taikhoan.Person.PersonId</th>
+
+                                    <th>
+                                        <button class="btn btn-primary">Sửa</button>
+                                    </th>
+
+                                    <th>
+                                        <button class="btn btn-danger">Xóa</button>
+                                    </th>
+                                </tr>
+
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</div>

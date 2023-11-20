@@ -35,6 +35,11 @@ namespace HotelManagement.Controllers
                 {
                     httpContextAccessor.HttpContext.Session.SetString("admin", account.UserName);
                 }
+
+                else if (repo.CheckAccount(account).LoaiTaiKhoan == "LTK2")
+                {
+                    httpContextAccessor.HttpContext.Session.SetString("nhanvien", account.UserName);
+                }
                 else
                 {
                     httpContextAccessor.HttpContext.Session.SetString("UserName", account.UserName);

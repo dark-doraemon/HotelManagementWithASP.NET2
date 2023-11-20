@@ -48,7 +48,7 @@ namespace HotelManagement.DataAccess
             }
         }
 
-        public string GetLastIndexOfAccount()
+        public string CreateMaTaiKhoan()
         {
             if (context.TaiKhoans.Any() == false)
             {
@@ -164,7 +164,7 @@ namespace HotelManagement.DataAccess
 
         public void addKhachHang(KhachHang kh)
         {
-            if(context.KhachHangs.Find(kh.KhachHangId) == null)
+            if (context.KhachHangs.Find(kh.KhachHangId) == null)
             {
                 context.KhachHangs.Add(kh);
                 context.SaveChanges();
@@ -174,7 +174,7 @@ namespace HotelManagement.DataAccess
 
         public void addOrderPhong(OrderPhong orderPhong)
         {
-            if(context.People.Where(p => p.PersonId == orderPhong.PersonId).Any())
+            if (context.People.Where(p => p.PersonId == orderPhong.PersonId).Any())
             {
                 context.People.Update(orderPhong.Person);
                 context.SaveChanges();
@@ -325,5 +325,51 @@ namespace HotelManagement.DataAccess
         }
 
 
+        public IEnumerable<LoaiTaiKhoan> getLoaiTaiKhoan => context.LoaiTaiKhoans;
+
+        public IEnumerable<TaiKhoan> getTaiKhoan => context.TaiKhoans;
+
+        public IEnumerable<NhanVien> getTaiKhoanNhanVien => context.NhanViens
+            .Include(nv => nv.MaVaiTroNavigation)
+            .Include(nv => nv.NhanVienNavigation)
+            .ThenInclude(p => p.TaiKhoans);
+
+        public IEnumerable<KhachHang> getTaiKhoanKhachHang => context.KhachHangs
+            .Include(kh => kh.KhachHangNavigation)
+            .ThenInclude(p => p.TaiKhoans);
+
+        public IEnumerable<VaiTro> GetVaiTros => context.VaiTros;
+
+        public bool checkTonTaiUserName(string username)
+        {
+            bool check = context.TaiKhoans.Where(tk => tk.UserName == username).Any();
+            if (check) return true;
+            return false;
+        }
+
+        public bool checkTonTaiMaNhanVien(string manhanvien)
+        {
+            bool check = context.NhanViens.Where(nv => nv.NhanVienId == manhanvien).Any();
+            if (check) return true;
+            return false;
+
+        }
+
+        public bool addNhanVien(NhanVien nhanvien)
+        {
+            //khi add nhan vien thi person cũng add theo 
+            context.NhanViens.Add(nhanvien);
+            int check = context.SaveChanges();
+            if (check > 0) return true;
+            return false;
+        }
+
+        public bool addTaiKhoanNhanVien(TaiKhoan taiKhoan)
+        {
+            context.TaiKhoans.Add(taiKhoan);    
+            int check = context.SaveChanges();
+            if(check > 0) return true;
+            return false;
+        }
     }
 }

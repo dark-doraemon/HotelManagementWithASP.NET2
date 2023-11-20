@@ -31,7 +31,7 @@ namespace HotelManagement.Controllers
             {
                 bool taoTaiKhoan = repo.CreateAccount(new TaiKhoan
                 {
-                    MaTaiKhoan = repo.GetLastIndexOfAccount(),
+                    MaTaiKhoan = repo.CreateMaTaiKhoan(),
                     UserName = paa.a.UserName,
                     Password = paa.a.Password,
                     LoaiTaiKhoan = "LTK3",
