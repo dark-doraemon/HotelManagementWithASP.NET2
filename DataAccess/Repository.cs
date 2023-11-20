@@ -379,5 +379,14 @@ namespace HotelManagement.DataAccess
         }
 
 
+        public void updateThongTinKhachHang(Person newperson)
+        {
+           
+
+            context.People.Update(newperson);
+            context.SaveChanges();  
+        }
+
+        public IEnumerable<DichVu> getDichVus => context.DichVus;
     }
 }

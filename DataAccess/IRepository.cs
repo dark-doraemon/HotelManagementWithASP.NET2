@@ -94,6 +94,10 @@ namespace HotelManagement.DataAccess
 
         bool addTaiKhoanNhanVien(TaiKhoan taiKhoan);
 
+        void updateThongTinKhachHang(Person newperson);
+
         void updateTrangThaiPhongs(IEnumerable<Phong> phongs);
+
+        IEnumerable<DichVu> getDichVus { get; }
     }
 }

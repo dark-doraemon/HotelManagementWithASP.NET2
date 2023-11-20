@@ -1,1 +1,43 @@
-﻿
+﻿@model IEnumerable<DichVu>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center bg-primary"> Quản lý dịch vụ</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã dịch vụ</th>
+                        <th>Tên dịch vụ</th>
+                        <th>Giá dịch vụ</th>
+                        <th>Sửa</th>
+                        <th>Xóa</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    @{
+                        int i = 0;
+                        foreach (var dichvu in Model)
+                        {
+                            <tr>
+                                <th>@(i++)</th>
+                                <th>@dichvu.MaDichVu</th>
+                                <th>@dichvu.TenDichVu</th>
+                                <th>@String.Format("{0:N0}",dichvu.GiaDichVu)</th>
+                                <th>
+                                    <button class="btn btn-primary">Sửa</button>
+                                </th>
+
+                                <th>
+                                    <button class="btn btn-danger">Xóa</button>
+                                </th>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -49,7 +49,7 @@
                                                 <div class="modal-body">
                                                     <form method="post" asp-action="updateThongTinKhachHang">
                                                         <label class="form-label">Person ID</label>
-                                                        <input class="form-control" value="@khachhang.KhachHangNavigation.PersonId" name="personid">
+                                                        <input  class="form-control" value="@khachhang.KhachHangNavigation.PersonId" name="personid">
 
                                                         <label class="form-label">Họ tên</label>
                                                         <input class="form-control" value="@khachhang.KhachHangNavigation.HoTen" name="hoten">
@@ -60,7 +60,7 @@
                                                         <label class="form-label">Giới tính</label>
                                                         <select class="form-select" name="gioitinh" >
                                                             <option value="0" selected="@Equals(khachhang.KhachHangNavigation.GioiTinh,0)">Nam</option>
-                                                            <option value="1" selected="@Equals(khachhang.KhachHangNavigation.GioiTinh,0)">Nữ</option>
+                                                            <option value="1" selected="@Equals(khachhang.KhachHangNavigation.GioiTinh,1)">Nữ</option>
                                                         </select>
 
                                                         <label class="form-label">SĐT</label>
@@ -80,7 +80,7 @@
                                 </th>
 
                                 <th>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@("y" + khachhang.KhachHangId)">
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@("y" + khachhang.KhachHangId)">
                                         Xóa
                                     </button>
 

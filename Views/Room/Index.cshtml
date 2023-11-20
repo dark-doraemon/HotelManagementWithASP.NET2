@@ -59,7 +59,6 @@
                             <div class="card-body">
                                 <h5 class="card-title">@phong.TenPhong - @phong.MaTrangThaiNavigation.TenTrangThai</h5>
                                 <div class="card-text">@phong.MaLoaiPhongNavigation.TenLoaiPhong - @String.Format("{0:N0}",phong.MaLoaiPhongNavigation.GiaPhong)</div>
-                                <input class="tienPhong" type="hidden" value="@phong.MaLoaiPhongNavigation.GiaPhong">
                                 <div>
                                     @{
                                         if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT1")//phòng trống
@@ -93,6 +92,7 @@
                                                         <!-- Modal body -->
                                                         <div class="modal-body row ">
                                                             <form method="post" class="form-group row" asp-controller="Room" asp-action="datPhongVaDichVu" id="myForm">
+                                                                <input class="tienPhong" type="hidden" value="@phong.MaLoaiPhongNavigation.GiaPhong">
                                                                 <div class="col-6 p-5" style="border:1px solid black">
                                                                     @if (accessor.HttpContext.Session.GetString("UserName") != null) // nếu tài khoản là khách hàng thì tự động điện thông tin vào phiếu đăng kí đặt phòng
                                                                     {
@@ -348,7 +348,7 @@
         var diffTime = Math.abs(date2 - date1);
         var totalDays = form.querySelector(".totalDays").textContent = Math.ceil(diffTime / 1000 / 60 / 60 / 24)
         form.querySelector(".totalDays").textContent = "Tổng ngày thuê: " + totalDays
-        tongTienPhong = totalDays * document.querySelector(".tienPhong").value
+        tongTienPhong = totalDays * form.querySelector(".tienPhong").value
         form.querySelector(".tongTienPhong").textContent = "Tổng tiền phòng: " + tongTienPhong.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 
         form.querySelector(".totalAll").textContent =

@@ -97,8 +97,8 @@ namespace HotelManagement.Controllers
         [AdminAuthentication]
         public IActionResult QLDichVu()
         {
-
-            return View();
+            
+            return View(repo.getDichVus);
         }
 
         [AdminOrNhanVienAuthentication]
@@ -135,6 +135,15 @@ namespace HotelManagement.Controllers
         [AdminOrNhanVienAuthentication]
         public IActionResult updateThongTinKhachHang(string personid, string hoten, int tuoi, int gioitinh, string sdt)
         {
+            Person person = new Person
+            {
+                PersonId = personid,
+                HoTen = hoten,
+                Tuoi = tuoi,
+                GioiTinh = gioitinh,
+                Sdt = sdt
+            };
+            repo.updateThongTinKhachHang(person);
             return RedirectToAction("QLUser");
         }
 
@@ -143,14 +152,15 @@ namespace HotelManagement.Controllers
         {
             var orderphongs = repo.getOrderPhongByPerson(personid);
             var phongs = orderphongs.Select(o => o.MaPhongNavigation)
-                .Select(p => {
+                .Select(p =>
+                {
                     p.MaTrangThai = "MTT1";
                     return p;
                 });
 
             //khi xóa khách hàng xong thì những phòng mà khách hàng order phải xóa theo
             //mà khi order phòng bị xóa thì trạng thái phòng phải chuyển sang thành là "trống" (MTT1)IEnumerable<OrderPhong>           foreach (var orderphong in orderphongs)
-            if(phongs != null) repo.updateTrangThaiPhongs(phongs); 
+            if (phongs != null) repo.updateTrangThaiPhongs(phongs);
 
             repo.removeKhachHang(personid);
 
@@ -243,6 +253,8 @@ namespace HotelManagement.Controllers
             }
             return View(model);
         }
+
+
 
     }
 
