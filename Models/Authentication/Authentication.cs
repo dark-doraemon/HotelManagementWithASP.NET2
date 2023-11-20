@@ -9,7 +9,7 @@ namespace HotelManagement.Models.Authentication
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             //nếu tài khoản user và admin đều null thì đăng nhập
-            if (context.HttpContext.Session.GetString("UserName") == null && context.HttpContext.Session.GetString("admin") == null)
+            if (context.HttpContext.Session.GetString("UserName") == null && context.HttpContext.Session.GetString("admin") == null && context.HttpContext.Session.GetString("nhanvien") != null)
             {
                 context.Result = new RedirectToRouteResult(new RouteValueDictionary
                 {
