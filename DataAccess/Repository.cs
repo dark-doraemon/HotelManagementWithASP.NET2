@@ -277,7 +277,7 @@ namespace HotelManagement.DataAccess
             //return tk.Person;
         }
 
-        public IEnumerable<OrderPhong> getOrdrPhongByPerson(string personid)
+        public IEnumerable<OrderPhong> getOrderPhongByPerson(string personid)
         {
             var result = context.OrderPhongs.
                 Include(od => od.MaPhongNavigation).
@@ -371,5 +371,13 @@ namespace HotelManagement.DataAccess
             if(check > 0) return true;
             return false;
         }
+
+        public void updateTrangThaiPhongs(IEnumerable<Phong> phongs)
+        {
+            context.Phongs.UpdateRange(phongs);
+            context.SaveChanges();
+        }
+
+
     }
 }

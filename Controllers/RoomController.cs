@@ -21,7 +21,7 @@ namespace HotelManagement.Controllers
 
         [HttpGet]
         [HttpPost]
-        public IActionResult Index(string loaiphong = null, string trangthaiphong = null)
+        public IActionResult Index(string loaiphong = null, string trangthaiphong = null, bool error = true)
         {
             if (loaiphong == null && trangthaiphong == null) treetable.phongs = repo.getPhongByLoaiPhong(null);
             else if (loaiphong == null) treetable.phongs = repo.getPhongByMaTrangThai(trangthaiphong);
@@ -30,6 +30,7 @@ namespace HotelManagement.Controllers
             treetable.trangthaiphongs = repo.getTrangThaiPhong;
             treetable.loaiphongs = repo.getLoaiPhong;
             treetable.dichvus = repo.getDichvu;
+            treetable.error = error;
             if (accessor.HttpContext.Session.GetString("UserName") != null)
             {
                 treetable.Person = repo.getPersonByUserName(accessor.HttpContext.Session.GetString("UserName"));
@@ -50,6 +51,10 @@ namespace HotelManagement.Controllers
             string servicePrice,
             string selectedQuantities)
         {
+            if (tuoi == 0 && gioitinh == 0 && cccd == null && sdt == null && ngayden == DateTime.MinValue && ngaydi == DateTime.MinValue)
+            {
+                 return RedirectToAction("Index", "Room",new {error = false});
+            }
             Person person = new Person();
             if (accessor.HttpContext.Session.GetString("UserName") != null)
             {
@@ -115,10 +120,12 @@ namespace HotelManagement.Controllers
                 repo.updateTrangThaiPhong(maphong, "MTT3");
             }
             else repo.updateTrangThaiPhong(maphong, "MTT2");
-            return RedirectToAction("Index", "Room", new { maorder = maorderphong });
+
+            return RedirectToAction("Index", "Room", new { error = true });
         }
 
-        [AdminAuthentication]
+
+        [AdminOrNhanVienAuthentication]
         [Route("[controller]/[action]/{maphong}/{successOrFail?}")]
         public IActionResult thanhToan(string maphong, string successOrFail = "0")
         {
@@ -128,7 +135,7 @@ namespace HotelManagement.Controllers
             return View("thanhToan", order);
         }
 
-        [AdminAuthentication]
+        [AdminOrNhanVienAuthentication]
         [Route("[controller]/[action]/maorder")]
         public IActionResult addHoadon(string maorder, string tongtien, string maphong)
         {
@@ -157,7 +164,8 @@ namespace HotelManagement.Controllers
             }
 
         }
-        [AdminAuthentication]
+
+        [AdminOrNhanVienAuthentication]
         public IActionResult xacNhanDatPhong(string maphong)
         {
             //khi xác nhận đặt phòng thì phòng chuyển sang trạng thái đã đặt nghĩa là khách đang ở
@@ -179,6 +187,7 @@ namespace HotelManagement.Controllers
         public IEnumerable<TrangThaiPhong> trangthaiphongs { get; set; }
         public IEnumerable<DichVu> dichvus { get; set; }
         public Person Person { get; set; } = null;
+        public bool error { get; set; } = true;
     }
 
 }

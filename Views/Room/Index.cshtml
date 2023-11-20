@@ -2,6 +2,12 @@
 @inject IHttpContextAccessor accessor
 <div class="container " style="border:1px solid black">
     <div class="row">
+        @{
+            if(Model.error == false)
+            {
+                <h1 class="text-danger text-center">Bạn chưa nhập đủ thông tin</h1>
+            }
+        }
         <div class="col-3 p-0 " style="border : 1px solid black">
             <div class=" text-center list-group-item active" aria-current="true">Loại phòng</div>
             <div class="text-center">
@@ -58,13 +64,14 @@
                                     @{
                                         if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT1")//phòng trống
                                         {
-                                            if (accessor.HttpContext.Session.GetString("UserName") != null)
+                                            if (accessor.HttpContext.Session.GetString("UserName") != null) //nếu tài khoản là khách hàng thì hiện "đặt trước"
                                             {
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
                                                     Đặt trước
                                                 </button>
 
                                             }
+                                            //nếu tài khoản là admin hoặc nhân viên thì hiện là "đăt phòng"
                                             else
                                             {
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
@@ -87,7 +94,7 @@
                                                         <div class="modal-body row ">
                                                             <form method="post" class="form-group row" asp-controller="Room" asp-action="datPhongVaDichVu" id="myForm">
                                                                 <div class="col-6 p-5" style="border:1px solid black">
-                                                                    @if (accessor.HttpContext.Session.GetString("UserName") != null)
+                                                                    @if (accessor.HttpContext.Session.GetString("UserName") != null) // nếu tài khoản là khách hàng thì tự động điện thông tin vào phiếu đăng kí đặt phòng
                                                                     {
                                                                         <div class="text-center"><b>Thông tin khách hàng</b></div>
                                                                         <label class="form-label">Họ và tên</label>
@@ -108,7 +115,7 @@
                                                                         <label class="form-label">SĐT</label>
                                                                         <input class="form-control" name="sdt" value="@Model.Person.Sdt" disabled>
                                                                     }
-                                                                    else
+                                                                    else //nếu là tài khoản admin hoặc nhân viên thì tự điền
                                                                     {
                                                                         <div class="text-center"><b>Thông tin khách hàng</b></div>
                                                                         <label class="form-label">Họ và tên</label>
@@ -199,12 +206,12 @@
                                         else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT2") // đang thuê
                                         {
                                             //nếu không có tài khoản nào đăng nhập thì ko hiện gì cả
-                                            if ((accessor.HttpContext.Session.GetString("UserName") == null || accessor.HttpContext.Session.GetString("admin") == null))
+                                            if (accessor.HttpContext.Session.GetString("UserName") == null && accessor.HttpContext.Session.GetString("admin") == null && accessor.HttpContext.Session.GetString("nhanvien") == null)
                                             {
 
                                             }
-                                            //nếu có tài khoản admin đăng nhập thì hiện nút thanh toán
-                                            if (accessor.HttpContext.Session.GetString("admin") != null)
+                                            //nếu có tài khoản admin hoặc nhân viên đăng nhập thì hiện nút thanh toán
+                                            if (accessor.HttpContext.Session.GetString("admin") != null || accessor.HttpContext.Session.GetString("nhanvien") != null)
                                             {
                                                 <a class="btn btn-primary" asp-controller="Room" asp-action="thanhToan" asp-route-maphong="@phong.MaPhong">Thanh toán</a>
                                             }
@@ -216,7 +223,10 @@
                                         }
                                         else if (phong.MaTrangThaiNavigation.MaTrangThai == "MTT3") // đặt trước
                                         {
-                                            if (accessor.HttpContext.Session.GetString("UserName") == null && accessor.HttpContext.Session.GetString("admin") != null)
+                                            //nếu là tài khoản admin hoặc nhân viên thì hiện nút xác nhận
+                                            if (accessor.HttpContext.Session.GetString("UserName") == null 
+                                            && (accessor.HttpContext.Session.GetString("admin") != null || accessor.HttpContext.Session.GetString("nhanvien") != null))
+
                                             {
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@phong.MaPhong">
                                                     Xác nhận
@@ -308,7 +318,7 @@
                                             }
                                             else
                                             {
-                                                <button class="btn btn-primary" disabled >Đã đặt trước</button>
+                                                <button class="btn btn-primary" disabled>Đã đặt trước</button>
                                             }
                                         }
                                     }

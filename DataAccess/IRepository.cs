@@ -61,7 +61,7 @@ namespace HotelManagement.DataAccess
 
         Person getPersonByUserName(string username);
     
-        public IEnumerable<OrderPhong> getOrdrPhongByPerson(string personid);
+        public IEnumerable<OrderPhong> getOrderPhongByPerson(string personid);
 
         public int funcGetLastIndex(List<string> maid,int vt);
 
@@ -94,5 +94,6 @@ namespace HotelManagement.DataAccess
 
         bool addTaiKhoanNhanVien(TaiKhoan taiKhoan);
 
+        void updateTrangThaiPhongs(IEnumerable<Phong> phongs);
     }
 }

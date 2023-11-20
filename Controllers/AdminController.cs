@@ -101,13 +101,14 @@ namespace HotelManagement.Controllers
             return View();
         }
 
-        [AdminAuthentication]
+        [AdminOrNhanVienAuthentication]
         public IActionResult QLHoaDon()
         {
             return View(repo.GetHoaDon);
         }
 
-        [AdminAuthentication]
+
+        [AdminOrNhanVienAuthentication]
         public IActionResult chiTietHoaDon(string mahoadon)
         {
             var s = repo.getChiTietHoaDon(mahoadon).FirstOrDefault();
@@ -115,14 +116,14 @@ namespace HotelManagement.Controllers
         }
 
         //khi xóa hóa đơn thì ta nên xóa order phòng
-        [AdminAuthentication]
+        [AdminOrNhanVienAuthentication]
         public IActionResult xoaHoadon(string maorder)
         {
             repo.removeOrderPhong(maorder);
             return RedirectToAction("QLHoaDon");
         }
 
-        [AdminAuthentication]
+        [AdminOrNhanVienAuthentication]
         public IActionResult QLUser()
         {
 
@@ -131,23 +132,25 @@ namespace HotelManagement.Controllers
 
 
 
-        [AdminAuthentication]
+        [AdminOrNhanVienAuthentication]
         public IActionResult updateThongTinKhachHang(string personid, string hoten, int tuoi, int gioitinh, string sdt)
         {
             return RedirectToAction("QLUser");
         }
 
-        [AdminAuthentication]
+        [AdminOrNhanVienAuthentication]
         public IActionResult xoaKhachHang(string personid)
         {
-            var orderphongs = repo.getOrdrPhongByPerson(personid);
+            var orderphongs = repo.getOrderPhongByPerson(personid);
+            var phongs = orderphongs.Select(o => o.MaPhongNavigation)
+                .Select(p => {
+                    p.MaTrangThai = "MTT1";
+                    return p;
+                });
 
             //khi xóa khách hàng xong thì những phòng mà khách hàng order phải xóa theo
-            //mà khi order phòng bị xóa thì trạng thái phòng phải chuyển sang thành là "trống" (MTT1)
-            foreach (var orderphong in orderphongs)
-            {
-                repo.updateTrangThaiPhong(orderphong.MaPhongNavigation.MaPhong, "MTT1");
-            }
+            //mà khi order phòng bị xóa thì trạng thái phòng phải chuyển sang thành là "trống" (MTT1)IEnumerable<OrderPhong>           foreach (var orderphong in orderphongs)
+            if(phongs != null) repo.updateTrangThaiPhongs(phongs); 
 
             repo.removeKhachHang(personid);
 

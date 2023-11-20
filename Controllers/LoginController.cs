@@ -55,6 +55,9 @@ namespace HotelManagement.Controllers
         {
             httpContextAccessor.HttpContext.Session.Clear();
             httpContextAccessor.HttpContext.Session.Remove("UserName");
+            httpContextAccessor.HttpContext.Session.Remove("nhanvien");
+            httpContextAccessor.HttpContext.Session.Remove("admin");
+
             return RedirectToAction("Index", "Home");
         }
     }

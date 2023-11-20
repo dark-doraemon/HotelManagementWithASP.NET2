@@ -25,7 +25,7 @@ namespace HotelManagement.Controllers
 
 
             //từ person lấy ra OrderPhong của person đó
-            IEnumerable<OrderPhong> oderPhongs = repo.getOrdrPhongByPerson(p.PersonId);
+            IEnumerable<OrderPhong> oderPhongs = repo.getOrderPhongByPerson(p.PersonId);
             return View(oderPhongs);
         }
 
