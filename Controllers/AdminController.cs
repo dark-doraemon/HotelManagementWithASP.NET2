@@ -95,11 +95,60 @@ namespace HotelManagement.Controllers
         }
 
         [AdminAuthentication]
-        public IActionResult QLDichVu()
+        public IActionResult QLDichVu(bool error = true)
         {
-            
+            ViewBag.error = error;
             return View(repo.getDichVus);
         }
+
+        [AdminOrNhanVienAuthentication]
+        public IActionResult updateDichVu(string madichvu,string tendichvu,float giadichvu)
+        {
+            DichVu dichvu = new DichVu
+            {
+                MaDichVu = madichvu,
+                TenDichVu = tendichvu,
+                GiaDichVu = giadichvu
+            };
+
+            repo.updateDichVu(dichvu);
+            return RedirectToAction("QLDichVu");
+        }
+
+        [AdminOrNhanVienAuthentication]
+        public IActionResult xoaDichVu(string madichvu)
+        {
+            bool check = repo.xoaDichVu(madichvu);
+            if (check)
+            {
+                return RedirectToAction("QLDichVu");
+            }
+            else
+            {
+                return View("error");
+            }
+        }
+
+        [AdminOrNhanVienAuthentication]
+        public IActionResult themDichVu(string madichvu,string tendichvu,float giadichvu)
+        {
+            DichVu dichvu = new DichVu
+            {
+                MaDichVu = madichvu,
+                TenDichVu = tendichvu,
+                GiaDichVu = giadichvu
+            };
+            bool check = repo.themDichVu(dichvu);
+            if (check)
+            {
+                return RedirectToAction("QLDichVu", new { error = true });
+            }
+            else
+            {
+                return RedirectToAction("QLDichVu",new {error = false});
+            }
+        }
+
 
         [AdminOrNhanVienAuthentication]
         public IActionResult QLHoaDon()
@@ -201,22 +250,25 @@ namespace HotelManagement.Controllers
                 nhanviens = repo.getTaiKhoanNhanVien,
                 vaitros = repo.GetVaiTros
             };
-            if (password != confirm)
-            {
-                ModelState.AddModelError("", "Mật khẩu không giống");
-            }
 
-            if (repo.checkTonTaiUserName(username))
-            {
-                ModelState.AddModelError("", "Tài khoản đã tồn tại");
-            }
-            if (repo.checkTonTaiMaNhanVien(manhanvien))
-            {
-                ModelState.AddModelError("", "Mã nhân viên đã tồn tại");
-            }
-
+            
             if (manhanvien != null && hoten != null && tuoi > 0 && gioitinh != -1 && sdt != null && vaitro != null && username != null && password != null && confirm != null)
             {
+                if (password != confirm)
+                {
+                    ModelState.AddModelError("", "Mật khẩu không giống");
+                }
+
+                if (repo.checkTonTaiUserName(username))
+                {
+                    ModelState.AddModelError("", "Tài khoản đã tồn tại");
+                }
+
+                if (repo.checkTonTaiMaNhanVien(manhanvien))
+                {
+                    ModelState.AddModelError("", "Mã nhân viên đã tồn tại");
+                }
+
                 NhanVien nhanvien = new NhanVien
                 {
                     NhanVienId = manhanvien,
@@ -254,6 +306,39 @@ namespace HotelManagement.Controllers
             return View(model);
         }
 
+        [AdminOrNhanVienAuthentication]
+        public IActionResult xoaNhanVien(string manhanvien)
+        {
+            return View();
+        }
+
+        [AdminAuthentication]
+        public IActionResult updateThongTinNhanVien(string manhanvien,string hoten,int tuoi,int gioitinh,string sdt,string vaitro)
+        {
+            Person person = new Person
+            {
+                PersonId = manhanvien,
+                HoTen = hoten,
+                Tuoi = tuoi,
+                GioiTinh = gioitinh,
+                Sdt = sdt,
+            };
+            NhanVien nhanvien = new NhanVien
+            {
+                NhanVienId = manhanvien,
+                MaVaiTro = vaitro
+            };
+            repo.updateThongTinNhanVien(person,nhanvien);
+            if(vaitro == "MVT1")
+            {
+                repo.updateLoaiTaiKhoan(manhanvien, "LTK1");
+            }
+            else
+            {
+                repo.updateLoaiTaiKhoan(manhanvien, "LTK2");
+            }
+            return RedirectToAction("QLNhanVien");
+        }
 
 
     }

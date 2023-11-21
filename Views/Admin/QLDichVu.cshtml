@@ -2,7 +2,50 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
+            @{
+                if(ViewBag.error == false)
+                {
+                    <h1 class="text-center text-danger">Trùng mã dịch vụ, vui lòng chọn mã dịch vụ khác</h1>
+                }
+            }
             <h1 class="text-center bg-primary"> Quản lý dịch vụ</h1>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" > Thêm dịch vụ</button>
+            <!-- The Modal -->
+            <div class="modal" id="myModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Modal Heading</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form method="post" class="form-group" asp-action="themDichVu">
+                                <label class="form-label">Mã dịch vụ</label>
+                                <input class="form-control" name="madichvu" />
+
+                                <label class="form-label">Tên dịch vụ</label>
+                                <input class="form-control" name="tendichvu"/>
+                                
+                                <label class="form-label">Giá dịch vụ</label>
+                                <input class="form-control" name="giadichvu" type="number" />
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xác nhận</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
             <table class="table">
                 <thead>
                     <tr>
@@ -18,7 +61,7 @@
 
                 <tbody>
                     @{
-                        int i = 0;
+                        int i = 1;
                         foreach (var dichvu in Model)
                         {
                             <tr>
@@ -27,11 +70,73 @@
                                 <th>@dichvu.TenDichVu</th>
                                 <th>@String.Format("{0:N0}",dichvu.GiaDichVu)</th>
                                 <th>
-                                    <button class="btn btn-primary">Sửa</button>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@dichvu.MaDichVu">
+                                        Sửa
+                                    </button>
+
+                                    <div class="modal" id="@dichvu.MaDichVu">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Sửa dịch vụ</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <form class="form-group" method="post" asp-action="updateDichVu">
+                                                        <label class="form-label">Mã dịch vụ</label>
+                                                        <input class="form-control"  value="@dichvu.MaDichVu" name="madichvu"/>
+
+                                                        <label class="form-label">Tên dịch vụ</label>
+                                                        <input class="form-control"  value="@dichvu.TenDichVu" name="tendichvu"/>
+
+                                                        <label class="form-label">Giá dịch vụ</label>
+                                                        <input class="form-control"  value="@dichvu.GiaDichVu"  type="number"  name="giadichvu"/>
+                                                        
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xác nhận</button>
+                                                        </div>
+                                                   
+                                                    </form>
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </th>
 
                                 <th>
-                                    <button class="btn btn-danger">Xóa</button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@("x" + dichvu.MaDichVu)" >Xóa</button>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="@("x" + dichvu.MaDichVu)">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Xóa dịch vụ</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <div class="text-center">Bạn có muốn xóa ?</div>
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <a class="btn btn-danger" asp-action="xoaDichVu" asp-route-madichvu="@dichvu.MaDichVu">Xóa</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </th>
                             </tr>
                         }

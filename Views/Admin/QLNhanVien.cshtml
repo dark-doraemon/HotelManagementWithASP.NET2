@@ -24,36 +24,36 @@
                                 <input class="form-control" name="manhanvien" />
 
                                 <label class="form-label">Họ tên</label>
-                                <input class="form-control" name="hoten"/>
+                                <input class="form-control" name="hoten" />
 
-                                <label class="form-label" >Tuổi</label>
-                                <input class="form-control" type="number" name="tuoi"/>
+                                <label class="form-label">Tuổi</label>
+                                <input class="form-control" type="number" name="tuoi" />
 
                                 <label class="form-label">Giới tính</label>
                                 <select class="form-select" name="gioitinh">
                                     <option value="0">Nam</option>
                                     <option value="1">Nữ</option>
-                                </select> 
+                                </select>
 
                                 <label class="form-label">SĐT</label>
-                                <input class="form-control" name="sdt"/>
+                                <input class="form-control" name="sdt" />
 
                                 <label class="form-label">Vai trò</label>
                                 <select class="form-select" name="vaitro">
-                                    @foreach(var vaitro in Model.vaitros)
+                                    @foreach (var vaitro in Model.vaitros)
                                     {
                                         <option value="@vaitro.MaVaiTro">@vaitro.TenVaiTro</option>
                                     }
                                 </select>
 
                                 <label class="form-label">Tài khoản</label>
-                                <input class="form-control" name="username"/>
+                                <input class="form-control" name="username" />
 
                                 <label class="form-label">Mật khẩu</label>
-                                <input class="form-control" name="password"/>
+                                <input class="form-control" name="password" />
 
                                 <label class="form-label">Xác nhận mật khẩu</label>
-                                <input class="form-control" name="confirm"/>
+                                <input class="form-control" name="confirm" />
 
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
@@ -91,15 +91,94 @@
                                 <th>@nhanvien.NhanVienNavigation.PersonId</th>
                                 <th>@nhanvien.NhanVienNavigation.HoTen</th>
                                 <th>@nhanvien.NhanVienNavigation.Tuoi</th>
-                                <th>@nhanvien.NhanVienNavigation.GioiTinh</th>
+                                <th>@(nhanvien.NhanVienNavigation.GioiTinh == 0 ? "Nam" : "Nữ")</th>
                                 <th>@nhanvien.NhanVienNavigation.Sdt</th>
                                 <th>@nhanvien.MaVaiTroNavigation.TenVaiTro</th>
                                 <th>
-                                    <button class="btn btn-primary">Sửa</button>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@nhanvien.NhanVienId">
+                                        Sửa
+                                    </button>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="@nhanvien.NhanVienId">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Sửa nhân viên</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <form class="form-group" method="post" asp-action="updateThongTinNhanVien">
+                                                        <label class="form-label">Nhân viên ID</label>
+                                                        <input class="form-control" name="manhanvien" value="@nhanvien.NhanVienId" />
+                            
+                                                        <label class="form-label">Họ tên</label>
+                                                        <input class="form-control" name="hoten"  value="@nhanvien.NhanVienNavigation.HoTen"/>
+
+                                                        <label class="form-label">Tuổi</label>
+                                                        <input class="form-control" name="tuoi" type="number" value="@nhanvien.NhanVienNavigation.Tuoi"/>
+
+                                                        <label class="form-label" >Giới tính</label>
+                                                        <select class="form-select" name="gioitinh" >
+                                                            <option value="0" selected="@Equals(nhanvien.NhanVienNavigation.GioiTinh,0)">Nam</option>
+                                                            <option value="1" selected="@Equals(nhanvien.NhanVienNavigation.GioiTinh,1)">Nữ</option>
+                                                        </select>
+
+                                                        <label class="form-label">SĐT</label>
+                                                        <input class="form-control" name="sdt" value="@nhanvien.NhanVienNavigation.Sdt">
+
+                                                        <label class="form-label">Vai trò</label>
+                                                        <select class="form-select" name="vaitro">
+                                                            @foreach(var vaitro in Model.vaitros)
+                                                            {
+                                                                <option  value="@vaitro.MaVaiTro" selected="@Equals(vaitro.MaVaiTro,nhanvien.MaVaiTroNavigation.MaVaiTro)">@vaitro.TenVaiTro</option>
+                                                            }
+                                                        </select>
+
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xác nhận</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </th>
 
                                 <th>
-                                    <button class="btn btn-danger">Xóa</button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@("x" + nhanvien.NhanVienId )">
+                                        Xóa
+                                    </button>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="@("x" + nhanvien.NhanVienId)">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Xóa nhân viên</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    Modal body..
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </th>
                             </tr>
                         }

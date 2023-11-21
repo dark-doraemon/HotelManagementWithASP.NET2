@@ -99,5 +99,15 @@ namespace HotelManagement.DataAccess
         void updateTrangThaiPhongs(IEnumerable<Phong> phongs);
 
         IEnumerable<DichVu> getDichVus { get; }
+
+        void updateDichVu(DichVu dichvu);
+
+        bool xoaDichVu(string madichvu);
+
+        bool themDichVu(DichVu dichvu);
+
+        void updateThongTinNhanVien(Person nhanvien,NhanVien vaitro);
+
+        void updateLoaiTaiKhoan(string personID, string loaitaikhoan);
     }
 }

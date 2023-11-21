@@ -388,5 +388,64 @@ namespace HotelManagement.DataAccess
         }
 
         public IEnumerable<DichVu> getDichVus => context.DichVus;
+
+
+        public void updateDichVu(DichVu dichvu)
+        {
+            context.DichVus.Update(dichvu);
+            context.SaveChanges();
+        }
+
+        public bool xoaDichVu(string madichvu)
+        {
+            DichVu dichvu = context.DichVus.FirstOrDefault(dv => dv.MaDichVu == madichvu);
+            if(dichvu == null) return false;
+            else
+            {
+                context.DichVus.Remove(dichvu);
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool themDichVu(DichVu dichvu)
+        {
+            var dv = context.DichVus.FirstOrDefault(dv => dv.MaDichVu == dichvu.MaDichVu);
+            if(dv != null)
+            {
+                return false;
+            }
+            else
+            {
+                context.DichVus.Add(dichvu);
+                context.SaveChanges() ;
+                return true;
+            }
+        }
+
+
+        public void updateThongTinNhanVien(Person nhanvien, NhanVien vaitro)
+        {
+            context.People.Update(nhanvien);
+            context.NhanViens.Update(vaitro);
+            context.SaveChanges();
+        }
+        
+        public void updateLoaiTaiKhoan(string personID,string loaitaikhoan)
+        {
+            var taikhoan = context.TaiKhoans.Where(tk => tk.PersonId == personID).ToList()
+                .Select(tk =>
+                {
+                    tk.LoaiTaiKhoan = loaitaikhoan;
+                    return tk;
+                });
+
+
+            context.TaiKhoans.UpdateRange(taikhoan);
+            context.SaveChanges();
+
+        }
+
+
     }
 }
