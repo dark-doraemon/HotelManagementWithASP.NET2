@@ -18,14 +18,49 @@
                 <tbody>
                     @{
                         int i = 1;
-                        foreach(var loaiphong in Model.loaiTaiKhoans)
+                        foreach(var loaitaikhoan in Model.loaiTaiKhoans)
                         {
                             <tr>
                                 <th>@(i++)</th>
-                                <th>@loaiphong.MaLoaiTaiKhoan</th>
-                                <th>@loaiphong.TenLoai</th>
+                                <th>@loaitaikhoan.MaLoaiTaiKhoan</th>
+                                <th>@loaitaikhoan.TenLoai</th>
                                 <th>
-                                    <button class="btn btn-primary">Sửa</button>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@loaitaikhoan.MaLoaiTaiKhoan">
+                                        Sửa
+                                    </button>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="@loaitaikhoan.MaLoaiTaiKhoan">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Sửa loại tài khoản</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <form class="form-group" method="post" asp-action="updateLoaiTaiKhoan">
+                                                        <label class="form-label">Mã loại tài khoản</label>
+                                                        <input class="form-control" value="@loaitaikhoan.MaLoaiTaiKhoan" name="maloaitaikhoan">
+                                                        
+                                                        <label class="form-label">Tên loại</label>
+                                                        <input class="form-control" value="@loaitaikhoan.TenLoai" name="tenloaitaikhoan">
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                        
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </th>
 
                                 <th>
@@ -68,7 +103,34 @@
                                     <th>@tk.LoaiTaiKhoan - @tk.LoaiTaiKhoanNavigation.TenLoai</th>
                                     <th>@tk.Person.PersonId</th>
                                     <th>
-                                        <button class="btn btn-primary">Sửa</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@tk.MaTaiKhoan">
+                                            Sửa
+                                        </button>
+
+                                        <!-- The Modal -->
+                                        <div class="modal" id="@tk.MaTaiKhoan">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Modal Heading</h4>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        Modal body..
+                                                    </div>
+
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </th>
                                     <th>
                                         <button class="btn btn-danger">Xóa</button>

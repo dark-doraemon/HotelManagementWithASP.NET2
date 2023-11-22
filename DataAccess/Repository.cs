@@ -366,9 +366,9 @@ namespace HotelManagement.DataAccess
 
         public bool addTaiKhoanNhanVien(TaiKhoan taiKhoan)
         {
-            context.TaiKhoans.Add(taiKhoan);    
+            context.TaiKhoans.Add(taiKhoan);
             int check = context.SaveChanges();
-            if(check > 0) return true;
+            if (check > 0) return true;
             return false;
         }
 
@@ -381,10 +381,10 @@ namespace HotelManagement.DataAccess
 
         public void updateThongTinKhachHang(Person newperson)
         {
-           
+
 
             context.People.Update(newperson);
-            context.SaveChanges();  
+            context.SaveChanges();
         }
 
         public IEnumerable<DichVu> getDichVus => context.DichVus;
@@ -399,7 +399,7 @@ namespace HotelManagement.DataAccess
         public bool xoaDichVu(string madichvu)
         {
             DichVu dichvu = context.DichVus.FirstOrDefault(dv => dv.MaDichVu == madichvu);
-            if(dichvu == null) return false;
+            if (dichvu == null) return false;
             else
             {
                 context.DichVus.Remove(dichvu);
@@ -411,14 +411,14 @@ namespace HotelManagement.DataAccess
         public bool themDichVu(DichVu dichvu)
         {
             var dv = context.DichVus.FirstOrDefault(dv => dv.MaDichVu == dichvu.MaDichVu);
-            if(dv != null)
+            if (dv != null)
             {
                 return false;
             }
             else
             {
                 context.DichVus.Add(dichvu);
-                context.SaveChanges() ;
+                context.SaveChanges();
                 return true;
             }
         }
@@ -430,8 +430,8 @@ namespace HotelManagement.DataAccess
             context.NhanViens.Update(vaitro);
             context.SaveChanges();
         }
-        
-        public void updateLoaiTaiKhoan(string personID,string loaitaikhoan)
+
+        public void updateLoaiTaiKhoanOfPerson(string personID, string loaitaikhoan)
         {
             var taikhoan = context.TaiKhoans.Where(tk => tk.PersonId == personID).ToList()
                 .Select(tk =>
@@ -445,6 +445,26 @@ namespace HotelManagement.DataAccess
             context.SaveChanges();
 
         }
+        public bool removeNhanVien(string manhanvien)
+        {
+            Person nhanvien = context.People.FirstOrDefault(p => p.PersonId == manhanvien);
+            if (nhanvien == null) {
+                return false;
+            }
+            else
+            {
+                context.People.Remove(nhanvien);
+                context.SaveChanges() ;
+                return true;
+            }
+        }
+
+        public void updateLoaiTaiKhoan(LoaiTaiKhoan loaitaikhoancansua)
+        {
+            context.LoaiTaiKhoans.Update(loaitaikhoancansua);
+            context.SaveChanges() ; 
+        }
+
 
 
     }

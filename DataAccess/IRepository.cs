@@ -108,6 +108,10 @@ namespace HotelManagement.DataAccess
 
         void updateThongTinNhanVien(Person nhanvien,NhanVien vaitro);
 
-        void updateLoaiTaiKhoan(string personID, string loaitaikhoan);
+        void updateLoaiTaiKhoanOfPerson(string personID, string loaitaikhoan);
+
+        bool removeNhanVien(string manhanvien);
+
+        void updateLoaiTaiKhoan(LoaiTaiKhoan loaitaikhoancansua);
     }
 }

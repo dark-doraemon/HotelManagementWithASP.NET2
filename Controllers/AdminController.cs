@@ -306,12 +306,7 @@ namespace HotelManagement.Controllers
             return View(model);
         }
 
-        [AdminOrNhanVienAuthentication]
-        public IActionResult xoaNhanVien(string manhanvien)
-        {
-            return View();
-        }
-
+       
         [AdminAuthentication]
         public IActionResult updateThongTinNhanVien(string manhanvien,string hoten,int tuoi,int gioitinh,string sdt,string vaitro)
         {
@@ -331,15 +326,34 @@ namespace HotelManagement.Controllers
             repo.updateThongTinNhanVien(person,nhanvien);
             if(vaitro == "MVT1")
             {
-                repo.updateLoaiTaiKhoan(manhanvien, "LTK1");
+                repo.updateLoaiTaiKhoanOfPerson(manhanvien, "LTK1");
             }
             else
             {
-                repo.updateLoaiTaiKhoan(manhanvien, "LTK2");
+                repo.updateLoaiTaiKhoanOfPerson(manhanvien, "LTK2");
             }
             return RedirectToAction("QLNhanVien");
         }
 
+        [AdminAuthentication]
+        public IActionResult xoaNhanVien(string manhanvien)
+        {
+            bool check = repo.removeNhanVien(manhanvien);
+
+            return RedirectToAction("QLNhanVien");
+        }
+
+        [AdminAuthentication]
+        public IActionResult updateLoaiTaiKhoan(string maloaitaikhoan,string tenloaitaikhoan)
+        {
+            LoaiTaiKhoan loaitaikhoan = new LoaiTaiKhoan
+            {
+                MaLoaiTaiKhoan = maloaitaikhoan,
+                TenLoai = tenloaitaikhoan
+            };
+            repo.updateLoaiTaiKhoan(loaitaikhoan);
+            return RedirectToAction("QLTaiKhoan");
+        }
 
     }
 
