@@ -17,7 +17,7 @@ namespace HotelManagement.Controllers
 
         [HttpGet]
         [HttpPost]
-        [AdminAuthentication]
+        [AdminOrNhanVienAuthentication]
         public IActionResult QLPhong(string id)
         {
             var loaiphong = repo.getLoaiPhong.ToList();
@@ -94,7 +94,7 @@ namespace HotelManagement.Controllers
             return RedirectToAction("QLPhong");
         }
 
-        [AdminAuthentication]
+        [AdminOrNhanVienAuthentication]
         public IActionResult QLDichVu(bool error = true)
         {
             ViewBag.error = error;
