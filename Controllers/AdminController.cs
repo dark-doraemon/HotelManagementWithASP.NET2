@@ -355,6 +355,19 @@ namespace HotelManagement.Controllers
             return RedirectToAction("QLTaiKhoan");
         }
 
+        [AdminAuthentication]
+        public IActionResult updateTaiKhoanNhanVien(string mataikhoan,string username, string password)
+        {
+            repo.updateTaiKhoan(mataikhoan, username, password);    
+            return RedirectToAction("QLTaiKhoan");
+        }
+        [AdminAuthentication]
+        public IActionResult updateTaiKhoanKhachHang(string mataikhoan, string username, string password)
+        {
+            repo.updateTaiKhoan(mataikhoan, username, password);
+            return RedirectToAction("QLTaiKhoan");
+        }
+
     }
 
     public class LoaiPhongAndPhong

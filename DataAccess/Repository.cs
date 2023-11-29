@@ -465,6 +465,22 @@ namespace HotelManagement.DataAccess
             context.SaveChanges() ; 
         }
 
+        public bool updateTaiKhoan(string mataikhoan,string username, string password)
+        {
+            TaiKhoan check = context.TaiKhoans.FirstOrDefault(tk => tk.MaTaiKhoan == mataikhoan);
+            if (check == null)
+            {
+                return false;
+            }
+            else
+            {
+                check.UserName = username;
+                check.Password = password;
+                context.TaiKhoans.Update(check);
+                context.SaveChanges() ;
+                return true;
+            }
+        }
 
 
     }

@@ -1,7 +1,7 @@
 ﻿@model LoaiTaiKhoan_TaiKhoan_NhanVien_KhacHang
 <div class="container">
     <h1 class="text-center bg-primary">Quản lý tài khoản</h1>
-    <div class="row" > 
+    <div class="row">
         <div class="col-12">
             <h2>Các loại tài khoản</h2>
             <table class="table">
@@ -18,7 +18,7 @@
                 <tbody>
                     @{
                         int i = 1;
-                        foreach(var loaitaikhoan in Model.loaiTaiKhoans)
+                        foreach (var loaitaikhoan in Model.loaiTaiKhoans)
                         {
                             <tr>
                                 <th>@(i++)</th>
@@ -45,7 +45,7 @@
                                                     <form class="form-group" method="post" asp-action="updateLoaiTaiKhoan">
                                                         <label class="form-label">Mã loại tài khoản</label>
                                                         <input class="form-control" value="@loaitaikhoan.MaLoaiTaiKhoan" name="maloaitaikhoan">
-                                                        
+
                                                         <label class="form-label">Tên loại</label>
                                                         <input class="form-control" value="@loaitaikhoan.TenLoai" name="tenloaitaikhoan">
 
@@ -53,7 +53,7 @@
                                                         <div class="modal-footer">
                                                             <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                                         </div>
-                                                        
+
                                                     </form>
                                                 </div>
 
@@ -64,7 +64,41 @@
                                 </th>
 
                                 <th>
-                                    <button class="btn btn-danger">Xóa</button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@("x" + loaitaikhoan.MaLoaiTaiKhoan)">
+                                        Xóa
+                                    </button>
+                                    <!-- The Modal -->
+                                    <div class="modal" id="@("x" + loaitaikhoan.MaLoaiTaiKhoan)">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Xóa loại tài khoản</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <form class="form-group">
+                                                        <label class="form-label">Mã loại tài khoản</label>
+                                                        <input class="form-control" value="@loaitaikhoan.MaLoaiTaiKhoan" name="maloaitaikhoan">
+
+                                                        <label class="form-label">Tên loại</label>
+                                                        <input class="form-control" value="@loaitaikhoan.TenLoai" name="tenloaitaikhoan">
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xóa</button>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </th>
                             </tr>
                         }
@@ -84,16 +118,15 @@
                         <th>Loại tài khoản</th>
                         <th>Person ID</th>
                         <th>Sửa</th>
-                        <th>Xóa</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     @{
                         int x = 1;
-                        foreach(var nhanvien in Model.nhanviens)
+                        foreach (var nhanvien in Model.nhanviens)
                         {
-                            foreach(var tk in nhanvien.NhanVienNavigation.TaiKhoans)
+                            foreach (var tk in nhanvien.NhanVienNavigation.TaiKhoans)
                             {
                                 <tr>
                                     <th>@(x++)</th>
@@ -114,26 +147,31 @@
 
                                                     <!-- Modal Header -->
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Modal Heading</h4>
+                                                        <h4 class="modal-title">Sủa tài khoản nhân viên</h4>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                     </div>
 
                                                     <!-- Modal body -->
                                                     <div class="modal-body">
-                                                        Modal body..
-                                                    </div>
+                                                        <form class="form-group" asp-action="updateTaiKhoanNhanVien">
+                                                            <label class="form-label">Tài khoản</label>
+                                                            <input type="hidden" value="@tk.MaTaiKhoan" name="mataikhoan">
+                                                            <input class="form-control" value="@tk.UserName" name="username">
 
-                                                    <!-- Modal footer -->
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                            <label class="form-label">Mật khẩu</label>
+                                                            <input class="form-control" value="@tk.Password" name="password">
+
+                                                            <!-- Modal footer -->
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xác nhận</button>
+                                                            </div>
+
+                                                        </form>
                                                     </div>
 
                                                 </div>
                                             </div>
                                         </div>
-                                    </th>
-                                    <th>
-                                        <button class="btn btn-danger">Xóa</button>
                                     </th>
                                 </tr>
                             }
@@ -155,16 +193,15 @@
                         <th>Loại tài khoản</th>
                         <th>Person ID</th>
                         <th>Sửa</th>
-                        <th>Xóa</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     @{
                         int y = 1;
-                        foreach(var khachhang in Model.khachhangs)
+                        foreach (var khachhang in Model.khachhangs)
                         {
-                            foreach(var taikhoan in khachhang.KhachHangNavigation.TaiKhoans)
+                            foreach (var taikhoan in khachhang.KhachHangNavigation.TaiKhoans)
                             {
                                 <tr>
                                     <th>@(y++)</th>
@@ -175,12 +212,44 @@
                                     <th>@taikhoan.Person.PersonId</th>
 
                                     <th>
-                                        <button class="btn btn-primary">Sửa</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@taikhoan.MaTaiKhoan">
+                                            Sửa
+                                        </button>
+
+                                        <!-- The Modal -->
+                                        <div class="modal" id="@taikhoan.MaTaiKhoan">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Sủa tài khoản khách hàng</h4>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        <form class="form-group" asp-action="updateTaiKhoanNhanVien">
+                                                            <label class="form-label">Tài khoản</label>
+                                                            <input type="hidden" value="@taikhoan.MaTaiKhoan" name="mataikhoan">
+                                                            <input class="form-control" value="@taikhoan.UserName" name="username">
+
+                                                            <label class="form-label">Mật khẩu</label>
+                                                            <input class="form-control" value="@taikhoan.Password" name="password">
+
+                                                            <!-- Modal footer -->
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xác nhận</button>
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </th>
 
-                                    <th>
-                                        <button class="btn btn-danger">Xóa</button>
-                                    </th>
                                 </tr>
 
                             }
@@ -188,7 +257,7 @@
                     }
                 </tbody>
             </table>
-            
+
         </div>
     </div>
 </div>

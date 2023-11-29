@@ -113,5 +113,7 @@ namespace HotelManagement.DataAccess
         bool removeNhanVien(string manhanvien);
 
         void updateLoaiTaiKhoan(LoaiTaiKhoan loaitaikhoancansua);
+
+        bool updateTaiKhoan(string mataikhoan,string username, string password);
     }
 }
