@@ -1,9 +1,35 @@
-### Công nghệ sử dụng
+## Công nghệ sử dụng
 .NET MVC, entity framework,sql server
 
-### Mô tả ứng dụng 
+## Mô tả ứng dụng 
 1. Ứng dụng quản lý khách sạn có quản lý phòng, dịch vụ, nhân viện, hóa đơn, ....
 2. Có phân chia role người dùng (khách có thể đặt online, hoặt trực tiếp tại khách sạn)
+
+## Cách setup project
+1. Tải file zip hoặc git clone 
+![image](https://github.com/user-attachments/assets/0edbb1a6-6e36-4152-9030-a08170749a79)
+
+2. Mở project bằng Visualt studio hoặc VS code <br>
+Tại terminal nhập ```dotnet ef database update``` để tạo database 
+![image](https://github.com/user-attachments/assets/ba03b54c-cbea-499d-a767-c757b340a66d)
+
+3. Mở SQL server <br>
+   ![image](https://github.com/user-attachments/assets/b54a217f-2da5-435b-992f-27f66412054f)
+   <br>
+ Ta sẽ thấy database Hotel <br>
+![image](https://github.com/user-attachments/assets/ecd29dd2-0a8d-489b-9755-fd98626256d0)
+
+4. Trong project ta vừa download về ở bước 1 có file ```dulieu.sql``` <br>
+![image](https://github.com/user-attachments/assets/085fea68-e470-4ed6-91f4-90773b70de80)
+
+Mở lên bằng sql server và chọn database ```hotel``` và nhấn F5 để execute file sql để nạp dữ liệu
+![image](https://github.com/user-attachments/assets/ae10984d-3c32-452b-b1f4-9ac5fdce3fb2)
+
+5. Done ta chỉ cần chạy dự án là xong
+
+
+
+
 
 ## Một số hình ảnh của web
 ![image](https://github.com/user-attachments/assets/c2a8b47e-6a6e-4c2c-b040-4f1f532dea15)
