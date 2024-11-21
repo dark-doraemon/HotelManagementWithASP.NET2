@@ -10,7 +10,8 @@
 ![image](https://github.com/user-attachments/assets/0edbb1a6-6e36-4152-9030-a08170749a79)
 
 2. Mở project bằng Visualt studio hoặc VS code <br>
-Tại terminal nhập ```dotnet ef database update``` để tạo database 
+Tại terminal nhập ```dotnet ef database update``` để tạo database <br>
+Neu các bạn bị lỗi khi nhập lệnh này thì do các bạn chưa cài ef, cài bằng lệnh ```dotnet tool install --global dotnet-ef --version 9.0.0```
 ![image](https://github.com/user-attachments/assets/ba03b54c-cbea-499d-a767-c757b340a66d)
 
 3. Mở SQL server <br>
