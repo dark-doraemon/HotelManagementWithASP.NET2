@@ -6,6 +6,7 @@
 2. Có phân chia role người dùng (khách có thể đặt online, hoặt trực tiếp tại khách sạn)
 
 ## Cách setup project
+Demo: https://www.youtube.com/watch?v=79xL04T3RMM&t=2s&ab_channel=CounterLogic
 1. Tải file zip hoặc git clone 
 ![image](https://github.com/user-attachments/assets/0edbb1a6-6e36-4152-9030-a08170749a79)
 
